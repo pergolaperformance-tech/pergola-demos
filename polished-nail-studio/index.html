@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polished Nail Studio</title>
+<meta name="description" content="Polished Nail Studio — a chic boutique nail bar. Manicures, pedicures, gel, dip, custom nail art, acrylic full sets, and waxing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blush:#e08aa6; --blush-2:#f0b4c6; --rose:#fbe6ed; --plum:#3c2235;
+  --cream:#fef7f4; --paper:#fffafa; --ink:#3a2e33; --muted:#8a7a81;
+  --chrome:#cdb8c6; --line:rgba(60,34,53,.1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:'Poppins',sans-serif;color:var(--plum);line-height:1.1;font-weight:700;letter-spacing:-.5px}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{width:min(1160px,92%);margin:0 auto}
+.eyebrow{display:inline-block;text-transform:uppercase;letter-spacing:.22em;font-size:.74rem;font-weight:600;color:var(--blush);font-family:'Poppins';margin-bottom:14px}
+.btn{display:inline-block;border-radius:999px;font-family:'Poppins';font-weight:600;padding:14px 30px;font-size:.92rem;cursor:pointer;transition:transform .22s,box-shadow .22s,background .22s,color .22s}
+.btn-primary{background:var(--blush);color:#fff;box-shadow:0 10px 26px rgba(224,138,166,.4)}
+.btn-primary:hover{background:var(--plum);transform:translateY(-3px);box-shadow:0 16px 32px rgba(60,34,53,.3)}
+.btn-ghost{background:#fff;color:var(--plum);border:1.5px solid var(--blush-2)}
+.btn-ghost:hover{background:var(--rose);transform:translateY(-3px)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;background:rgba(254,247,244,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:74px}
+.brand{font-family:'Poppins';font-size:1.4rem;font-weight:700;color:var(--plum)}
+.brand span{color:var(--blush)}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a.link{font-size:.92rem;font-weight:500;color:var(--muted);transition:color .2s}
+.nav-links a.link:hover{color:var(--blush)}
+.nav .btn-primary{padding:11px 22px;font-size:.84rem}
+.nav-toggle{display:none;background:none;border:none;color:var(--plum);font-size:1.5rem;cursor:pointer}
+
+/* HERO */
+.hero{position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,var(--rose),transparent 70%);top:-160px;right:-140px;z-index:0}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;padding:80px 0 90px}
+.hero h1{font-size:clamp(2.6rem,5.6vw,4.3rem);margin-bottom:20px}
+.hero h1 em{font-style:normal;color:var(--blush)}
+.hero p.sub{font-size:1.14rem;color:var(--muted);max-width:480px;margin-bottom:32px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero-art{position:relative}
+.hero-art .main{border-radius:34px;overflow:hidden;box-shadow:0 30px 60px -24px rgba(60,34,53,.4);aspect-ratio:4/3}
+.hero-art .main img{width:100%;height:100%;object-fit:cover}
+.hero-art .float{position:absolute;bottom:-28px;left:-28px;width:170px;border-radius:24px;overflow:hidden;border:5px solid #fff;box-shadow:0 20px 40px -16px rgba(60,34,53,.45)}
+.hero-art .float img{width:100%;aspect-ratio:1;object-fit:cover}
+.hero-art .chip{position:absolute;top:-18px;right:18px;background:#fff;border-radius:999px;padding:10px 20px;font-family:'Poppins';font-weight:600;font-size:.84rem;color:var(--plum);box-shadow:0 12px 26px -10px rgba(60,34,53,.35)}
+.hero-art .chip b{color:var(--blush)}
+
+/* TRUST */
+.trust{background:var(--plum);color:#fbeef3}
+.trust-inner{display:flex;justify-content:space-between;gap:26px;padding:26px 0;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:11px;font-size:.96rem;font-weight:500}
+.trust-item .dot{width:9px;height:9px;border-radius:50%;background:var(--blush-2);flex:none}
+
+section.block{padding:96px 0}
+.section-head{max-width:600px;margin:0 auto 56px;text-align:center}
+.section-head h2{font-size:clamp(2.1rem,4.4vw,3.1rem)}
+.section-head p{color:var(--muted);margin-top:12px}
+
+/* SERVICES */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--paper);border-radius:26px;padding:34px 30px;border:1px solid var(--line);box-shadow:0 8px 24px -16px rgba(60,34,53,.3);transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-7px);box-shadow:0 22px 44px -20px rgba(224,138,166,.6)}
+.card .ico{width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,var(--blush-2),var(--blush));display:flex;align-items:center;justify-content:center;font-family:'Poppins';font-size:1.5rem;color:#fff;font-weight:700;margin-bottom:18px;box-shadow:0 8px 18px -6px rgba(224,138,166,.6)}
+.card h3{font-size:1.3rem;margin-bottom:9px}
+.card p{color:var(--muted);font-size:.95rem}
+.card .price{display:inline-block;margin-top:14px;font-family:'Poppins';font-weight:600;color:var(--blush);font-size:.95rem}
+
+/* ABOUT */
+.about{background:var(--rose)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:58px;align-items:center}
+.about-art{position:relative}
+.about-art img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:32px 32px 120px 32px;box-shadow:0 30px 60px -28px rgba(60,34,53,.45)}
+.about-art .badge{position:absolute;right:-14px;bottom:24px;background:#fff;border-radius:20px;padding:16px 22px;text-align:center;box-shadow:0 16px 34px -14px rgba(60,34,53,.4)}
+.about-art .badge b{display:block;font-family:'Poppins';font-size:1.7rem;color:var(--blush)}
+.about-art .badge span{font-size:.74rem;color:var(--muted);letter-spacing:.04em}
+.about-text h2{font-size:clamp(2.1rem,4.4vw,3rem);margin-bottom:18px}
+.about-text p{color:var(--muted);margin-bottom:16px}
+.about-list{list-style:none;margin-top:6px}
+.about-list li{padding-left:30px;position:relative;margin-bottom:12px;font-weight:500;color:var(--ink)}
+.about-list li::before{content:"♥";position:absolute;left:0;top:0;color:var(--blush)}
+
+/* GALLERY */
+.collage{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:160px;gap:16px}
+.collage figure{position:relative;overflow:hidden;border-radius:22px}
+.collage img{width:100%;height:100%;object-fit:cover;transition:transform .55s}
+.collage figure:hover img{transform:scale(1.06)}
+.collage figure::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(60,34,53,.5));z-index:1}
+.collage figcaption{position:absolute;left:16px;bottom:13px;z-index:2;font-family:'Poppins';font-weight:600;color:#fff;font-size:1rem}
+.big{grid-column:span 2;grid-row:span 2}
+.tall{grid-row:span 2}
+
+/* CONTACT */
+.contact{background:linear-gradient(160deg,var(--rose),var(--cream))}
+.contact-card{background:#fff;border-radius:34px;padding:60px 48px;text-align:center;box-shadow:0 30px 60px -30px rgba(60,34,53,.35);max-width:780px;margin:0 auto}
+.contact-card h2{font-size:clamp(2.1rem,4.4vw,3rem);margin-bottom:14px}
+.contact-card p.lead{color:var(--muted);font-size:1.08rem;margin-bottom:28px}
+.contact-meta{display:flex;justify-content:center;gap:42px;flex-wrap:wrap;margin-top:34px}
+.contact-meta .lbl{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;color:var(--blush);font-weight:600;margin-bottom:5px;font-family:'Poppins'}
+.contact-meta .val{color:var(--ink);font-weight:500}
+
+footer{background:var(--plum);color:#e9d2dd;padding:46px 0;text-align:center}
+footer .brand{color:#fff;display:inline-block;margin-bottom:12px}
+footer .brand span{color:var(--blush-2)}
+footer a{color:var(--blush-2);font-weight:600}
+footer .credit{font-size:.9rem;color:#c3a7b5;margin-top:6px}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.show{opacity:1;transform:none}
+
+.mcta{display:none}
+@media(max-width:880px){
+  .nav-links{position:fixed;top:74px;left:0;right:0;flex-direction:column;align-items:flex-start;gap:0;background:var(--paper);border-bottom:1px solid var(--line);padding:0 6%;max-height:0;overflow:hidden;transition:max-height .4s}
+  .nav-links.open{max-height:400px}
+  .nav-links a.link{width:100%;padding:18px 0;border-bottom:1px solid var(--line)}
+  .nav .btn-primary{margin:14px 0}
+  .nav-toggle{display:block}
+  .hero-grid{grid-template-columns:1fr;gap:60px;padding:54px 0 70px}
+  .about-grid{grid-template-columns:1fr;gap:50px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .collage{grid-template-columns:repeat(2,1fr)}
+  .big{grid-column:span 2;grid-row:span 1}
+}
+@media(max-width:560px){
+  .grid,.collage{grid-template-columns:1fr}
+  .big,.tall{grid-column:auto;grid-row:auto}
+  .trust-inner{flex-direction:column;gap:14px}
+  .contact-card{padding:40px 24px}
+  section.block{padding:60px 0}
+  body{padding-bottom:74px}
+  .mcta{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:200;padding:10px 14px;background:rgba(254,247,244,.95);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+  .mcta a{flex:1;text-align:center;padding:13px;border-radius:999px;font-family:'Poppins';font-weight:600;font-size:.9rem}
+  .mcta .c1{background:var(--blush);color:#fff}
+  .mcta .c2{background:#fff;color:var(--plum);border:1.5px solid var(--blush-2)}
+}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body id="top">
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">Polished <span>·</span> Nail Studio</a>
+    <div class="nav-links" id="navLinks">
+      <a class="link" href="#services">Services</a>
+      <a class="link" href="#about">About</a>
+      <a class="link" href="#gallery">Gallery</a>
+      <a class="btn btn-primary" href="tel:+15552043310">Call (555) 204-3310</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">Uptown, your city</span>
+      <h1>Beautiful nails, a little <em>ritual</em> of self-care.</h1>
+      <p class="sub">Step into a calm, chic nail bar where every set is shaped, polished, and finished with care — the kind of detail that makes hands and feet feel new again.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="tel:+15552043310">Book your appointment</a>
+        <a class="btn btn-ghost" href="#services">See services</a>
+      </div>
+    </div>
+    <div class="hero-art reveal">
+      <div class="chip">★ <b>4.9</b> loved by guests</div>
+      <div class="main"><img src="img/hero.png" alt="Polished Nail Studio interior"></div>
+      <div class="float"><img src="img/nails.png" alt="Blush almond nails"></div>
+    </div>
+  </div>
+</header>
+
+<!-- TRUST -->
+<section class="trust">
+  <div class="wrap trust-inner">
+    <div class="trust-item reveal"><span class="dot"></span>Clean tools, fresh files for every guest</div>
+    <div class="trust-item reveal"><span class="dot"></span>Skilled technicians who love the craft</div>
+    <div class="trust-item reveal"><span class="dot"></span>Relaxed boutique setting, no rush</div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="block" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">What we offer</span>
+      <h2>Services made for happy hands &amp; feet</h2>
+      <p>From a quick polish to a full custom set, choose the treatment that fits your mood and your moment.</p>
+    </div>
+    <div class="grid">
+      <div class="card reveal"><div class="ico">M</div><h3>Classic Manicure</h3><p>Shaping, cuticle care, a soothing hand massage, and a flawless coat of your favorite shade.</p><span class="price">from $28</span></div>
+      <div class="card reveal"><div class="ico">P</div><h3>Luxury Pedicure</h3><p>A warm soak, gentle exfoliation, and a calming massage that leaves your feet smooth and refreshed.</p><span class="price">from $45</span></div>
+      <div class="card reveal"><div class="ico">G</div><h3>Gel &amp; Dip Powder</h3><p>Long-lasting color with a glossy finish that stays chip-free through your busiest weeks.</p><span class="price">from $40</span></div>
+      <div class="card reveal"><div class="ico">A</div><h3>Custom Nail Art</h3><p>Hand-painted designs, delicate detail, and on-trend finishes created just for you.</p><span class="price">from $15</span></div>
+      <div class="card reveal"><div class="ico">F</div><h3>Acrylic Full Sets</h3><p>Sculpted length and strength in the shape you love, built to look natural and last.</p><span class="price">from $55</span></div>
+      <div class="card reveal"><div class="ico">W</div><h3>Waxing</h3><p>Smooth, gentle waxing services to round out your visit and keep you feeling polished.</p><span class="price">from $18</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="block about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-art reveal">
+      <img src="img/applying.png" alt="Manicure in progress">
+      <div class="badge"><b>10k+</b><span>happy hands</span></div>
+    </div>
+    <div class="about-text reveal">
+      <span class="eyebrow">Our story</span>
+      <h2>A boutique nail bar with a softer pace.</h2>
+      <p>Polished began with a simple idea — beauty appointments should feel like a treat, not a task. We built a warm, uncluttered space where you can slow down, exhale, and leave with nails you love.</p>
+      <p>Our technicians blend precision with genuine care, taking the time to understand the look you want and the comfort you deserve.</p>
+      <ul class="about-list">
+        <li>Personal attention from start to finish</li>
+        <li>Quality products that respect your nails</li>
+        <li>A calm atmosphere designed for self-care</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="block" id="gallery">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">A look inside</span>
+      <h2>Recent sets &amp; signature finishes</h2>
+      <p>A glimpse of the colors, shapes, and details our guests love most.</p>
+    </div>
+    <div class="collage">
+      <figure class="big reveal"><img src="img/nails.png" alt="Blush almond set"><figcaption>Soft Blush Almond</figcaption></figure>
+      <figure class="reveal"><img src="img/polish.png" alt="Polish flat lay"><figcaption>The Shade Bar</figcaption></figure>
+      <figure class="reveal"><img src="img/applying.png" alt="Gel application"><figcaption>Glossy Gel</figcaption></figure>
+      <figure class="reveal"><img src="img/hero.png" alt="Studio"><figcaption>The Studio</figcaption></figure>
+      <figure class="reveal"><img src="img/nails.png" alt="Chrome detail" style="object-position:center 60%"><figcaption>Chrome Accent</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="block contact" id="contact">
+  <div class="wrap">
+    <div class="contact-card reveal">
+      <span class="eyebrow">Visit us</span>
+      <h2>Ready to treat yourself?</h2>
+      <p class="lead">Call to book your appointment and let us take care of the rest. Walk-ins are welcome when chairs are open.</p>
+      <a class="btn btn-primary" href="tel:+15552043310">Call (555) 204-3310</a>
+      <div class="contact-meta">
+        <div><div class="lbl">Location</div><div class="val">Uptown, your city</div></div>
+        <div><div class="lbl">Hours</div><div class="val">Mon–Sat 9–7 · Sun 10–5</div></div>
+        <div><div class="lbl">Phone</div><div class="val"><a href="tel:+15552043310">(555) 204-3310</a></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="#top" class="brand">Polished <span>· Nail Studio</span></a>
+    <p class="credit"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · Website by <a href="../../index.html">Pergola Performance</a> · pergolaperformance@gmail.com</p>
+  </div>
+</footer>
+
+<div class="mcta">
+  <a class="c1" href="tel:+15552043310">Call</a>
+  <a class="c2" href="#contact">Book now</a>
+</div>
+
+<script>
+(function(){
+  var toggle=document.getElementById('navToggle'),links=document.getElementById('navLinks');
+  if(toggle){toggle.addEventListener('click',function(){links.classList.toggle('open');});
+    links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});}
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items=document.querySelectorAll('.reveal');
+  if(reduce||!('IntersectionObserver'in window)){items.forEach(function(el){el.classList.add('show')});return;}
+  var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');obs.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  items.forEach(function(el){obs.observe(el)});
+})();
+</script>
+</body>
+</html>

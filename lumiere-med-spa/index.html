@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumière Med Spa | Radiant Skin, Refined Care</title>
+<meta name="description" content="Lumière Med Spa offers medical grade aesthetics in a calm, premium setting. Facials, injectables, laser resurfacing, and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sage:#5f7a68; --sage-deep:#42584a; --sage-light:#88a08e;
+    --cream:#f6f2ec; --paper:#fdfbf7;
+    --ink:#2b2e2b; --muted:#6f746e; --gold:#b69566;
+    --line:rgba(66,88,74,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Jost',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;font-weight:300;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;line-height:1.06;letter-spacing:.3px}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{width:min(1180px,90%);margin:0 auto}
+  .label{font-family:'Jost';font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;font-weight:400;color:var(--gold)}
+  .btn{display:inline-block;font-family:'Jost';font-weight:400;font-size:.86rem;letter-spacing:.12em;text-transform:uppercase;padding:15px 30px;border-radius:999px;transition:.3s}
+  .btn-solid{background:var(--sage-deep);color:#fff}
+  .btn-solid:hover{background:var(--sage);transform:translateY(-2px)}
+  .btn-line{border:1px solid rgba(255,255,255,.6);color:#fff}
+  .btn-line:hover{background:#fff;color:var(--sage-deep)}
+  .btn-dark{border:1px solid var(--line);color:var(--ink)}
+  .btn-dark:hover{background:var(--sage-deep);color:#fff;border-color:var(--sage-deep)}
+
+  /* NAV */
+  header.nav{position:absolute;top:0;left:0;right:0;z-index:30}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:30px 0;color:#fff}
+  .brand{font-family:'Cormorant Garamond';font-size:1.85rem;font-weight:600;letter-spacing:1px;color:#fff}
+  .brand i{font-style:normal;color:#fff;opacity:.85}
+  .nav-links{display:flex;gap:38px;align-items:center}
+  .nav-links a{font-family:'Jost';font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.85);transition:.25s}
+  .nav-links a:hover{color:#fff}
+  .nav-cta{border:1px solid rgba(255,255,255,.5);padding:11px 22px;border-radius:999px;font-size:.74rem!important}
+  .nav-cta:hover{background:#fff;color:var(--sage-deep)}
+
+  /* HERO */
+  .hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;color:#fff;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  .hero-bg img{width:100%;height:100%;object-fit:cover}
+  .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,48,42,.45) 0%,rgba(40,48,42,.05) 38%,rgba(35,42,37,.72) 100%)}
+  .hero-inner{position:relative;z-index:2;padding-bottom:84px;max-width:760px}
+  .hero .label{color:#e7d9bf;margin-bottom:22px;display:block}
+  .hero h1{font-size:clamp(3rem,7vw,5.6rem);margin-bottom:20px;font-weight:500}
+  .hero h1 em{font-style:italic;color:#e9dcc4}
+  .hero p{font-size:1.18rem;font-weight:300;max-width:540px;margin-bottom:34px;color:rgba(255,255,255,.92)}
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap}
+
+  /* MARQUEE STRIP */
+  .strip{background:var(--sage-deep);color:#ede4d3}
+  .strip .wrap{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;padding:22px 0;text-align:center}
+  .strip .item{flex:1;min-width:200px}
+  .strip .item b{font-family:'Cormorant Garamond';font-size:1.5rem;font-weight:500;color:#fff;display:block}
+  .strip .item span{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+
+  section{padding:108px 0}
+  .eyebrow-c{text-align:center;display:block;margin-bottom:14px}
+
+  /* INTRO / FEATURE split */
+  .feature{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch}
+  .feature .ph{background:#e9e3d8}
+  .feature .ph img{width:100%;height:100%;object-fit:cover;min-height:460px}
+  .feature .txt{padding:0 0 0 70px;display:flex;flex-direction:column;justify-content:center}
+  .feature .txt h2{font-size:clamp(2.4rem,4.4vw,3.6rem);margin:16px 0 18px}
+  .feature .txt p{color:var(--muted);margin-bottom:16px}
+  .feature .txt .sig{font-family:'Cormorant Garamond';font-style:italic;font-size:1.4rem;color:var(--sage);margin-top:8px}
+
+  /* SERVICES — editorial list */
+  .svc-head{text-align:center;max-width:600px;margin:0 auto 64px}
+  .svc-head h2{font-size:clamp(2.4rem,5vw,3.6rem);margin:14px 0 12px}
+  .svc-head p{color:var(--muted)}
+  .svc-list{max-width:920px;margin:0 auto;border-top:1px solid var(--line)}
+  .svc-row{display:grid;grid-template-columns:48px 1fr auto;gap:28px;align-items:baseline;padding:30px 8px;border-bottom:1px solid var(--line);transition:.3s;cursor:default}
+  .svc-row:hover{padding-left:22px;background:linear-gradient(90deg,rgba(95,122,104,.05),transparent)}
+  .svc-row .n{font-family:'Cormorant Garamond';font-style:italic;font-size:1.5rem;color:var(--gold)}
+  .svc-row h3{font-size:1.7rem;margin-bottom:4px}
+  .svc-row p{color:var(--muted);font-size:.96rem;max-width:520px}
+  .svc-row .price{font-family:'Cormorant Garamond';font-size:1.25rem;color:var(--sage);white-space:nowrap}
+
+  /* GALLERY collage */
+  .gallery{background:var(--cream)}
+  .collage{display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-template-rows:200px 200px;gap:16px;margin-top:54px}
+  .collage figure{position:relative;overflow:hidden;border-radius:6px}
+  .collage img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .collage figure:hover img{transform:scale(1.05)}
+  .collage figure::after{content:attr(data-cap);position:absolute;left:18px;bottom:14px;color:#fff;font-family:'Cormorant Garamond';font-style:italic;font-size:1.2rem;text-shadow:0 2px 12px rgba(0,0,0,.4)}
+  .collage figure::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(35,42,37,.4));z-index:1}
+  .c-tall{grid-row:span 2}
+  .c-wide{grid-column:span 2}
+
+  /* CONTACT */
+  .contact{background:var(--sage-deep);color:#eef0ec}
+  .contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
+  .contact .label{color:#e7d9bf}
+  .contact h2{font-size:clamp(2.4rem,5vw,3.6rem);color:#fff;margin:14px 0 18px}
+  .contact p.lead{color:rgba(255,255,255,.8);margin-bottom:30px;max-width:430px}
+  .info{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:14px 32px}
+  .irow{display:flex;justify-content:space-between;gap:18px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+  .irow:last-child{border-bottom:none}
+  .irow .k{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#d6c8ab}
+  .irow .v{text-align:right;color:#fff}
+  .irow a.v:hover{color:#e7d9bf}
+
+  footer{background:#23261f;color:#9aa39a;padding:46px 0;text-align:center}
+  footer .fb{font-family:'Cormorant Garamond';font-size:1.6rem;color:#ece6da;margin-bottom:6px}
+  footer p{font-size:.86rem;margin:4px 0}
+  footer a{color:var(--sage-light)}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  .mcta{display:none}
+  @media(max-width:900px){
+    .nav-links{display:none}
+    .feature{grid-template-columns:1fr}
+    .feature .txt{padding:46px 0 0}
+    .contact-grid{grid-template-columns:1fr;gap:34px}
+    .collage{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,180px)}
+    .c-wide{grid-column:span 2}
+  }
+  @media(max-width:560px){
+    section{padding:64px 0}
+    .hero{min-height:88vh}
+    .svc-row{grid-template-columns:1fr;gap:6px}
+    .svc-row .n,.svc-row .price{display:none}
+    .collage{grid-template-columns:1fr;grid-template-rows:repeat(5,180px)}
+    .c-wide,.c-tall{grid-column:auto;grid-row:auto}
+    body{padding-bottom:74px}
+    .mcta{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:200;padding:10px 14px;background:rgba(253,251,247,.95);backdrop-filter:blur(8px);border-top:1px solid var(--line)}
+    .mcta a{flex:1;text-align:center;padding:13px;border-radius:999px;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase}
+    .mcta .c1{background:var(--sage-deep);color:#fff}
+    .mcta .c2{border:1px solid var(--line);color:var(--ink)}
+  }
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body id="top">
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">Lumi<i>è</i>re</a>
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#gallery">Gallery</a>
+      <a href="tel:+15551207788" class="nav-cta">(555) 120-7788</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"><img src="img/hero.png" alt="Lumière Med Spa treatment suite"></div>
+  <div class="wrap hero-inner">
+    <span class="label">Medical Aesthetics · Reimagined</span>
+    <h1>Radiant skin,<br><em>refined</em> care.</h1>
+    <p>A calm, modern med spa where advanced treatments meet a gentle, personal touch — every visit shaped around your skin and your goals.</p>
+    <div class="hero-ctas">
+      <a href="tel:+15551207788" class="btn btn-solid">Book a consultation</a>
+      <a href="#services" class="btn btn-line">View services</a>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="wrap">
+    <div class="item"><b>Medical grade</b><span>Clinically backed care</span></div>
+    <div class="item"><b>Tailored plans</b><span>Built around your skin</span></div>
+    <div class="item"><b>Serene by design</b><span>Calm, private suites</span></div>
+  </div>
+</div>
+
+<!-- FEATURE / ABOUT -->
+<section id="about">
+  <div class="wrap feature">
+    <div class="ph reveal"><img src="img/products.png" alt="Premium skincare products at Lumière"></div>
+    <div class="txt reveal">
+      <span class="label">About Lumière</span>
+      <h2>Thoughtful care in a serene space.</h2>
+      <p>We built Lumière to feel like a breath of calm — soft light, quiet rooms, and a team that genuinely listens before recommending anything.</p>
+      <p>Our practitioners blend clinical expertise with an artist's eye, so your results always look like the best version of you, never overdone.</p>
+      <div class="sig">Calm by design.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" style="background:var(--paper)">
+  <div class="wrap">
+    <div class="svc-head reveal">
+      <span class="label">Our Services</span>
+      <h2>Treatments crafted for you</h2>
+      <p>From everyday glow to advanced rejuvenation, designed to help you look refreshed and feel confident.</p>
+    </div>
+    <div class="svc-list">
+      <div class="svc-row reveal"><span class="n">01</span><div><h3>Signature Facials</h3><p>Deeply restorative facials customized to your skin type — smooth, hydrated, luminous.</p></div><span class="price">from $120</span></div>
+      <div class="svc-row reveal"><span class="n">02</span><div><h3>Injectables</h3><p>Subtle, expert refinement with neuromodulators and dermal fillers for a naturally rested look.</p></div><span class="price">from $250</span></div>
+      <div class="svc-row reveal"><span class="n">03</span><div><h3>Laser Skin Resurfacing</h3><p>Advanced laser therapy that smooths texture, softens fine lines, and brightens uneven tone.</p></div><span class="price">from $300</span></div>
+      <div class="svc-row reveal"><span class="n">04</span><div><h3>Body Contouring</h3><p>Non-invasive contouring that helps define and refine the areas you want to sculpt.</p></div><span class="price">from $350</span></div>
+      <div class="svc-row reveal"><span class="n">05</span><div><h3>Medical Grade Peels</h3><p>Professional peels that renew the surface of your skin for a fresh, even, radiant finish.</p></div><span class="price">from $95</span></div>
+      <div class="svc-row reveal"><span class="n">06</span><div><h3>Membership Plans</h3><p>Ongoing care made simple — member pricing and priority booking for your favorite treatments.</p></div><span class="price">$79 / mo</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="gallery">
+  <div class="wrap">
+    <div class="svc-head reveal">
+      <span class="label">The Experience</span>
+      <h2>A glimpse of Lumière</h2>
+      <p>A calm, considered environment designed around your comfort and your results.</p>
+    </div>
+    <div class="collage">
+      <figure class="c-tall reveal" data-cap="The Suite"><img src="img/hero.png" alt="Treatment suite"></figure>
+      <figure class="reveal" data-cap="The Glow"><img src="img/treatment.png" alt="Facial treatment"></figure>
+      <figure class="reveal" data-cap="The Ritual"><img src="img/products.png" alt="Skincare products"></figure>
+      <figure class="c-wide reveal" data-cap="The Lounge"><img src="img/lounge.png" alt="Med spa relaxation lounge"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <span class="label">Get in Touch</span>
+      <h2>Ready to glow?</h2>
+      <p class="lead">Book your complimentary consultation and let us design a plan around your skin. We would love to welcome you.</p>
+      <a href="tel:+15551207788" class="btn btn-line" style="border-color:rgba(255,255,255,.6)">Call (555) 120-7788</a>
+    </div>
+    <div class="info reveal">
+      <div class="irow"><span class="k">Phone</span><a href="tel:+15551207788" class="v">(555) 120-7788</a></div>
+      <div class="irow"><span class="k">Hours</span><span class="v">Mon – Sat · 9 to 6<br>Sunday closed</span></div>
+      <div class="irow"><span class="k">Location</span><span class="v">Downtown, your city</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fb">Lumière Med Spa</div>
+    <p>Radiant skin, refined care.</p>
+    <p><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · Website by <a href="../../index.html">Pergola Performance</a> · pergolaperformance@gmail.com</p>
+  </div>
+</footer>
+
+<div class="mcta">
+  <a class="c1" href="tel:+15551207788">Call</a>
+  <a class="c2" href="#contact">Book a consult</a>
+</div>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items=document.querySelectorAll('.reveal');
+  if(reduce||!('IntersectionObserver'in window)){items.forEach(function(el){el.classList.add('in')});return;}
+  var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  items.forEach(function(el){obs.observe(el)});
+})();
+</script>
+</body>
+</html>

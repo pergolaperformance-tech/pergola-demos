@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greythorn Funeral Home | Caring guidance, with dignity</title>
+<meta name="description" content="Greythorn Funeral Home is a family-owned funeral home offering funerals, cremation, memorial and celebration-of-life services, pre-planning, and grief support — arranged gently around your family, with transparent guidance and no pressure.">
+<meta name="theme-color" content="#3a434c">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Greythorn Funeral Home | Caring guidance, with dignity">
+<meta property="og:description" content="Family-owned funeral home. Funerals, cremation, memorials, pre-planning, and grief support — arranged gently around your family, available 24 hours.">
+<meta property="og:image" content="img/hero.webp">
+<meta property="og:site_name" content="Greythorn Funeral Home">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Inline SVG favicon -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='6'%20fill='%233a434c'/%3E%3Cpath%20d='M16%206l5%204v9a5%205%200%2001-10%200v-9z'%20fill='none'%20stroke='%23b89a5e'%20stroke-width='1.6'/%3E%3Cpath%20d='M16%2010v11'%20stroke='%23b89a5e'%20stroke-width='1.4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ---- locked palette: ivory + slate, ONE accent (antique gold) ---- */
+    --paper:#f5f2ea;        /* ivory page */
+    --paper-warm:#efe9dc;   /* warm ivory bands */
+    --slate:#3a434c;        /* deep slate */
+    --slate-deep:#2c333a;   /* darker slate (footer/contact) */
+    --slate-soft:#5a6570;   /* soft slate text on light */
+    --ink:#2a2e33;          /* near-black body ink */
+    --muted:#5e646b;        /* muted body text */
+    --gold:#a98a4e;         /* muted antique gold — the ONLY accent */
+    --gold-soft:#c4ad7e;    /* lighter gold for dark backgrounds */
+    --line:rgba(58,67,76,.16);
+    --line-soft:rgba(58,67,76,.10);
+    /* ---- 8px spacing scale ---- */
+    --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+    /* ---- radii ---- */
+    --r-sm:6px; --r-md:12px; --r-lg:18px; --r-pill:999px;
+    --shadow:0 18px 48px rgba(44,51,58,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Spectral',Georgia,serif;background:var(--paper);color:var(--ink);line-height:1.65;font-weight:400;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .lead-p{font-size:1.3rem;line-height:1.55;color:var(--ink)}
+  h1,h2,h3,.brand,.fr{font-family:'Fraunces','Spectral',Georgia,serif;font-weight:500;line-height:1.1;letter-spacing:.1px}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{width:min(1160px,90%);margin:0 auto}
+  section{padding:var(--s7) 0}
+  .label{font-family:'Spectral';font-size:.74rem;letter-spacing:.32em;text-transform:uppercase;font-weight:500;color:var(--gold)}
+  .eyebrow-c{display:block;text-align:center;margin-bottom:var(--s2)}
+
+  /* ---- buttons ---- */
+  .btn{display:inline-block;font-family:'Spectral';font-weight:500;font-size:.88rem;letter-spacing:.1em;text-transform:uppercase;padding:14px 28px;border-radius:var(--r-pill);transition:background .3s,color .3s,border-color .3s,transform .3s}
+  .btn-solid{background:var(--slate);color:#fff}
+  .btn-solid:hover{background:var(--slate-deep);transform:translateY(-2px)}
+  .btn-line{border:1px solid rgba(255,255,255,.6);color:#fff}
+  .btn-line:hover{background:#fff;color:var(--slate-deep)}
+  .btn-dark{border:1px solid var(--line);color:var(--ink);background:transparent}
+  .btn-dark:hover{background:var(--slate);color:#fff;border-color:var(--slate);transform:translateY(-2px)}
+  .btn-gold{background:var(--gold);color:#fff}
+  .btn-gold:hover{background:#977942;transform:translateY(-2px)}
+
+  /* ---- concept badge ---- */
+  .concept-bar{background:var(--slate-deep);color:#e9e1cf;text-align:center;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px}
+  .concept-bar b{color:var(--gold-soft);font-weight:500}
+  .concept-bar .cb-short{display:none}
+
+  /* ---- NAV ---- */
+  header.nav{position:absolute;top:33px;left:0;right:0;z-index:30}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:var(--s3) 0;color:#fff}
+  .brand{font-size:1.7rem;font-weight:600;letter-spacing:.4px;color:#fff;display:flex;align-items:center;gap:10px}
+  .brand svg{width:26px;height:26px;flex:none}
+  .nav-links{display:flex;gap:34px;align-items:center}
+  .nav-links a{font-family:'Spectral';font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.86);transition:color .25s}
+  .nav-links a:hover{color:#fff}
+  .nav-cta{border:1px solid rgba(255,255,255,.5);padding:10px 20px;border-radius:var(--r-pill);font-size:.78rem!important;letter-spacing:.1em!important}
+  .nav-cta:hover{background:#fff;color:var(--slate-deep)}
+
+  /* ---- HERO ---- */
+  .hero{position:relative;min-height:80vh;display:flex;align-items:flex-end;color:#fff;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:30% 40%}
+  .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,33,38,.50) 0%,rgba(28,33,38,.40) 42%,rgba(24,28,32,.78) 100%)}
+  .hero-inner{position:relative;z-index:2;padding:48px 40px 56px;max-width:760px;background:linear-gradient(105deg,rgba(20,24,28,.74) 0%,rgba(20,24,28,.58) 52%,transparent 88%);border-radius:var(--r-md)}
+  .hero-mark{position:absolute;top:46%;right:6%;z-index:1;display:flex;flex-direction:column;align-items:flex-end;gap:14px;text-align:right;pointer-events:none}
+  .hero-mark .hr{width:1px;height:120px;background:linear-gradient(180deg,transparent,var(--gold-soft),transparent);opacity:.7}
+  .hero-mark .wm{writing-mode:vertical-rl;font-family:'Fraunces';font-style:italic;font-size:1.05rem;letter-spacing:.5px;color:rgba(231,217,187,.66);text-shadow:0 1px 14px rgba(0,0,0,.5)}
+  @media(max-width:900px){.hero-mark{display:none}}
+  .hero .label{color:#e3d4ad;margin-bottom:var(--s3);display:block;text-shadow:0 1px 14px rgba(0,0,0,.55)}
+  .hero .label .lbl-short{display:none}
+  .hero h1{font-size:clamp(2.7rem,6.4vw,5rem);margin-bottom:var(--s3);font-weight:500;letter-spacing:-.5px;text-shadow:0 1px 18px rgba(0,0,0,.5)}
+  .hero h1 em{font-style:italic;color:#e7d9bb;font-weight:400}
+  .hero p{font-size:1.15rem;font-weight:400;max-width:540px;margin-bottom:var(--s4);color:rgba(255,255,255,.96);text-shadow:0 1px 18px rgba(0,0,0,.5)}
+  .hero-ctas{display:flex;gap:var(--s2);flex-wrap:wrap}
+
+  /* ---- REASSURANCE STRIP — light ivory breather between two dark anchors ---- */
+  .strip{background:var(--paper-warm);color:var(--slate);border-top:1px solid var(--gold);border-bottom:1px solid var(--line-soft)}
+  .strip .wrap{display:flex;gap:0;flex-wrap:wrap;padding:var(--s5) 0}
+  .strip .item{flex:1;min-width:220px;display:flex;align-items:center;gap:18px;padding:8px var(--s4)}
+  .strip .item+.item{border-left:1px solid var(--line)}
+  .strip .ico{flex:none;width:42px;height:42px;color:var(--gold)}
+  .strip .ico svg{width:100%;height:100%;display:block}
+  .strip .item .txt2{display:flex;flex-direction:column;gap:3px}
+  .strip .item b{font-family:'Fraunces';font-size:1.3rem;font-weight:500;color:var(--slate-deep);display:block;line-height:1.15}
+  .strip .item span{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--slate-soft)}
+  @media(max-width:760px){
+    .strip .wrap{flex-direction:column;padding:var(--s4) 0}
+    .strip .item{padding:18px var(--s4);gap:18px}
+    .strip .item+.item{border-left:none;border-top:1px solid var(--line)}
+  }
+
+  /* ---- ABOUT / OUR PROMISE split ---- */
+  .promise{background:var(--paper)}
+  .feature{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch}
+  .feature .ph{background:var(--paper-warm);overflow:hidden;border-radius:var(--r-md)}
+  .feature .ph img{width:100%;height:100%;object-fit:cover;min-height:480px}
+  .feature .txt{padding:0 0 0 70px;display:flex;flex-direction:column;justify-content:center}
+  .feature .txt h2{font-size:clamp(2.1rem,3.8vw,2.8rem);margin:var(--s2) 0 var(--s3);letter-spacing:-.3px}
+  .feature .txt p{color:var(--muted);margin-bottom:var(--s2)}
+  .feature .txt .sig{font-family:'Fraunces';font-style:italic;font-size:1.4rem;color:var(--slate);margin-top:var(--s1)}
+  .promise-points{list-style:none;margin:var(--s2) 0 0;padding:0}
+  .promise-points li{position:relative;padding-left:26px;margin-bottom:10px;color:var(--slate-soft)}
+  .promise-points li::before{content:"";position:absolute;left:0;top:11px;width:9px;height:9px;border:1.5px solid var(--gold);border-radius:50%}
+
+  /* ---- SERVICES editorial list ---- */
+  .svc-head{text-align:center;max-width:620px;margin:0 auto var(--s6)}
+  .svc-head h2{font-size:clamp(2.1rem,3.8vw,2.8rem);margin:14px 0 14px;letter-spacing:-.3px}
+  .svc-head p{color:var(--muted)}
+  .svc-head p.lead-p{color:var(--slate-soft);font-size:1.3rem;line-height:1.55}
+  .svc-head.left{text-align:left;max-width:620px;margin:0 0 var(--s6)}
+  #services .svc-head.left h2{max-width:14ch}
+  .svc-list{max-width:940px;margin:0 auto;border-top:1px solid var(--line)}
+  .svc-row{display:grid;grid-template-columns:52px 1fr 250px;gap:var(--s4);align-items:start;padding:var(--s4) var(--s1);border-bottom:1px solid var(--line);transition:padding .3s,background .3s}
+  .svc-row:hover{padding-left:22px;background:linear-gradient(90deg,rgba(169,138,78,.07),transparent)}
+  .svc-row .n{font-family:'Fraunces';font-style:italic;font-size:1.5rem;color:var(--gold);line-height:1.4}
+  .svc-row h3{font-size:1.55rem;margin-bottom:6px;color:var(--ink)}
+  .svc-row p{color:var(--muted);font-size:1rem;max-width:none}
+  .svc-aside{display:flex;flex-direction:column;align-items:flex-end;text-align:right;gap:10px;padding-top:8px}
+  .svc-aside .ask{font-family:'Fraunces';font-style:italic;font-size:1.06rem;color:var(--slate);line-height:1.3}
+  .svc-more{font-family:'Spectral';font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);display:inline-flex;align-items:center;gap:7px;transition:gap .25s,color .25s}
+  .svc-more::after{content:"→";font-size:.95rem;transition:transform .25s}
+  .svc-row:hover .svc-more{color:var(--gold)}
+  .svc-row:hover .svc-more::after{transform:translateX(3px)}
+  @media(max-width:760px){
+    .svc-row{grid-template-columns:52px 1fr}
+    .svc-aside{grid-column:1/-1;align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap;gap:8px 20px;padding-top:0}
+  }
+
+  /* ---- QUIET REFLECTIVE QUOTE ---- */
+  .quote{background:var(--paper-warm)}
+  .quote .wrap{max-width:840px;text-align:center}
+  .quote blockquote{font-family:'Fraunces';font-style:italic;font-weight:400;font-size:clamp(1.7rem,3.6vw,2.5rem);line-height:1.34;color:var(--slate);letter-spacing:.1px}
+  .quote .mark{color:var(--gold);font-size:3.2rem;line-height:1;display:block;margin-bottom:var(--s2)}
+  .quote cite{display:block;margin-top:var(--s3);font-style:normal;font-family:'Spectral';font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+  /* ---- GALLERY ---- */
+  .gallery{background:var(--paper)}
+  .collage{display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-template-rows:230px 230px;gap:var(--s2);margin-top:var(--s6)}
+  .collage figure{position:relative;overflow:hidden;border-radius:var(--r-md);background:var(--paper-warm)}
+  .collage img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+  .collage figure:hover img{transform:scale(1.05)}
+  .collage figcaption{position:absolute;left:18px;bottom:14px;color:#fff;font-family:'Fraunces';font-style:italic;font-size:1.2rem;text-shadow:0 2px 18px rgba(0,0,0,.7);z-index:2}
+  .collage figure::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(24,28,32,.6));z-index:1}
+  .c-tall{grid-row:span 2}
+  .c-wide{grid-column:span 2}
+
+  /* ---- CONTACT ---- */
+  .contact{background:var(--slate-deep);color:#eef0ec}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s7);align-items:start}
+  .contact .label{color:#dccda7}
+  .contact h2{font-size:clamp(2.1rem,3.8vw,2.8rem);color:#fff;margin:14px 0 var(--s3);letter-spacing:-.3px}
+  .contact p.lead{color:rgba(255,255,255,.82);margin-bottom:var(--s4);max-width:440px}
+  .phone-block{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-md);padding:var(--s3) var(--s4);margin-bottom:var(--s4)}
+  .phone-block .k{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#d6c8ab;display:block;margin-bottom:6px}
+  .phone-block a{font-family:'Fraunces';font-size:2rem;color:#fff;letter-spacing:.5px}
+  .phone-block a:hover{color:var(--gold-soft)}
+  .phone-block small{display:block;margin-top:6px;color:rgba(255,255,255,.6);font-size:.85rem;letter-spacing:.04em}
+  .info{display:grid;gap:0}
+  .irow{display:flex;justify-content:space-between;gap:18px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+  .irow:last-child{border-bottom:none}
+  .irow .k{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#c9bb9d}
+  .irow .v{text-align:right;color:#fff}
+  .irow a.v:hover{color:var(--gold-soft)}
+
+  /* ---- FORM ---- */
+  .lead-form{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-lg);padding:var(--s5)}
+  .lead-form h3{font-size:1.6rem;color:#fff;margin-bottom:6px}
+  .lead-form .sub{color:rgba(255,255,255,.72);font-size:.95rem;margin-bottom:var(--s3)}
+  .field{margin-bottom:var(--s2)}
+  .field label{display:block;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#c9bb9d;margin-bottom:7px}
+  .field input,.field textarea{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:var(--r-sm);padding:13px 15px;color:#fff;font-family:'Spectral';font-size:1rem;transition:border-color .25s,background .25s}
+  .field input::placeholder,.field textarea::placeholder{color:rgba(255,255,255,.4)}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--gold-soft);background:rgba(255,255,255,.09)}
+  .field textarea{resize:vertical;min-height:104px}
+  .form-note{font-size:.78rem;color:rgba(255,255,255,.55);margin-top:6px}
+  .form-msg{display:none;margin-top:var(--s2);padding:14px 16px;border-radius:var(--r-sm);font-size:.95rem}
+  .form-msg.err{display:block;background:rgba(190,120,90,.16);border:1px solid rgba(214,150,120,.5);color:#f1d8cb}
+  .form-msg.ok{display:block;background:rgba(169,138,78,.18);border:1px solid rgba(196,173,126,.5);color:#efe2c5}
+  .lead-form button{width:100%;margin-top:var(--s1);cursor:pointer;border:none}
+
+  /* ---- FOOTER ---- */
+  footer{background:#23282d;color:#9aa1a8;padding:var(--s6) 0 var(--s5);text-align:center}
+  footer .fb{font-family:'Fraunces';font-size:1.5rem;color:#ece6da;margin-bottom:8px}
+  footer .ftag{font-size:.92rem;margin-bottom:var(--s3);color:#b7bcc1}
+  footer .links{font-size:.86rem;margin-bottom:var(--s3)}
+  footer .links a{color:var(--gold-soft)}
+  footer .links a:hover{text-decoration:underline}
+  footer .disclaimer{max-width:780px;margin:0 auto;font-size:.78rem;line-height:1.7;color:#7f868d;border-top:1px solid rgba(255,255,255,.08);padding-top:var(--s3)}
+
+  /* ---- reveals ---- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---- focus-visible ---- */
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+  .hero :focus-visible,.contact :focus-visible,header :focus-visible{outline-color:var(--gold-soft)}
+
+  /* scroll-margin so anchors clear nothing-special but stay comfortable */
+  section[id]{scroll-margin-top:24px}
+
+  .mcta{display:none}
+  @media(max-width:900px){
+    .nav-links{display:none}
+    .feature{grid-template-columns:1fr}
+    .feature .ph img{min-height:340px}
+    .feature .txt{padding:var(--s5) 0 0}
+    .contact-grid{grid-template-columns:1fr;gap:var(--s5)}
+    .collage{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,200px)}
+    .c-wide{grid-column:span 2}
+    .c-tall{grid-row:auto}
+  }
+  @media(max-width:560px){
+    section{padding:var(--s6) 0}
+    .concept-bar{font-size:.64rem;letter-spacing:.1em;padding:6px 12px}
+    .concept-bar .cb-full{display:none}
+    .concept-bar .cb-short{display:inline}
+    .hero{min-height:76vh}
+    .hero-inner{padding:28px 22px 44px}
+    .hero .label .lbl-full{display:none}
+    .hero .label .lbl-short{display:inline}
+    .hero-ctas .btn-line{display:none}
+    .hero-ctas{flex-direction:column;align-items:stretch}
+    .hero-ctas .btn{width:100%;text-align:center}
+    .svc-row{grid-template-columns:1fr;gap:6px}
+    .svc-row .n{display:none}
+    .collage{grid-template-columns:1fr;grid-template-rows:repeat(4,210px)}
+    .c-wide,.c-tall{grid-column:auto;grid-row:auto}
+    .lead-form{padding:var(--s4)}
+    body{padding-bottom:88px}
+    .mcta{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:200;padding:10px 14px;background:rgba(245,242,234,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(44,51,58,.16)}
+    .mcta a{flex:1;text-align:center;padding:13px;border-radius:var(--r-pill);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;font-family:'Spectral';font-weight:500}
+    .mcta .c1{background:var(--slate);color:#fff}
+    .mcta .c2{border:1px solid var(--line);color:var(--ink)}
+  }
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .collage img,.btn{transition:none}
+  }
+</style>
+</head>
+<body id="top">
+
+<!-- CONCEPT BADGE -->
+<div class="concept-bar"><span class="cb-full"><b>Concept demo</b> — Greythorn Funeral Home is a fictional sample business, not a real company. Demo by Pergola Performance.</span><span class="cb-short"><b>Concept demo</b> — fictional sample by Pergola Performance</span></div>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand" aria-label="Greythorn Funeral Home — home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M16 5l6 4.5V20a6 6 0 01-12 0V9.5z" fill="none" stroke="#c4ad7e" stroke-width="1.5"/><path d="M16 9.5V22" stroke="#c4ad7e" stroke-width="1.3"/></svg>
+      Greythorn
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#preplanning">Pre-Planning</a>
+      <a href="tel:+15550199074" class="nav-cta">24/7 · (555) 019-9074</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" aria-label="Introduction">
+  <div class="hero-bg"><picture><source srcset="img/hero.webp" type="image/webp"><img src="img/hero.png" alt="A quiet, softly lit chapel interior with rows of wooden pews and gentle daylight" fetchpriority="high"></picture></div>
+  <div class="hero-mark" aria-hidden="true"><span class="wm">Est. in service to families</span><span class="hr"></span></div>
+  <div class="wrap hero-inner">
+    <span class="label"><span class="lbl-full">Family-owned · Available 24 hours</span><span class="lbl-short">Family-owned · Open 24h</span></span>
+    <h1>Caring guidance,<br>with <em>dignity</em>.</h1>
+    <p>When the time comes, you do not have to face it alone. Greythorn is a family-owned funeral home, here to walk beside you with patience, warmth, and quiet attention to every detail.</p>
+    <div class="hero-ctas">
+      <a href="tel:+15550199074" class="btn btn-solid">Call us, any hour</a>
+      <a href="#services" class="btn btn-line">How we can help</a>
+    </div>
+  </div>
+</section>
+
+<!-- REASSURANCE STRIP -->
+<div class="strip" aria-label="What you can count on">
+  <div class="wrap">
+    <div class="item">
+      <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg></span>
+      <span class="txt2"><b>Available 24 hours</b><span>Someone always answers</span></span>
+    </div>
+    <div class="item">
+      <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 5l8 6.5"/><path d="M6 10.5V19h12v-8.5"/><path d="M10 19v-4.5h4V19"/></svg></span>
+      <span class="txt2"><b>Family owned</b><span>Cared for like our own</span></span>
+    </div>
+    <div class="item">
+      <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M9.5 11.5 7.5 21l4.5-2.6L16.5 21l-2-9.5"/></svg></span>
+      <span class="txt2"><b>Every tradition honored</b><span>Faith, culture &amp; custom</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT / OUR PROMISE -->
+<section id="about" class="promise">
+  <div class="wrap feature">
+    <div class="ph reveal"><picture><source srcset="img/candle-quiet-room.webp" type="image/webp"><img src="img/candle-quiet-room.png" alt="A single lit candle resting on a wooden table in a calm, quiet room"></picture></div>
+    <div class="txt reveal">
+      <span class="label">Our Promise</span>
+      <h2>A steady hand in a tender time.</h2>
+      <p class="lead-p">Greythorn began as a family business, and it remains one. We treat every family who comes to us the way we would want our own to be treated — with honesty, gentleness, and unhurried care.</p>
+      <p>There is no single right way to say goodbye. Our role is to listen first, explain things plainly, and then arrange everything thoughtfully around what matters to you.</p>
+      <ul class="promise-points">
+        <li>We explain every option clearly, and never pressure you.</li>
+        <li>We honor every faith, culture, and family tradition.</li>
+        <li>We handle the details so you can be present with the people you love.</li>
+      </ul>
+      <div class="sig">Here for your family, at any hour.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" style="background:var(--paper-warm)">
+  <div class="wrap">
+    <div class="svc-head left reveal">
+      <span class="label">How We Can Help</span>
+      <h2>Services, arranged around your family.</h2>
+      <p class="lead-p">Every family is different, and so is every farewell. These are the ways we can help — guided gently, explained transparently, and shaped entirely by your wishes.</p>
+    </div>
+    <div class="svc-list">
+      <div class="svc-row reveal"><span class="n" aria-hidden="true">01</span><div>
+        <h3>Funeral Services</h3>
+        <p>A traditional service held with care — from the visitation and ceremony to transport and final arrangements. We coordinate quietly in the background so your family can simply be together.</p>
+      </div><div class="svc-aside">
+        <span class="ask">Ask us about visitation &amp; ceremony</span>
+        <a class="svc-more" href="#contact" aria-label="Ask us about funeral services">Talk to us</a>
+      </div></div>
+      <div class="svc-row reveal"><span class="n" aria-hidden="true">02</span><div>
+        <h3>Cremation</h3>
+        <p>A dignified cremation option, with the same attentiveness and respect at every step. Whether you wish to hold a gathering or keep things simple, we'll walk you through each choice.</p>
+      </div><div class="svc-aside">
+        <span class="ask">Ask about gathering or simple options</span>
+        <a class="svc-more" href="#contact" aria-label="Ask us about cremation">Ask about cremation</a>
+      </div></div>
+      <div class="svc-row reveal"><span class="n" aria-hidden="true">03</span><div>
+        <h3>Memorial &amp; Celebration of Life</h3>
+        <p>A gathering shaped by a life well lived — personal, reflective, and as unique as the person being remembered. Held in our chapel, at a place of meaning, or wherever feels right.</p>
+      </div><div class="svc-aside">
+        <span class="ask">Ask about a service shaped to a life</span>
+        <a class="svc-more" href="#contact" aria-label="Ask us about memorial and celebration of life services">Plan a tribute</a>
+      </div></div>
+      <div class="svc-row reveal"><span class="n" aria-hidden="true">04</span><div>
+        <h3>Pre-Planning</h3>
+        <p>Making your wishes known in advance is a quiet gift to those you love. We'll sit with you, answer every question, and record your preferences — calmly, and with no obligation.</p>
+      </div><div class="svc-aside">
+        <span class="ask">Ask about recording your wishes</span>
+        <a class="svc-more" href="#contact" aria-label="Ask us about pre-planning">Start pre-planning</a>
+      </div></div>
+      <div class="svc-row reveal"><span class="n" aria-hidden="true">05</span><div>
+        <h3>Grief Support</h3>
+        <p>Our care does not end after the service. We can point you toward grief resources and community support, and our door stays open whenever you need to talk.</p>
+      </div><div class="svc-aside">
+        <span class="ask">Ask about resources for after</span>
+        <a class="svc-more" href="#contact" aria-label="Ask us about grief support">Reach out anytime</a>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRE-PLANNING anchor target / quiet quote -->
+<section id="preplanning" class="quote">
+  <div class="wrap">
+    <blockquote class="reveal">
+      <span class="mark" aria-hidden="true">&ldquo;</span>
+      To live in hearts we leave behind is not to die. A life remembered with love is never truly gone.
+    </blockquote>
+    <cite class="reveal">A reflection we hold close at Greythorn</cite>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="gallery">
+  <div class="wrap">
+    <div class="svc-head left reveal">
+      <span class="label">A Calm Place</span>
+      <h2>Quiet spaces to gather and reflect</h2>
+      <p>Soft light, gentle surroundings, and room to breathe — a setting made for remembrance, not haste.</p>
+    </div>
+    <div class="collage">
+      <figure class="c-tall reveal"><picture><source srcset="img/garden-path.webp" type="image/webp"><img src="img/garden-path.png" alt="A peaceful garden path lined with greenery, leading toward soft light"></picture><figcaption>Memorial garden</figcaption></figure>
+      <figure class="reveal"><picture><source srcset="img/candle-quiet-room.webp" type="image/webp"><img src="img/candle-quiet-room.png" alt="A single lit candle glowing in a softly lit, quiet room"></picture><figcaption>A moment of stillness</figcaption></figure>
+      <figure class="reveal"><picture><source srcset="img/floral-arrangement.webp" type="image/webp"><img src="img/floral-arrangement.png" alt="A gentle white and ivory floral arrangement in soft daylight"></picture><figcaption>Floral tributes</figcaption></figure>
+      <figure class="c-wide reveal"><picture><source srcset="img/hero.webp" type="image/webp"><img src="img/hero.png" alt="The chapel interior with wooden pews bathed in calm, natural light"></picture><figcaption>Our chapel</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <span class="label">Reach Us, Any Hour</span>
+      <h2>We're here whenever you need us.</h2>
+      <p class="lead">There is no wrong time to call. Whether you need immediate help or simply want to ask a question, a member of our family is ready to listen.</p>
+      <div class="phone-block">
+        <span class="k">Available 24 hours a day</span>
+        <a href="tel:+15550199074">(555) 019-9074</a>
+        <small>Call or visit — we'll take it from here, at your pace.</small>
+      </div>
+      <div class="info">
+        <div class="irow"><span class="k">In person</span><span class="v">114 Elm Court<br>Greythorn, your city</span></div>
+        <div class="irow"><span class="k">Email</span><a class="v" href="mailto:care@greythorn-demo.example">care@greythorn-demo.example</a></div>
+        <div class="irow"><span class="k">Arrangements</span><span class="v">By appointment, any day</span></div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <form class="lead-form" id="leadForm" novalidate>
+        <h3>Send us a message</h3>
+        <p class="sub">Tell us a little about what you need, and we'll reach back gently. There is no obligation, and no rush.</p>
+        <div class="field">
+          <label for="lf-name">Your name</label>
+          <input id="lf-name" name="name" type="text" placeholder="First and last name" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="lf-phone">Phone</label>
+          <input id="lf-phone" name="phone" type="tel" placeholder="Best number to reach you" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="lf-email">Email</label>
+          <input id="lf-email" name="email" type="email" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="lf-message">How can we help?</label>
+          <textarea id="lf-message" name="message" placeholder="A few words are enough — we'll take it from there."></textarea>
+        </div>
+        <div class="form-msg" id="formMsg" role="status" aria-live="polite"></div>
+        <button type="submit" class="btn btn-gold">Send message</button>
+        <p class="form-note">This is a concept demo form — messages are not sent or stored.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fb">Greythorn Funeral Home</div>
+    <p class="ftag">Caring guidance, with dignity — available 24 hours.</p>
+    <p class="links">
+      <a href="tel:+15550199074">(555) 019-9074</a> ·
+      <a href="privacy.html">Privacy</a> ·
+      <a href="terms.html">Terms</a> ·
+      <a href="terms.html#refunds">Refunds</a> ·
+      Demo by <a href="../../index.html">Pergola Performance</a>
+    </p>
+    <p class="disclaimer">Concept demo — Greythorn Funeral Home is a fictional sample business, not a real company, and is not affiliated with any real business; any resemblance is coincidental. Demo by Pergola Performance. No reviews, ratings, certifications, or pricing shown here represent a real business.</p>
+  </div>
+</footer>
+
+<div class="mcta">
+  <a class="c1" href="tel:+15550199074">Call 24/7</a>
+  <a class="c2" href="#contact">Message us</a>
+</div>
+
+<script>
+(function(){
+  /* ---- reduced-motion-safe scroll reveals ---- */
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items=document.querySelectorAll('.reveal');
+  if(reduce||!('IntersectionObserver' in window)){
+    items.forEach(function(el){el.classList.add('in');});
+  } else {
+    var obs=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
+    },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+    items.forEach(function(el){obs.observe(el);});
+  }
+
+  /* ---- demo lead form: blocks empty submit, shows success state ---- */
+  var form=document.getElementById('leadForm');
+  var msg=document.getElementById('formMsg');
+  if(form){
+    form.addEventListener('submit',function(ev){
+      ev.preventDefault();
+      var name=form.name.value.trim();
+      var phone=form.phone.value.trim();
+      var email=form.email.value.trim();
+      var message=form.message.value.trim();
+      if(!name || !message || (!phone && !email)){
+        msg.className='form-msg err';
+        msg.textContent='Please share your name, a way to reach you (phone or email), and a short message.';
+        return;
+      }
+      msg.className='form-msg ok';
+      msg.textContent='Thank you, '+name.split(' ')[0]+'. This is a demo, so nothing was actually sent — but in a real site, we would reach back to you gently and soon.';
+      form.reset();
+    });
+  }
+})();
+</script>
+</body>
+</html>

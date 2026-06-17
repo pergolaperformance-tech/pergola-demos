@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Auto Care | Build It. Fix It. Drive It.</title>
+<meta name="description" content="Apex Auto Care — honest repair and serious customization. Use the service estimator to get an honest price range for your vehicle, then book it with one click.">
+<meta property="og:title" content="Apex Auto Care | Build It. Fix It. Drive It.">
+<meta property="og:description" content="Pick your vehicle type and service in the Apex estimator for an honest price range — sourced from our live shop ledger — then book it straight from the page.">
+<meta property="og:image" content="https://pergolaperformance.pages.dev/work/apex-auto-care/img/hero.webp">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ff4d00'/%3E%3Cpath d='M16 6 L26 26 H20.5 L16 16.5 L11.5 26 H6 Z' fill='%23141414'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f3f1ec; --paper-2:#ebe8e1; --ink:#141414; --ink-soft:#3c3c38;
+    --muted:#6f6e66; --rule:#d8d4ca; --rule-dark:#bdb8ab;
+    --orange:#ff4d00; --orange-deep:#d94100;
+    --lab:#121316; --lab-2:#1a1c20; --lab-line:rgba(255,255,255,.1); --lab-text:#edeef0; --lab-muted:#8d929b;
+    --ease:cubic-bezier(0.23,1,0.32,1);
+    /* premium spacing scale — dramatic negative space is the biggest single lever */
+    --space-section:clamp(88px,11vw,168px);
+    --space-section-lab:clamp(112px,13vw,200px);
+    --measure:52ch;
+    --gut:clamp(16px,2.2vw,40px);
+    --tick:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  /* clip horizontal overflow at the ROOT so the initial containing block can never widen past the
+     visual viewport (fixes off-screen fixed-position concierge panel/FAB/lightbox on mobile).
+     clip (not hidden) avoids creating a scroll container that would break position:sticky on .nav. */
+  html{scroll-behavior:smooth;max-width:100%;overflow-x:clip}
+  body{font-family:'Archivo',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;max-width:100%;overflow-x:clip;position:relative}
+  /* P1 — paper grain + blueprint grid substrate (fixed, GPU-cheap, scoped to the light paper) */
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.04;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:repeating-linear-gradient(0deg,rgba(20,20,20,.025) 0 1px,transparent 1px 32px),repeating-linear-gradient(90deg,rgba(20,20,20,.025) 0 1px,transparent 1px 32px)}
+  /* keep all real content above the substrate pseudos */
+  body>*{position:relative;z-index:1}
+  h1,h2,h3{font-stretch:118%;font-weight:850;text-transform:uppercase;line-height:.96;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .mono{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+  :focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:2px}
+  ::selection{background:var(--orange);color:#fff}
+
+  .btn{display:inline-flex;align-items:center;gap:.55rem;cursor:pointer;font-family:'Archivo';font-stretch:115%;text-transform:uppercase;letter-spacing:.06em;font-weight:800;font-size:.95rem;padding:.85rem 1.7rem;border:2px solid var(--ink);background:var(--ink);color:var(--paper);transition:transform 160ms var(--ease),background 180ms ease,color 180ms ease,box-shadow 200ms var(--ease)}
+  .btn:active{transform:scale(.97)}
+  @media(hover:hover){.btn:hover{background:var(--orange);border-color:var(--orange);color:#fff;transform:translateY(-2px);box-shadow:0 10px 24px -10px rgba(255,77,0,.7)}}
+  .btn-hot{background:var(--orange);border-color:var(--orange);color:#fff;box-shadow:0 8px 22px -10px rgba(255,77,0,.8)}
+  @media(hover:hover){.btn-hot:hover{background:var(--orange-deep);border-color:var(--orange-deep)}}
+  .btn-line{background:transparent;color:var(--ink)}
+  @media(hover:hover){.btn-line:hover{background:var(--ink);border-color:var(--ink);color:var(--paper);box-shadow:none}}
+
+  /* NAV — anchored, edge-to-edge, NOT floating pills; 2px orange under-rule + live-status token */
+  .nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px clamp(20px,4vw,56px);background:rgba(243,241,236,.92);backdrop-filter:blur(10px);border-bottom:2px solid var(--orange)}
+  .brand{display:flex;align-items:center;gap:11px;font-stretch:120%;font-weight:850;text-transform:uppercase;font-size:1.18rem;letter-spacing:.02em;min-width:0}
+  .brand .mk{width:34px;height:34px;background:var(--orange);display:grid;place-items:center;color:#141414;font-weight:900;font-size:1.15rem;clip-path:polygon(0 0,100% 0,100% 78%,78% 100%,0 100%)}
+  .nav-mid{display:flex;align-items:center;gap:18px;min-width:0}
+  .nav-links{display:flex;gap:4px}
+  .nav-links a{padding:9px 14px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid transparent;transition:color 150ms ease,border-color 150ms ease}
+  @media(hover:hover){.nav-links a:hover{color:var(--ink);border-color:var(--orange)}}
+  .nav-status{display:inline-flex;align-items:center;gap:7px;color:var(--ink);font-size:.66rem;letter-spacing:.14em;white-space:nowrap}
+  .nav-status::before{content:"";width:8px;height:8px;background:var(--orange);display:block;animation:navPulse 2.4s ease-in-out infinite}
+  @keyframes navPulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .nav .tel{font-stretch:115%;font-weight:850;font-size:1.02rem;white-space:nowrap;min-width:0;flex:0 1 auto}
+  .nav .tel span{color:var(--orange)}
+
+  .sec{padding:var(--space-section) clamp(20px,4.5vw,64px);position:relative;overflow:hidden}
+  .inner{max-width:1180px;margin:0 auto;position:relative}
+  .kicker{display:flex;align-items:center;gap:12px;color:var(--orange-deep);margin-bottom:18px}
+  .kicker::before{content:"";width:30px;height:2px;background:var(--orange)}
+  .sec h2{font-size:clamp(2.6rem,6vw,4.6rem);letter-spacing:-.035em;line-height:.92;margin-bottom:16px}
+  /* P5 — letterpress macro caps, ink-on-paper headings only */
+  .sec:not(.lab) h2{text-shadow:0 1px 0 rgba(255,255,255,.5),0 2px 0 var(--rule-dark)}
+  .lead{color:var(--muted);font-size:1.08rem;max-width:var(--measure)}
+  .lab .lead{color:var(--lab-muted)}
+
+  /* FRAME — declassified-blueprint section header rule: hairline carrying two riding mono spans */
+  .frame{position:relative;border-top:1px solid var(--rule);display:flex;justify-content:space-between;gap:16px;
+    padding-top:10px;margin-bottom:clamp(28px,4vw,52px);flex-wrap:wrap}
+  .frame .fx{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .frame .fx b{color:var(--orange-deep);font-weight:600}
+  .lab .frame{border-top-color:var(--lab-line)}
+  .lab .frame .fx{color:var(--lab-muted)}
+  .lab .frame .fx b{color:var(--orange)}
+
+  /* OVERSIZED GHOST NUMERALS — static, half-cropped off one edge, behind content (z-index:0) */
+  .ghost-num{position:absolute;z-index:0;pointer-events:none;font:900 clamp(8rem,22vw,18rem)/.8 'Archivo';font-stretch:118%;
+    color:rgba(20,20,20,.05);top:50%;transform:translateY(-50%);user-select:none}
+  .ghost-num.gn-right{right:-2vw}
+  .ghost-num.gn-left{left:-3vw}
+  .lab .ghost-num{color:rgba(255,255,255,.04)}
+
+  /* CORNER TICKS — '+' crosshair registration marks at two opposite corners, pure CSS, static */
+  .ticks{position:relative}
+  .ticks::before,.ticks::after{content:"";position:absolute;width:var(--tick);height:var(--tick);z-index:3;pointer-events:none;
+    background:
+      linear-gradient(currentColor,currentColor) center/100% 1.5px no-repeat,
+      linear-gradient(currentColor,currentColor) center/1.5px 100% no-repeat}
+  .ticks::before{top:8px;left:8px;color:var(--orange)}
+  .ticks::after{bottom:8px;right:8px;color:var(--orange)}
+
+  /* HERO — editorial split, copy-left / photo-right, NOT centered */
+  .hero{padding:0;border-bottom:2px solid var(--ink)}
+  .hero .inner{max-width:none;display:grid;grid-template-columns:1.15fr .85fr;min-height:88vh}
+  .hero-copy{display:flex;flex-direction:column;justify-content:center;padding:56px clamp(20px,4.5vw,64px);position:relative}
+  .hero-copy::after{content:"";position:absolute;top:0;right:0;bottom:0;width:1px;background:var(--rule-dark)}
+  .hero-hud{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px solid var(--rule-dark);padding-top:9px;margin-bottom:26px;
+    font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .hero-hud i{color:var(--orange-deep);font-style:normal}
+  .hero h1{font-size:clamp(3.2rem,8vw,6.4rem);margin:0 0 22px;letter-spacing:-.04em;line-height:.9;text-shadow:0 1px 0 rgba(255,255,255,.5),0 2px 0 var(--rule-dark)}
+  .hero h1 em{font-style:normal;color:var(--orange);text-shadow:none}
+  .hero .sub{font-size:1.14rem;color:var(--ink-soft);max-width:480px;margin-bottom:30px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  /* hairline-ruled 3-cell spec strip — gap:1px on ink bg, like the creds band */
+  .hero-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:38px;background:var(--rule-dark);border:1px solid var(--rule-dark)}
+  .hero-meta .m{background:var(--paper);padding:14px 16px}
+  .hero-meta .m b{display:block;font-stretch:118%;font-weight:850;font-size:1.18rem}
+  .hero-meta .m span{color:var(--muted);font-size:.8rem}
+  .hero-photo{position:relative;overflow:hidden;background:var(--paper-2);color:var(--paper)}
+  .hero-photo img{width:100%;height:100%;object-fit:cover}
+  /* hard ink plate (square corners) */
+  .hero-photo .plate{position:absolute;left:18px;bottom:18px;background:var(--ink);color:var(--paper);padding:9px 15px;z-index:4}
+  /* CONCEPT DEMO chip — hard ink, top-right, NOT a banner */
+  .hero-photo .demo-chip{position:absolute;top:18px;right:18px;background:var(--ink);color:var(--paper);padding:7px 12px;z-index:4;
+    font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase}
+  .hero-photo .demo-chip::before{content:"";width:7px;height:7px;background:var(--orange);display:inline-block;margin-right:7px;vertical-align:middle}
+
+  /* marquee */
+  .marq{overflow:hidden;background:var(--ink);color:var(--paper);padding:13px 0;white-space:nowrap}
+  /* P4 — edge-fade so the ticker dissolves at the viewport edges */
+  .marq-track{display:inline-block;animation:marq 26s linear infinite;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  @media(hover:hover){.marq:hover .marq-track{animation-play-state:paused}}
+  @keyframes marq{to{transform:translateX(-50%)}}
+  .marq span{font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;margin:0 26px}
+  .marq i{color:var(--orange);font-style:normal}
+
+  /* SHOP CREDENTIALS / TRUST BAR — full-bleed ink band, hairline-ruled cells; FLUSH against marquee = one credential strip */
+  .creds{background:var(--ink);border-bottom:2px solid var(--ink)}
+  .creds-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ink)}
+  .creds-cell{background:var(--paper);padding:16px clamp(14px,2.4vw,26px);display:flex;align-items:center;gap:11px;min-height:64px}
+  .creds-cell .seal{color:var(--orange-deep);font-size:1.05rem;line-height:1;flex:none}
+  .creds-cell .lbl{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;font-weight:600;color:var(--ink);line-height:1.35}
+
+  /* ESTIMATOR LAB (dark) */
+  .lab{background:var(--lab);color:var(--lab-text);border-bottom:2px solid var(--ink);padding-top:var(--space-section-lab);padding-bottom:var(--space-section-lab)}
+  .lab .kicker{color:var(--orange)}
+  .lab-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:36px;margin-top:30px;align-items:start}
+  .stage{background:radial-gradient(ellipse 70% 60% at 50% 62%,rgba(255,77,0,.1),transparent 70%),var(--lab-2);border:1px solid var(--lab-line);padding:30px 18px 18px;position:relative}
+  .stage .mono{position:absolute;top:14px;left:16px;color:var(--lab-muted);z-index:4}
+  /* engineering-elevation silhouettes */
+  .veh-stage{margin-top:14px}
+  .veh-stage svg{width:100%;height:clamp(220px,34vw,420px);display:block;stroke:var(--orange);stroke-width:2.5;fill:none;stroke-linejoin:round;stroke-linecap:round}
+  .veh-stage svg .det{stroke:var(--lab-text);stroke-width:2}
+  .veh-stage svg .ground{stroke:var(--orange);stroke-width:1}
+  .veh-stage svg .dim{stroke:var(--lab-muted);stroke-width:1}
+  .veh-stage svg .glass{stroke:var(--lab-muted);stroke-width:2}
+  .ctrl{display:flex;flex-direction:column;gap:24px}
+  .ctrl-block .mono{color:var(--lab-muted);display:block;margin-bottom:11px}
+  /* button groups — flex-wrap so 5 vehicles + 7 services flow on mobile */
+  .seg{display:flex;flex-wrap:wrap;gap:6px}
+  .seg button{position:relative;padding:11px 12px;min-height:44px;background:transparent;border:1px solid var(--lab-line);color:var(--lab-muted);font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all 160ms ease}
+  .seg button:active{transform:scale(.96)}
+  @media(hover:hover){.seg button:hover{border-color:var(--orange);color:var(--lab-text)}}
+  .seg button[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:#141414;font-weight:600}
+  /* orange top-tick on the pressed vehicle button */
+  #vehRow button[aria-pressed="true"]::before{content:"";position:absolute;top:-1px;left:-1px;right:-1px;height:3px;background:#141414}
+  .build-total{border:1px solid var(--lab-line);background:var(--lab-2);padding:22px;box-shadow:5px 5px 0 var(--orange-deep)}
+  .build-total .mono{color:var(--lab-muted);display:block;margin-bottom:10px}
+  .est-out{font:900 clamp(1.8rem,4vw,2.6rem) 'Archivo';font-stretch:118%;color:var(--orange);font-variant-numeric:tabular-nums;line-height:1;display:block;letter-spacing:-.02em}
+  .est-out.flick{animation:estFlick 120ms var(--ease)}
+  @keyframes estFlick{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .est-inc{color:var(--lab-muted);font-size:.85rem;margin-top:10px;max-width:46ch}
+  .est-div{border:none;border-top:1px solid var(--lab-line);margin:18px 0}
+  .ctrl .btn{justify-content:center;width:100%}
+  .veh-cross{transition:opacity 180ms var(--ease)}
+
+  /* SERVICES — 5fr/7fr asymmetric split */
+  .svc-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(28px,4vw,56px);align-items:start}
+  .svc-lead h2{margin-bottom:14px}
+  /* stats restacked as oversized vertical numerals with hairline dividers */
+  .stat-stack{margin-top:30px}
+  .stat-stack .st{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:16px 0;border-top:1px solid var(--rule)}
+  .stat-stack .st .v{font-stretch:118%;font-weight:850;font-size:clamp(2.2rem,4vw,3rem);color:var(--orange-deep);line-height:.9;letter-spacing:-.02em}
+  .stat-stack .st .k{color:var(--muted);font-size:.85rem;text-align:right;max-width:18ch}
+  /* SERVICES ledger */
+  .ledger{border:2px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);transition:transform 200ms var(--ease),box-shadow 200ms var(--ease)}
+  @media(hover:hover){.ledger:hover{transform:translate(2px,2px);box-shadow:4px 4px 0 var(--ink)}}
+  .lrow{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;padding:15px 24px;border-bottom:1px solid var(--rule);transition:background 160ms ease,padding-left 200ms var(--ease);position:relative}
+  .lrow:last-child{border-bottom:none}
+  /* P6 — ledger row -> shop traveler: orange left-edge bar grows on hover */
+  .lrow::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--orange);transform:scaleY(0);transform-origin:top;transition:transform 220ms var(--ease)}
+  @media(hover:hover){.lrow:hover{background:var(--paper);padding-left:36px}.lrow:hover::before{transform:scaleY(1)}}
+  .lrow .num{font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--orange-deep);letter-spacing:.1em}
+  .lrow h3{font-size:1.3rem}
+  .lrow p{color:var(--muted);font-size:.92rem}
+  .lrow .price{font-stretch:118%;font-weight:850;font-size:1.35rem;white-space:nowrap}
+  .lrow .price small{display:block;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:.6rem;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;text-align:right}
+
+  /* GALLERY — asymmetric mosaic with hero plate */
+  .gal{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:repeat(2,minmax(160px,1fr));gap:14px;margin-top:14px}
+  .gal button{padding:0;border:2px solid var(--ink);overflow:hidden;cursor:pointer;background:none;position:relative;display:block}
+  .gal button:first-child{grid-column:1;grid-row:1/3}
+  .gal img{width:100%;height:100%;object-fit:cover;transition:transform 500ms var(--ease),filter 300ms ease}
+  @media(hover:hover){.gal button:hover img{transform:scale(1.06)}}
+  .gal figcaption{position:absolute;left:0;bottom:0;background:var(--ink);color:var(--paper);
+    font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:5px 9px;z-index:2}
+  .lb{position:fixed;inset:0;max-width:100vw;z-index:100;display:flex;align-items:center;justify-content:center;background:rgba(14,14,13,.88);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity 220ms var(--ease),visibility 220ms}
+  .lb.open{opacity:1;visibility:visible}
+  .lb img{max-width:90vw;max-height:84vh;border:2px solid var(--paper);transform:scale(.96);transition:transform 240ms var(--ease)}
+  .lb.open img{transform:scale(1)}
+  .lb-btn{position:absolute;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.3);color:#fff;width:48px;height:48px;border-radius:50%;font-size:1.3rem;cursor:pointer;display:grid;place-items:center;transition:background 160ms ease,transform 140ms var(--ease)}
+  @media(hover:hover){.lb-btn:hover{background:var(--orange)}}
+  .lb-btn:active{transform:scale(.92)}
+  .lb-close{top:24px;right:24px}.lb-prev{left:24px}.lb-next{right:24px}
+
+  /* BOOK — printed WORK ORDER / shop traveler */
+  .book{background:var(--paper-2);border-top:2px solid var(--ink)}
+  .book-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(28px,4vw,56px);align-items:start}
+  .book-lead h2{margin-bottom:16px}
+  .wo-steps{list-style:none;counter-reset:wo;margin-top:24px}
+  .wo-steps li{counter-increment:wo;position:relative;padding:14px 0 14px 44px;border-top:1px solid var(--rule);color:var(--ink-soft);font-size:.98rem}
+  .wo-steps li::before{content:counter(wo,decimal-leading-zero);position:absolute;left:0;top:13px;
+    font-family:'IBM Plex Mono',monospace;font-size:.82rem;font-weight:600;color:var(--orange-deep);letter-spacing:.06em}
+  .wo-paper{background:#fff;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);transition:transform 200ms var(--ease),box-shadow 200ms var(--ease)}
+  @media(hover:hover){.wo-paper:hover{box-shadow:5px 5px 0 var(--ink)}}
+  .wo-head{background:var(--ink);color:var(--paper);padding:14px 18px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
+  .wo-head .wn b{color:var(--orange)}
+  .form{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:28px;border-top:1px dashed var(--rule-dark)}
+  .field{display:flex;flex-direction:column;gap:7px}
+  .field.full{grid-column:1/-1}
+  .field label{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-weight:500;font-size:.7rem;color:var(--muted)}
+  .field input,.field select,.field textarea{background:#fff;border:1px solid var(--rule-dark);padding:13px 14px;color:var(--ink);font-family:'Archivo';font-size:1rem;min-height:48px;transition:border-color 160ms ease,box-shadow 160ms ease}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,77,0,.16)}
+  .form-note{grid-column:1/-1;color:var(--muted);font-size:.83rem}
+  .form-ok{grid-column:1/-1;display:none;background:var(--ink);color:var(--paper);padding:16px 18px}
+  .form-ok.show{display:block}
+
+  /* FOOTER */
+  footer{background:var(--ink);color:var(--paper);padding:64px clamp(20px,4.5vw,64px) 30px;border-top:2px solid var(--ink)}
+  .ft{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:38px}
+  .ft h4{font-stretch:118%;text-transform:uppercase;font-weight:850;font-size:1.05rem;margin-bottom:14px}
+  .ft p,.ft a{color:#b9b6ad;font-size:.92rem}
+  .ft a{display:block;padding:3px 0;transition:color 140ms ease}
+  @media(hover:hover){.ft a:hover{color:var(--orange)}}
+  .ft .tel-big{font-stretch:118%;font-weight:850;font-size:1.7rem;color:var(--paper);display:inline-block;margin:6px 0 10px}
+  .ft-bottom{max-width:1180px;margin:44px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:#8d8a81;font-size:.8rem}
+  .ft-bottom a{color:#b9b6ad}
+  @media(hover:hover){.ft-bottom a:hover{color:var(--orange)}}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(22px);transition:opacity 600ms var(--ease),transform 600ms var(--ease)}
+  .rv.in{opacity:1;transform:none}
+  .no-js .rv{opacity:1;transform:none}
+
+  /* ============ APEX SERVICE DESK — concierge (scripted demo) ============ */
+  /* FAB — square, brand-mark clip-path, hard offset shadow */
+  .cc-fab{position:fixed;right:24px;bottom:24px;z-index:90;width:60px;height:60px;border-radius:0;border:2px solid var(--ink);cursor:pointer;background:var(--orange);color:#141414;display:grid;place-items:center;box-shadow:5px 5px 0 var(--ink);clip-path:polygon(0 0,100% 0,100% 78%,78% 100%,0 100%);transition:transform 180ms var(--ease),background 180ms ease,box-shadow 200ms var(--ease)}
+  @media(hover:hover){.cc-fab:hover{transform:translateY(-2px);background:var(--orange-deep);box-shadow:0 10px 24px -10px rgba(255,77,0,.7),5px 5px 0 var(--ink)}}
+  .cc-fab:active{transform:scale(.96)}
+  .cc-fab svg{width:26px;height:26px;pointer-events:none}
+  .cc-pip{position:absolute;top:5px;right:7px;width:9px;height:9px;background:var(--ink);display:block}
+  .cc-fab.cc-seen .cc-pip{display:none}
+  /* Panel — clipboard/printout, square, hard shadow, sits below the lightbox (z 91 < 100) */
+  .cc-panel{position:fixed;right:24px;bottom:96px;z-index:91;width:min(380px,calc(100vw - 32px));height:min(560px,calc(100vh - 140px));background:var(--paper);border:2px solid var(--ink);border-radius:0;box-shadow:10px 10px 0 rgba(20,20,20,.22);display:flex;flex-direction:column;overflow:hidden;opacity:0;visibility:hidden;transform:translateY(8px) scale(.99);transform-origin:bottom right;transition:opacity 220ms var(--ease),transform 220ms var(--ease),visibility 220ms}
+  .cc-panel.open{opacity:1;visibility:visible;transform:none}
+  .cc-head{background:var(--lab);color:#fff;padding:15px 16px;display:flex;align-items:center;gap:12px;border-bottom:2px solid var(--ink)}
+  .cc-head .av{width:38px;height:38px;background:var(--orange);display:grid;place-items:center;color:#141414;font-weight:900;font-size:1.1rem;font-stretch:120%;clip-path:polygon(0 0,100% 0,100% 78%,78% 100%,0 100%);flex:none}
+  .cc-head .t b{font-stretch:118%;font-weight:850;text-transform:uppercase;font-size:1rem;display:block;letter-spacing:.01em;line-height:1}
+  .cc-head .t span{font-family:'IBM Plex Mono',monospace;font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;color:var(--lab-muted);display:flex;align-items:center;gap:6px;margin-top:4px}
+  .cc-head .t span::after{content:"\2588";color:var(--orange);animation:ccBlink 1.1s steps(1) infinite}
+  @keyframes ccBlink{0%,100%{opacity:1}50%{opacity:0}}
+  .cc-head .x{margin-left:auto;background:transparent;border:none;color:var(--lab-muted);cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.06em;padding:6px 8px;min-height:44px;display:flex;align-items:center;transition:color 160ms ease}
+  @media(hover:hover){.cc-head .x:hover{color:var(--orange)}}
+  .cc-log{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:10px;background:var(--paper);
+    background-image:repeating-linear-gradient(0deg,rgba(20,20,20,.025) 0 1px,transparent 1px 28px),repeating-linear-gradient(90deg,rgba(20,20,20,.025) 0 1px,transparent 1px 28px)}
+  .cc-msg{max-width:86%;padding:10px 13px;font-size:.9rem;line-height:1.5;border-radius:0;animation:ccPop 260ms var(--ease)}
+  @keyframes ccPop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .cc-bot{align-self:flex-start;background:#fff;border:1px solid var(--rule);border-left:2px solid var(--orange);color:var(--ink);box-shadow:2px 2px 0 rgba(0,0,0,.08)}
+  /* darkened from --orange-deep (#d94100 = 4.46:1, fails AA) to #c23a00 (>=4.5:1 on #fff) */
+  .cc-bot .pfx{display:block;font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:#c23a00;margin-bottom:5px}
+  .cc-bot b{font-weight:800}
+  .cc-bot .miniledger{margin:8px 0 2px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:6px 0;display:flex;flex-direction:column;gap:3px}
+  .cc-bot .miniledger span{display:flex;justify-content:space-between;gap:14px;font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+  .cc-bot .miniledger span i{font-style:normal;color:var(--muted);text-transform:uppercase;font-size:.66rem;letter-spacing:.1em}
+  .cc-user{align-self:flex-end;background:var(--ink);color:var(--paper);text-align:left;clip-path:polygon(0 0,100% 0,100% 100%,8px 100%,0 calc(100% - 8px))}
+  .cc-user .pfx{display:block;font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin-bottom:4px}
+  .cc-typing{align-self:flex-start;display:flex;gap:5px;padding:13px 14px;background:#fff;border:1px solid var(--rule);border-left:2px solid var(--orange)}
+  .cc-typing i{width:7px;height:7px;background:var(--orange);display:block;animation:ccBlink2 1.2s infinite}
+  .cc-typing i:nth-child(2){animation-delay:.18s}.cc-typing i:nth-child(3){animation-delay:.36s}
+  @keyframes ccBlink2{0%,60%,100%{opacity:.3}30%{opacity:1}}
+  .cc-chips{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px 6px;background:var(--paper)}
+  .cc-chip{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:9px 12px;min-height:40px;display:inline-flex;align-items:center;border:1px solid var(--ink);border-radius:0;background:var(--paper);color:var(--ink);cursor:pointer;transition:background 160ms ease,color 160ms ease,transform 120ms var(--ease);font-variant-numeric:tabular-nums}
+  @media(hover:hover){.cc-chip:hover{background:var(--orange);color:#141414}}
+  .cc-chip:active{transform:scale(.96)}
+  .cc-input{display:flex;gap:8px;padding:11px 14px;border-top:1px solid var(--rule);background:var(--paper)}
+  .cc-input input{flex:1;border:1px solid var(--ink);border-radius:0;background:#fff;padding:11px 13px;font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.04em;min-height:44px;color:var(--ink);transition:box-shadow 160ms ease}
+  .cc-input input::placeholder{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:.7rem}
+  .cc-input input:focus{outline:none;box-shadow:0 0 0 3px rgba(255,77,0,.16)}
+  .cc-input button{flex:none;width:44px;height:44px;border-radius:0;border:2px solid var(--ink);background:var(--orange);color:#141414;cursor:pointer;display:grid;place-items:center;transition:background 160ms ease,transform 120ms var(--ease)}
+  @media(hover:hover){.cc-input button:hover{background:var(--orange-deep)}}
+  .cc-input button:active{transform:scale(.92)}
+  .cc-foot{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:8px 10px;background:var(--paper);border-top:1px solid var(--rule)}
+
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    html{scroll-behavior:auto}
+    .rv{opacity:1;transform:none}
+    .marq-track{animation:none}
+    .cc-head .t span::after{animation:none}
+    .nav-status::before{animation:none}
+    /* estimator: instant silhouette swap + no readout flicker */
+    .est-out.flick{animation:none}
+    .veh-cross{transition:none}
+  }
+
+  @media(max-width:980px){
+    .hero .inner{grid-template-columns:1fr}
+    .hero-photo{min-height:340px;order:-1}
+    .hero-copy::after{display:none}
+    .lab-grid{grid-template-columns:1fr}
+    .nav-links{display:none}
+    .creds-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:860px){
+    .svc-grid{grid-template-columns:1fr}
+    .book-grid{grid-template-columns:1fr}
+  }
+  @media(max-width:640px){
+    .gal{grid-template-columns:repeat(2,1fr);grid-template-rows:none;grid-auto-rows:140px}
+    .gal button:first-child{grid-column:1/-1;grid-row:auto}
+    .sec{padding-left:18px;padding-right:18px}
+    .brand{font-size:.92rem;white-space:nowrap}
+    .brand .mk{width:28px;height:28px;font-size:.95rem}
+    .nav{padding:10px 16px}
+    .nav-status{display:none}
+    .hero h1{font-size:clamp(2.4rem,11vw,3.2rem)}
+    .hero-copy{padding:40px 18px}
+    .form{gap:12px;padding:20px}
+    .form{grid-template-columns:1fr}
+    .ft{grid-template-columns:1fr}
+    .nav .tel span{display:none}
+    .hero-meta .m b{font-size:1.02rem}
+  }
+  @media(max-width:560px){
+    /* keep the fixed FAB clear of #book submit + footer tel */
+    body{padding-bottom:76px}
+    .cc-fab{right:16px;bottom:16px}
+    .cc-panel{right:8px;bottom:84px;width:calc(100vw - 16px);height:min(72vh,500px)}
+    .ledger,.wo-paper{box-shadow:5px 5px 0 rgba(0,0,0,.18)}
+  }
+  @media(max-width:400px){
+    /* shrink the nav phone number so it stays fully readable on the tightest viewports */
+    .nav .tel{font-size:.9rem}
+  }
+</style>
+</head>
+<body class="no-js">
+<script>document.body.classList.remove('no-js')</script>
+
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="#top"><span class="mk" aria-hidden="true">A</span>Apex Auto Care</a>
+  <div class="nav-mid">
+    <div class="nav-links">
+      <a href="#estimator">Estimator</a>
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#book">Book</a>
+    </div>
+    <span class="nav-status mono" aria-hidden="true">OPEN · 7:30–6</span>
+  </div>
+  <a class="tel" href="tel:+15553182240"><span>Call&nbsp;</span>(555) 318-2240</a>
+</nav>
+
+<header class="hero" id="top">
+  <div class="inner">
+    <div class="hero-copy">
+      <span class="hero-hud" aria-hidden="true">Apex Auto Care <i>—</i> 2841 Industrial Ave <i>/</i> 38.79°N 89.64°W <i>/</i> Est. 2009</span>
+      <h1>Fix it right.<br>Then make it <em>yours.</em></h1>
+      <p class="sub">Apex handles the honest stuff — brakes, diagnostics, oil — and the fun stuff: lifts, wheels, wraps and tint. Get an honest price range, then send it straight to our bay.</p>
+      <div class="hero-cta">
+        <a class="btn btn-hot" href="#estimator">Get an instant estimate</a>
+        <a class="btn btn-line" href="#book">Book a service</a>
+      </div>
+      <div class="hero-meta">
+        <div class="m"><b>Mon–Fri 7:30–6</b><span>Sat 8–2 · Sun closed</span></div>
+        <div class="m"><b>12-month</b><span>warranty on repairs</span></div>
+        <div class="m"><b>Same day</b><span>on most services</span></div>
+      </div>
+    </div>
+    <div class="hero-photo ticks">
+      <img src="img/hero.webp" alt="Charcoal pickup truck parked in the bright Apex Auto Care workshop" fetchpriority="high">
+      <span class="demo-chip" aria-label="This is a concept demo">Concept Demo</span>
+      <span class="plate mono">Bay 01 / Apex HQ / Frame 001</span>
+    </div>
+  </div>
+</header>
+
+<div class="marq" aria-hidden="true">
+  <div class="marq-track">
+    <span>Engine diagnostics <i>///</i></span><span>Lift kits <i>///</i></span><span>Brake service <i>///</i></span><span>Wheels &amp; tires <i>///</i></span><span>Wraps &amp; tint <i>///</i></span><span>AC &amp; heating <i>///</i></span><span>Transmission <i>///</i></span><span>Alignment <i>///</i></span>
+    <span>Engine diagnostics <i>///</i></span><span>Lift kits <i>///</i></span><span>Brake service <i>///</i></span><span>Wheels &amp; tires <i>///</i></span><span>Wraps &amp; tint <i>///</i></span><span>AC &amp; heating <i>///</i></span><span>Transmission <i>///</i></span><span>Alignment <i>///</i></span>
+  </div>
+</div>
+
+<section class="creds" aria-label="Shop credentials">
+  <div class="creds-grid">
+    <div class="creds-cell"><span class="seal" aria-hidden="true">&#10003;</span><span class="lbl">ASE-Certified Techs</span></div>
+    <div class="creds-cell"><span class="seal" aria-hidden="true">&#10003;</span><span class="lbl">OEM + Aftermarket Parts</span></div>
+    <div class="creds-cell"><span class="seal" aria-hidden="true">&#10003;</span><span class="lbl">12-Month Warranty</span></div>
+    <div class="creds-cell"><span class="seal" aria-hidden="true">&#10003;</span><span class="lbl">4.9 &#9733; · 12k+ Serviced</span></div>
+  </div>
+</section>
+
+<section class="sec lab" id="estimator">
+  <span class="ghost-num gn-right" aria-hidden="true">01</span>
+  <div class="inner">
+    <div class="frame">
+      <span class="fx"><b>S.01</b> / Service Estimator</span>
+      <span class="fx">REV 2.6 / Springfield</span>
+    </div>
+    <span class="mono kicker">Service estimator</span>
+    <h2 class="rv">Know the number before you book</h2>
+    <p class="lead rv">Pick your vehicle type and service for an honest price range — sourced from our live shop ledger. When it looks right, send it straight to the booking desk.</p>
+    <div class="lab-grid">
+      <div class="stage rv ticks">
+        <span class="mono">APX-EST / Vehicle class</span>
+        <div class="veh-stage" id="vehStage">
+          <!-- SEDAN -->
+          <svg class="veh-cross" data-veh="Sedan" viewBox="0 0 320 160" role="img" aria-label="Sedan silhouette">
+            <path d="M30 118 L52 118 C58 96 70 78 96 74 L150 72 C176 72 196 80 214 96 L262 102 C280 104 290 110 292 118 L298 118"/>
+            <path class="det" d="M104 76 L120 56 L188 56 L210 80"/>
+            <path class="glass" d="M120 58 L148 58 L148 74 M156 58 L186 58 L205 78"/>
+            <circle class="det" cx="104" cy="118" r="18"/><circle class="det" cx="240" cy="118" r="18"/>
+            <line class="ground" x1="20" y1="136" x2="300" y2="136"/>
+            <line class="dim" x1="20" y1="130" x2="20" y2="142"/><line class="dim" x1="300" y1="130" x2="300" y2="142"/>
+          </svg>
+          <!-- SUV -->
+          <svg class="veh-cross" data-veh="SUV" viewBox="0 0 320 160" hidden role="img" aria-label="SUV silhouette">
+            <path d="M28 116 L48 116 C50 86 60 64 84 60 L210 58 C238 58 254 70 266 92 L292 98 C300 100 300 110 300 116 L304 116"/>
+            <path class="det" d="M92 62 L96 40 L208 40 L222 64"/>
+            <path class="glass" d="M100 42 L142 42 L142 60 M150 42 L202 42 L214 60"/>
+            <circle class="det" cx="100" cy="118" r="20"/><circle class="det" cx="244" cy="118" r="20"/>
+            <line class="ground" x1="18" y1="140" x2="306" y2="140"/>
+            <line class="dim" x1="18" y1="134" x2="18" y2="146"/><line class="dim" x1="306" y1="134" x2="306" y2="146"/>
+          </svg>
+          <!-- TRUCK -->
+          <svg class="veh-cross" data-veh="Truck" viewBox="0 0 320 160" hidden role="img" aria-label="Pickup truck silhouette">
+            <path d="M24 114 L46 114 C48 82 58 58 82 54 L150 52 L150 64 L300 64 L300 114 L306 114"/>
+            <path class="det" d="M90 56 L96 34 L150 34 L150 52"/>
+            <path class="glass" d="M102 36 L144 36 L144 50"/>
+            <path class="det" d="M150 64 L150 110 M300 64 L300 110"/>
+            <circle class="det" cx="100" cy="120" r="22"/><circle class="det" cx="252" cy="120" r="22"/>
+            <line class="ground" x1="16" y1="144" x2="308" y2="144"/>
+            <line class="dim" x1="16" y1="138" x2="16" y2="150"/><line class="dim" x1="308" y1="138" x2="308" y2="150"/>
+          </svg>
+          <!-- LUXURY / EURO -->
+          <svg class="veh-cross" data-veh="Luxury/Euro" viewBox="0 0 320 160" hidden role="img" aria-label="Luxury coupe silhouette">
+            <path d="M22 118 L46 118 C50 100 62 86 86 82 L138 78 C172 76 200 82 228 96 L280 104 C296 106 300 112 300 118 L306 118"/>
+            <path class="det" d="M96 84 L118 60 L196 58 L224 90"/>
+            <path class="glass" d="M120 62 L152 62 L152 80 M160 62 L192 60 L218 86"/>
+            <circle class="det" cx="100" cy="118" r="18"/><circle class="det" cx="244" cy="118" r="18"/>
+            <line class="ground" x1="16" y1="136" x2="308" y2="136"/>
+            <line class="dim" x1="16" y1="130" x2="16" y2="142"/><line class="dim" x1="308" y1="130" x2="308" y2="142"/>
+          </svg>
+          <!-- EV / HYBRID -->
+          <svg class="veh-cross" data-veh="EV/Hybrid" viewBox="0 0 320 160" hidden role="img" aria-label="EV hatchback silhouette">
+            <path d="M26 116 L48 116 C52 92 64 72 92 66 L150 62 C190 60 222 70 250 90 L286 98 C298 100 300 108 300 116 L306 116"/>
+            <path class="det" d="M100 68 L126 46 L206 46 L236 84"/>
+            <path class="glass" d="M128 48 L160 48 L160 64 M168 48 L202 48 L228 80"/>
+            <circle class="det" cx="104" cy="118" r="18"/><circle class="det" cx="246" cy="118" r="18"/>
+            <path class="det" d="M158 100 l-8 14 l10 0 l-8 14"/>
+            <line class="ground" x1="18" y1="136" x2="306" y2="136"/>
+            <line class="dim" x1="18" y1="130" x2="18" y2="142"/><line class="dim" x1="306" y1="130" x2="306" y2="142"/>
+          </svg>
+        </div>
+      </div>
+      <div class="ctrl rv">
+        <div class="ctrl-block">
+          <span class="mono">01 / Vehicle type</span>
+          <div class="seg" id="vehRow" role="group" aria-label="Vehicle type">
+            <button type="button" data-veh="Sedan" data-factor="1.0" aria-pressed="true">Sedan</button>
+            <button type="button" data-veh="SUV" data-factor="1.15" aria-pressed="false">SUV</button>
+            <button type="button" data-veh="Truck" data-factor="1.25" aria-pressed="false">Truck</button>
+            <button type="button" data-veh="Luxury/Euro" data-factor="1.5" aria-pressed="false">Luxury/Euro</button>
+            <button type="button" data-veh="EV/Hybrid" data-factor="1.35" aria-pressed="false">EV/Hybrid</button>
+          </div>
+        </div>
+        <div class="ctrl-block">
+          <span class="mono">02 / Service</span>
+          <div class="seg" id="svcRow" role="group" aria-label="Service">
+            <button type="button" data-svc="Diagnostics" data-base="89" aria-pressed="true">Diagnostics</button>
+            <button type="button" data-svc="Oil &amp; Filter" data-base="49" aria-pressed="false">Oil &amp; Filter</button>
+            <button type="button" data-svc="Brakes" data-base="149" aria-pressed="false">Brakes</button>
+            <button type="button" data-svc="AC &amp; Heating" data-base="99" aria-pressed="false">AC &amp; Heating</button>
+            <button type="button" data-svc="Tire &amp; Alignment" data-base="79" aria-pressed="false">Tire &amp; Alignment</button>
+            <button type="button" data-svc="Transmission" data-base="130" aria-pressed="false">Transmission</button>
+            <button type="button" data-svc="Custom Build" data-base="1500" aria-pressed="false">Custom Build</button>
+          </div>
+        </div>
+        <div class="build-total rv">
+          <span class="mono">Estimated price</span>
+          <span class="est-out" id="estOut">$80 – $100</span>
+          <hr class="est-div">
+          <span class="est-inc" id="estInc">Honest estimate · final price confirmed at drop-off · 12-mo warranty</span>
+        </div>
+        <button class="btn btn-hot" id="bookEst" type="button">Book this service</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="services">
+  <span class="ghost-num gn-left" aria-hidden="true">02</span>
+  <div class="inner">
+    <div class="frame">
+      <span class="fx"><b>S.02</b> / Services Ledger</span>
+      <span class="fx">REV 2.6 / Springfield</span>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-lead">
+        <h2 class="rv">The honest stuff</h2>
+        <p class="lead rv">Straight diagnoses, upfront pricing, 12-month warranty. No upsell theater.</p>
+        <div class="stat-stack rv">
+          <div class="st"><span class="v">4.9★</span><span class="k">Average customer rating</span></div>
+          <div class="st"><span class="v">12k+</span><span class="k">Vehicles serviced</span></div>
+          <div class="st"><span class="v">12mo</span><span class="k">Warranty on repairs</span></div>
+          <div class="st"><span class="v">Same day</span><span class="k">On most services</span></div>
+        </div>
+      </div>
+      <div class="ledger rv">
+        <div class="lrow"><span class="num">/01</span><div><h3>Engine Diagnostics</h3><p>Full computer scan with a plain-English explanation of what's wrong.</p></div><div class="price">$89<small>from</small></div></div>
+        <div class="lrow"><span class="num">/02</span><div><h3>Brake Service</h3><p>Pads, rotors, fluid — stop like you mean it.</p></div><div class="price">$149<small>from</small></div></div>
+        <div class="lrow"><span class="num">/03</span><div><h3>Oil &amp; Filter Change</h3><p>Full synthetic, multi-point inspection included.</p></div><div class="price">$49<small>from</small></div></div>
+        <div class="lrow"><span class="num">/04</span><div><h3>AC &amp; Heating</h3><p>Recharge, leak detection, compressor repair.</p></div><div class="price">$99<small>from</small></div></div>
+        <div class="lrow"><span class="num">/05</span><div><h3>Tire &amp; Alignment</h3><p>Mounting, balancing, four-wheel alignment.</p></div><div class="price">$79<small>from</small></div></div>
+        <div class="lrow"><span class="num">/06</span><div><h3>Transmission Repair</h3><p>Service, rebuild or replace — diagnosed honestly first.</p></div><div class="price">$130<small>from</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="work">
+  <span class="ghost-num gn-right" aria-hidden="true">03</span>
+  <div class="inner">
+    <div class="frame">
+      <span class="fx"><b>S.03</b> / Recent Work</span>
+      <span class="fx">REV 2.6 / Springfield</span>
+    </div>
+    <h2 class="rv">Out of the bay</h2>
+    <div class="gal rv" id="gallery">
+      <button type="button"><img src="img/build.webp" alt="Lifted black pickup build on off-road wheels, studio shot"><figcaption>Build / 04</figcaption></button>
+      <button type="button"><img src="img/wheel.webp" alt="Forged gunmetal wheel with orange brake caliper"><figcaption>Wheel / Forged</figcaption></button>
+      <button type="button"><img src="img/bay.webp" alt="Technician working under a vehicle on the lift"><figcaption>Bay / Lift</figcaption></button>
+      <button type="button"><img src="img/detail.webp" alt="Hand-polishing a burnt-orange truck fender"><figcaption>Detail / Polish</figcaption></button>
+    </div>
+  </div>
+</section>
+
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <img id="lbImg" src="" alt="">
+  <button class="lb-btn lb-close" type="button" aria-label="Close">✕</button>
+  <button class="lb-btn lb-prev" type="button" aria-label="Previous image">‹</button>
+  <button class="lb-btn lb-next" type="button" aria-label="Next image">›</button>
+</div>
+
+<section class="sec book" id="book">
+  <div class="inner">
+    <div class="frame">
+      <span class="fx"><b>S.04</b> / Booking Desk</span>
+      <span class="fx">REV 2.6 / Springfield</span>
+    </div>
+    <span class="mono kicker">Book it</span>
+    <div class="book-grid">
+      <div class="book-lead">
+        <h2 class="rv">Get on the schedule</h2>
+        <p class="lead rv">Tell us what you're driving and what it needs — we'll confirm a slot within one business day.</p>
+        <ol class="wo-steps rv">
+          <li>We confirm within 1 business day</li>
+          <li>You drop it at Bay 01</li>
+          <li>Honest diagnosis, upfront price</li>
+        </ol>
+      </div>
+      <div class="wo-paper rv ticks">
+        <div class="wo-head">
+          <span class="wn">Work Order <b>/ APX-00</b></span>
+          <span>2026-06-14</span>
+        </div>
+        <form class="form" id="bookForm" novalidate>
+          <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" required autocomplete="name"></div>
+          <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" required autocomplete="tel"></div>
+          <div class="field"><label for="f-vehicle">Vehicle</label><input id="f-vehicle" name="vehicle" placeholder="e.g. 2021 F-150"></div>
+          <div class="field"><label for="f-service">Service</label>
+            <select id="f-service" name="service">
+              <option>Engine diagnostics</option><option>Brake service</option><option>Oil &amp; filter</option>
+              <option>AC &amp; heating</option><option>Tire &amp; alignment</option><option>Transmission</option>
+              <option>Custom build</option><option>Something else</option>
+            </select>
+          </div>
+          <div class="field full"><label for="f-msg">Details</label><textarea id="f-msg" name="message" rows="4" placeholder="What's going on with it?"></textarea></div>
+          <p class="form-note">We only use your info to schedule your service — never shared, never sold. See our <a href="privacy.html" style="text-decoration:underline">privacy policy</a>.</p>
+          <div class="form-ok" id="formOk">✓ Request received — we'll call you within one business day to confirm.</div>
+          <div class="field full"><button class="btn btn-hot" type="submit">Request appointment</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">
+    <div>
+      <h4>Apex Auto Care</h4>
+      <p>Honest repair and serious builds under one roof.</p>
+      <a class="tel-big" href="tel:+15553182240">(555) 318-2240</a>
+      <p>2841 Industrial Ave, Springfield</p>
+    </div>
+    <div>
+      <h4>Hours</h4>
+      <p>Mon–Fri · 7:30am – 6:00pm</p>
+      <p>Saturday · 8:00am – 2:00pm</p>
+      <p>Sunday · Closed</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <a href="#estimator">Service estimator</a>
+      <a href="#services">Services &amp; pricing</a>
+      <a href="#work">Recent work</a>
+      <a href="#book">Book a service</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <span>© 2026 Apex Auto Care · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+    <span>Demo site by <a href="../../index.html">Pergola Performance</a></span>
+  </div>
+</footer>
+
+<!-- APEX SERVICE DESK — concierge (scripted demo) -->
+<button class="cc-fab" id="ccFab" type="button" aria-expanded="false" aria-label="Open the Apex service desk (demo)">
+  <span class="cc-pip" aria-hidden="true"></span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-3a8 8 0 0 1 16 0v3"/><path d="M20 15a2 2 0 0 1-2 2h-1v-5h1a2 2 0 0 1 2 2zM4 15a2 2 0 0 0 2 2h1v-5H6a2 2 0 0 0-2 2z"/><path d="M18 17v1a3 3 0 0 1-3 3h-3"/></svg>
+</button>
+<div class="cc-panel" id="ccPanel" role="dialog" aria-label="Apex Service Desk (demo)">
+  <div class="cc-head">
+    <div class="av" aria-hidden="true">A</div>
+    <div class="t"><b>Apex Service Desk</b><span>Bay Radio · Auto-reply</span></div>
+    <button class="x" id="ccClose" type="button" aria-label="Close service desk">[ X ]</button>
+  </div>
+  <div class="cc-log" id="ccLog" aria-live="polite"></div>
+  <div class="cc-chips" id="ccChips"></div>
+  <form class="cc-input" id="ccForm">
+    <input id="ccText" type="text" placeholder="Type a question…" autocomplete="off" aria-label="Message">
+    <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></button>
+  </form>
+  <div class="cc-foot">/// Scripted demo — built by Pergola Performance</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ============ SERVICE ESTIMATOR (no 3D, deterministic) ============ */
+  var FACTORS={Sedan:1.0,SUV:1.15,Truck:1.25,'Luxury/Euro':1.5,'EV/Hybrid':1.35};
+  var BASE={Diagnostics:89,'Oil & Filter':49,Brakes:149,'AC & Heating':99,'Tire & Alignment':79,Transmission:130,'Custom Build':1500};
+  /* map estimator service names -> existing #f-service <option> strings */
+  var SVC_OPTION={
+    'Diagnostics':'Engine diagnostics',
+    'Oil & Filter':'Oil & filter',
+    'Brakes':'Brake service',
+    'AC & Heating':'AC & heating',
+    'Tire & Alignment':'Tire & alignment',
+    'Transmission':'Transmission',
+    'Custom Build':'Custom build'
+  };
+
+  var vehRow=document.getElementById('vehRow');
+  var svcRow=document.getElementById('svcRow');
+  var estOut=document.getElementById('estOut');
+  var estInc=document.getElementById('estInc');
+  var stage=document.getElementById('vehStage');
+  var sils=Array.prototype.slice.call(stage.querySelectorAll('.veh-cross'));
+
+  var sel={veh:'Sedan',factor:1.0,svc:'Diagnostics',base:89};
+
+  function calcRange(base,factor){
+    return {low:Math.round(base*factor*0.9/5)*5, high:Math.round(base*factor*1.15/5)*5};
+  }
+
+  function render(){
+    /* readout — textContent ONLY, never innerHTML */
+    if(sel.svc==='Custom Build'){
+      estOut.textContent='from $'+Math.round(sel.base*sel.factor);
+      estInc.textContent='Starting point for a custom build · final number set after a build consult · 12-mo warranty on workmanship';
+    } else {
+      var r=calcRange(sel.base,sel.factor);
+      estOut.textContent='$'+r.low+' – $'+r.high;
+      estInc.textContent='Honest estimate · final price confirmed at drop-off · 12-mo warranty';
+    }
+    if(!reduce){ estOut.classList.remove('flick'); void estOut.offsetWidth; estOut.classList.add('flick'); }
+    /* silhouette — instant attribute swap, no innerHTML, no morph */
+    sils.forEach(function(s){
+      if(s.getAttribute('data-veh')===sel.veh){ s.removeAttribute('hidden'); }
+      else { s.setAttribute('hidden',''); }
+    });
+  }
+
+  function pressOne(row,btn,attr){
+    Array.prototype.slice.call(row.querySelectorAll('button')).forEach(function(b){
+      b.setAttribute('aria-pressed', b===btn ? 'true' : 'false');
+    });
+  }
+
+  vehRow.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b||!vehRow.contains(b))return;
+    sel.veh=b.getAttribute('data-veh'); sel.factor=parseFloat(b.getAttribute('data-factor'));
+    pressOne(vehRow,b); render();
+  });
+  svcRow.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b||!svcRow.contains(b))return;
+    /* data-svc may contain an HTML entity (&amp;) — read the decoded text via the key from BASE lookup */
+    var raw=b.getAttribute('data-svc'); // e.g. "Oil & Filter" (already decoded by the parser)
+    sel.svc=raw; sel.base=parseFloat(b.getAttribute('data-base'));
+    pressOne(svcRow,b); render();
+  });
+
+  /* default selection: Sedan + Diagnostics, render immediately */
+  render();
+
+  document.getElementById('bookEst').addEventListener('click',function(){
+    var sv=document.getElementById('f-service');
+    var want=SVC_OPTION[sel.svc]||sel.svc;
+    /* set the select to the mapped option; create + append if somehow absent */
+    var found=false, opts=sv.options;
+    for(var i=0;i<opts.length;i++){ if(opts[i].text===want){ sv.selectedIndex=i; found=true; break; } }
+    if(!found){ var o=document.createElement('option'); o.value=want; o.textContent=want; sv.appendChild(o); sv.value=want; }
+    document.getElementById('f-vehicle').value=sel.veh;
+    /* message via string concatenation, written to .value — NO innerHTML */
+    document.getElementById('f-msg').value='Estimate request — '+sel.svc+' for a '+sel.veh+' · est. '+estOut.textContent;
+    document.getElementById('book').scrollIntoView({behavior:reduce?'auto':'smooth'});
+    setTimeout(function(){ var n=document.getElementById('f-name'); if(n)n.focus({preventScroll:true}); }, reduce?0:650);
+  });
+
+  /* ============ LIGHTBOX ============ */
+  var lb=document.getElementById("lightbox"),lbImg=document.getElementById("lbImg"),idx=0;
+  var shots=Array.prototype.slice.call(document.querySelectorAll("#gallery img"));
+  var lbBtns=Array.prototype.slice.call(lb.querySelectorAll(".lb-btn")); // [close, prev, next]
+  var lbReturnTo=null; // gallery button that opened the lightbox — focus returns here on close
+  function openLb(i,trigger){
+    idx=i;lbImg.src=shots[i].src;lbImg.alt=shots[i].alt;lb.classList.add("open");
+    lbReturnTo=trigger||null;
+    lb.querySelector(".lb-close").focus(); // move focus into the dialog
+  }
+  function closeLb(){
+    lb.classList.remove("open");
+    if(lbReturnTo){lbReturnTo.focus();lbReturnTo=null;} // restore focus to the originating gallery button
+  }
+  function step(d){idx=(idx+d+shots.length)%shots.length;lbImg.src=shots[idx].src;lbImg.alt=shots[idx].alt}
+  document.querySelectorAll("#gallery button").forEach(function(b,i){b.addEventListener("click",function(){openLb(i,b)})});
+  lb.querySelector(".lb-close").addEventListener("click",closeLb);
+  lb.querySelector(".lb-prev").addEventListener("click",function(){step(-1)});
+  lb.querySelector(".lb-next").addEventListener("click",function(){step(1)});
+  lb.addEventListener("click",function(e){if(e.target===lb)closeLb()});
+  document.addEventListener("keydown",function(e){
+    if(!lb.classList.contains("open"))return;
+    if(e.key==="Escape"){closeLb();return;}
+    if(e.key==="ArrowLeft")step(-1);
+    if(e.key==="ArrowRight")step(1);
+    /* focus trap — keep Tab cycling within the three lightbox buttons */
+    if(e.key==="Tab"){
+      var first=lbBtns[0], last=lbBtns[lbBtns.length-1];
+      if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
+      else if(lbBtns.indexOf(document.activeElement)===-1){e.preventDefault();first.focus();}
+    }
+  });
+
+  /* ============ FORM ============ */
+  document.getElementById("bookForm").addEventListener("submit",function(e){
+    e.preventDefault();
+    document.getElementById("formOk").classList.add("show");
+    this.reset();
+  });
+
+  /* ============ REVEALS ============ */
+  var els=document.querySelectorAll(".rv");
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en,i){
+        if(en.isIntersecting){
+          en.target.style.transitionDelay=(i%4)*60+"ms";
+          en.target.classList.add("in");io.unobserve(en.target);
+        }
+      });
+    },{threshold:.12});
+    els.forEach(function(el){io.observe(el)});
+  } else { els.forEach(function(el){el.classList.add("in")}) }
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  /* ============ APEX SERVICE DESK + POLISH (scripted demo, self-contained) ============ */
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Concierge ---- */
+  var fab=document.getElementById('ccFab'), panel=document.getElementById('ccPanel'), closeBtn=document.getElementById('ccClose');
+  var log=document.getElementById('ccLog'), chips=document.getElementById('ccChips'), form=document.getElementById('ccForm'), text=document.getElementById('ccText');
+  var lb=document.getElementById('lightbox');
+  var seeded=false;
+
+  var CHIPS=['Services & pricing','Open the Build Lab','Shop hours','Book a service'];
+
+  function add(who,html){
+    var d=document.createElement('div');
+    d.className='cc-msg '+(who==='bot'?'cc-bot':'cc-user');
+    var pfx=who==='bot'?'Advisor ›':'You ›';
+    var p=document.createElement('span'); p.className='pfx'; p.textContent=pfx;
+    var body=document.createElement('span');
+    if(who==='bot'){ body.innerHTML=html; } else { body.textContent=html; }  /* user input as text, never HTML */
+    d.appendChild(p); d.appendChild(body);
+    log.appendChild(d); log.scrollTop=log.scrollHeight; return d;
+  }
+  function typing(){
+    var t=document.createElement('div'); t.className='cc-typing';
+    t.innerHTML='<i></i><i></i><i></i>'; log.appendChild(t); log.scrollTop=log.scrollHeight; return t;
+  }
+  function botReply(html,delay){
+    var t=typing();
+    setTimeout(function(){ t.remove(); add('bot',html); }, reduce?0:(delay||700));
+  }
+  function renderChips(){
+    chips.innerHTML='';
+    CHIPS.forEach(function(c){
+      var b=document.createElement('button'); b.type='button'; b.className='cc-chip';
+      b.textContent=c; b.addEventListener('click',function(){ handle(c); }); chips.appendChild(b);
+    });
+  }
+
+  function answer(q){
+    var s=q.toLowerCase();
+    /* SERVICES / PRICING */
+    if(/(price|pricing|cost|service|ledger|how much|quote)/.test(s))
+      return 'Straight pricing — diagnostics from <b>$89</b>, brakes from <b>$149</b>, oil + filter <b>$49</b>, AC from <b>$99</b>, tire &amp; alignment from <b>$79</b>, transmission from <b>$130</b>. Every repair carries our 12-month warranty.'
+        +'<div class="miniledger"><span><i>Diagnostics</i>$89</span><span><i>Brakes</i>$149</span><span><i>Oil + filter</i>$49</span></div>'
+        +'Want the full ledger?';
+    /* ESTIMATOR */
+    if(/(build|visualiz|estimat|the lab|build lab|spec|configure|configurator)/.test(s))
+      return 'That&rsquo;s the <b>service estimator</b> — pick your vehicle type and service for an honest price range, sourced from our live ledger. When it looks right, fire it straight to the booking desk. Want me to open it?';
+    /* WRAP / LIFT / WHEEL / TINT price OR bare number */
+    if(/(wrap|lift|wheel|tint|forged|mesh)/.test(s) || /\d{2,}/.test(s))
+      return 'Ballpark from the menu — wraps run <b>$2,400</b>, lifts <b>$850&ndash;$2,200</b> by height, forged or mesh wheels <b>$1,600&ndash;$1,900</b>, tint <b>$249</b>. For repair pricing, run your vehicle type through the estimator for a live range.';
+    /* BOOK / APPOINTMENT */
+    if(/(book|appointment|schedule|slot|reserve)/.test(s))
+      return 'Easiest part. I&rsquo;ll drop you at the booking ticket — name, vehicle, and what it needs, and we confirm a slot within one business day.';
+    /* HOURS */
+    if(/(hour|open|close|time|when)/.test(s))
+      return 'Mon&ndash;Fri 7:30&ndash;6, Saturday 8&ndash;2, Sunday we&rsquo;re dark. Most services are same-day.';
+    /* WARRANTY */
+    if(/(warrant|guarantee|guaranty)/.test(s))
+      return 'Every repair is backed <b>12 months</b>, parts and labor. Honest diagnosis first — no upsell theater.';
+    /* GREETING */
+    if(/^(hi|hey|hello|yo|sup)\b/.test(s) || s.indexOf('hello')>-1)
+      return 'Apex service desk. I can talk pricing, the estimator, shop hours, or get you booked. Pick a chip or ask away.';
+    /* FALLBACK — self-aware, never a dead end */
+    return 'Good question — on the live site this routes straight to a tech at the counter. For the demo I can talk pricing, the estimator, shop hours, or get you booked. Or call the shop direct: <b>(555) 318-2240</b>.';
+  }
+
+  function maybeScroll(q){
+    var s=q.toLowerCase();
+    function go(id,extra){
+      setTimeout(function(){
+        var el=document.getElementById(id);
+        if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth'});
+        if(extra)extra();
+      }, reduce?0:1200);
+    }
+    if(/(book|appointment|schedule|slot|reserve)/.test(s))
+      go('book',function(){ setTimeout(function(){ var n=document.getElementById('f-name'); if(n)n.focus({preventScroll:true}); }, reduce?0:650); });
+    else if(/(price|pricing|cost|service|ledger|how much|quote)/.test(s))
+      go('services');
+    else if(/(build|visualiz|estimat|the lab|build lab|spec|configure|configurator|wrap|lift|wheel|tint|forged|mesh)/.test(s) || /\d{2,}/.test(s))
+      go('estimator');
+    /* greeting + warranty + hours + fallback => no scroll (avoid scroll-jack) */
+  }
+
+  function handle(q){ add('user',q); botReply(answer(q),700); maybeScroll(q); }
+
+  function openChat(){
+    /* z-ladder discipline: never stack two modals */
+    if(lb && lb.classList.contains('open'))lb.classList.remove('open');
+    panel.classList.add('open'); fab.classList.add('cc-seen'); fab.setAttribute('aria-expanded','true');
+    if(!seeded){
+      seeded=true;
+      botReply('Apex service desk — what&rsquo;re you working on? /// Pick a chip or type a question.',400);
+      renderChips();
+    }
+    setTimeout(function(){ text.focus(); }, reduce?0:300);
+  }
+  function closeChat(){ panel.classList.remove('open'); fab.setAttribute('aria-expanded','false'); fab.focus(); }
+
+  fab.addEventListener('click',function(){ panel.classList.contains('open')?closeChat():openChat(); });
+  closeBtn.addEventListener('click',closeChat);
+
+  /* collect the panel's focusable elements live (chips render after open, so query on demand) */
+  function ccFocusables(){
+    return Array.prototype.slice.call(
+      panel.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+    ).filter(function(el){ return !el.disabled && el.offsetParent!==null; });
+  }
+
+  /* scoped Escape + focus trap — early-return when the panel is closed so it never collides with the lightbox handler */
+  document.addEventListener('keydown',function(e){
+    if(!panel.classList.contains('open'))return;
+    if(e.key==='Escape'){ closeChat(); return; }
+    if(e.key==='Tab'){
+      var f=ccFocusables(); if(!f.length)return;
+      var first=f[0], last=f[f.length-1];
+      if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
+      else if(f.indexOf(document.activeElement)===-1){e.preventDefault();first.focus();}
+    }
+  });
+
+  /* force-close the concierge if the lightbox opens (gallery click) so two overlays never stack */
+  document.querySelectorAll('#gallery button').forEach(function(b){
+    b.addEventListener('click',function(){ if(panel.classList.contains('open'))panel.classList.remove('open'); });
+  });
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=text.value.trim(); if(!v)return;
+    handle(v); text.value='';
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mane &amp; Co. | Luxury Hair Salon</title>
+<meta name="description" content="Mane and Co. is a luxury hair salon offering precision cuts, color, balayage, blowouts, treatments, and extensions. Book your appointment today.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4eee4; --paper-2:#ece3d5; --card:#fbf7f0;
+    --espresso:#241c16; --ink:#33291f; --muted:#7a6c5d;
+    --copper:#b6643c; --copper-2:#c87a4e; --gold:#bb934f;
+    --line:rgba(36,28,22,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Outfit',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.04;letter-spacing:-.5px}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{width:min(1200px,92%);margin:0 auto}
+  .label{font-family:'Outfit';font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;font-weight:500;color:var(--copper)}
+  .btn{display:inline-block;font-family:'Outfit';font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;padding:15px 30px;border-radius:2px;transition:.3s}
+  .btn-solid{background:var(--espresso);color:#f4eee4}
+  .btn-solid:hover{background:var(--copper);transform:translateY(-2px)}
+  .btn-line{border:1px solid var(--line);color:var(--ink)}
+  .btn-line:hover{background:var(--espresso);color:#f4eee4;border-color:var(--espresso)}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:rgba(244,238,228,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{font-family:'Fraunces';font-size:1.7rem;font-weight:600;letter-spacing:0;color:var(--espresso)}
+  .brand span{color:var(--copper)}
+  .nav-links{display:flex;align-items:center;gap:36px}
+  .nav-links a.link{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:400;transition:color .25s}
+  .nav-links a.link:hover{color:var(--espresso)}
+  .nav-call{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;padding:11px 20px;background:var(--espresso);color:#f4eee4;border-radius:2px;transition:.3s}
+  .nav-call:hover{background:var(--copper)}
+  .nav-toggle{display:none;background:none;border:none;color:var(--espresso);font-size:1.5rem;cursor:pointer}
+
+  /* HERO — split */
+  .hero{display:grid;grid-template-columns:1fr 1.05fr;min-height:84vh}
+  .hero-l{display:flex;flex-direction:column;justify-content:center;padding:60px 70px 60px max(4vw,calc((100vw - 1200px)/2))}
+  .hero-l .label{margin-bottom:22px;display:block}
+  .hero-l h1{font-size:clamp(3rem,5.6vw,5.2rem);margin-bottom:24px}
+  .hero-l h1 em{font-style:italic;color:var(--copper)}
+  .hero-l p{font-size:1.12rem;color:var(--muted);max-width:480px;margin-bottom:34px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-r{position:relative;overflow:hidden;border-radius:0 0 0 90px}
+  .hero-r img{width:100%;height:100%;object-fit:cover}
+  .hero-r .badge{position:absolute;left:30px;bottom:30px;background:rgba(36,28,22,.78);color:#f4eee4;backdrop-filter:blur(4px);padding:14px 22px;border-radius:3px;font-family:'Fraunces';font-style:italic;font-size:1.2rem}
+
+  /* MARQUEE */
+  .strip{background:var(--espresso);color:#e8ddcb;overflow:hidden;white-space:nowrap}
+  .strip .run{display:inline-block;padding:16px 0;animation:slide 26s linear infinite}
+  .strip span{font-family:'Fraunces';font-style:italic;font-size:1.15rem;padding:0 30px;color:#ecdcc4}
+  .strip span b{color:var(--copper-2);font-style:normal;font-weight:500}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  section{padding:108px 0}
+
+  /* ABOUT — image left */
+  .about{background:var(--paper-2)}
+  .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
+  .about-img{position:relative;border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(36,28,22,.5)}
+  .about-img img{width:100%;aspect-ratio:4/5;object-fit:cover}
+  .about-copy .label{margin-bottom:16px;display:block}
+  .about-copy h2{font-size:clamp(2.3rem,4.4vw,3.4rem);margin-bottom:22px}
+  .about-copy p{color:var(--muted);margin-bottom:18px}
+  .about-copy .sig{font-family:'Fraunces';font-style:italic;font-size:1.5rem;color:var(--copper);margin-top:10px}
+
+  /* SERVICES */
+  .svc-head{text-align:center;max-width:620px;margin:0 auto 60px}
+  .svc-head .label{display:block;margin-bottom:14px}
+  .svc-head h2{font-size:clamp(2.4rem,5vw,3.6rem);margin-bottom:14px}
+  .svc-head p{color:var(--muted)}
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .svc{background:var(--card);border:1px solid var(--line);border-top:2px solid var(--copper);border-radius:3px;padding:36px 30px;transition:transform .35s,box-shadow .35s}
+  .svc:hover{transform:translateY(-6px);box-shadow:0 24px 50px -28px rgba(36,28,22,.5)}
+  .svc .n{font-family:'Fraunces';font-style:italic;font-size:1.3rem;color:var(--copper);display:block;margin-bottom:14px}
+  .svc h3{font-size:1.5rem;margin-bottom:10px}
+  .svc p{color:var(--muted);font-size:.94rem}
+
+  /* GALLERY */
+  .gallery{background:var(--espresso);color:#f0e7d8}
+  .gallery .svc-head h2{color:#fbf7f0}
+  .gallery .svc-head p{color:#c4b7a4}
+  .collage{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:175px;gap:14px;margin-top:54px}
+  .collage figure{position:relative;overflow:hidden;border-radius:4px}
+  .collage img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .collage figure:hover img{transform:scale(1.06)}
+  .collage figure::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(20,15,11,.6));z-index:1}
+  .collage figure figcaption{position:absolute;left:16px;bottom:13px;z-index:2;font-family:'Fraunces';font-style:italic;font-size:1.15rem;color:#fbf7f0}
+  .big{grid-column:span 2;grid-row:span 2}
+  .tall{grid-row:span 2}
+
+  /* CONTACT */
+  .contact{background:var(--paper)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  .contact .label{display:block;margin-bottom:14px}
+  .contact h2{font-size:clamp(2.3rem,5vw,3.5rem);margin-bottom:18px}
+  .contact p.lead{color:var(--muted);margin-bottom:24px;max-width:430px}
+  .phone-big{font-family:'Fraunces';font-size:2.3rem;color:var(--copper);display:inline-block;margin-bottom:26px}
+  .info{list-style:none;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:8px 30px}
+  .info li{display:flex;justify-content:space-between;gap:18px;padding:20px 0;border-bottom:1px solid var(--line)}
+  .info li:last-child{border-bottom:none}
+  .info .k{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--copper);font-weight:500}
+  .info .v{text-align:right;color:var(--ink)}
+
+  footer{background:var(--espresso);color:#b7a892;padding:46px 0}
+  .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+  .foot .fb{font-family:'Fraunces';font-size:1.5rem;color:#f4eee4}
+  .foot .fb span{color:var(--copper-2)}
+  .foot .credit a{color:var(--copper-2)}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  .mcta{display:none}
+  @media(max-width:900px){
+    .nav-links{position:fixed;top:74px;right:0;left:0;flex-direction:column;align-items:flex-start;gap:0;background:var(--paper-2);border-bottom:1px solid var(--line);padding:0 6%;max-height:0;overflow:hidden;transition:max-height .4s}
+    .nav-links.open{max-height:420px}
+    .nav-links a.link{width:100%;padding:18px 0;border-bottom:1px solid var(--line)}
+    .nav-call{margin:16px 0}
+    .nav-toggle{display:block}
+    .hero{grid-template-columns:1fr}
+    .hero-l{padding:50px 0 40px}
+    .hero-r{border-radius:0;min-height:50vh}
+    .about-grid,.contact-grid{grid-template-columns:1fr;gap:36px}
+    .svc-grid{grid-template-columns:repeat(2,1fr)}
+    .collage{grid-template-columns:repeat(2,1fr)}
+    .big{grid-column:span 2;grid-row:span 1}
+  }
+  @media(max-width:560px){
+    section{padding:62px 0}
+    .svc-grid,.collage{grid-template-columns:1fr}
+    .big,.tall{grid-column:auto;grid-row:auto}
+    body{padding-bottom:74px}
+    .mcta{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:200;padding:10px 14px;background:rgba(244,238,228,.95);backdrop-filter:blur(8px);border-top:1px solid var(--line)}
+    .mcta a{flex:1;text-align:center;padding:13px;border-radius:2px;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
+    .mcta .c1{background:var(--espresso);color:#f4eee4}
+    .mcta .c2{border:1px solid var(--line);color:var(--ink)}
+  }
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.strip .run{animation:none}}
+</style>
+</head>
+<body id="top">
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">Mane <span>&amp;</span> Co.</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#services" class="link">Services</a>
+      <a href="#about" class="link">About</a>
+      <a href="#gallery" class="link">Gallery</a>
+      <a href="tel:+15555301190" class="nav-call">Call (555) 530 1190</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-l reveal">
+    <span class="label">Luxury Hair Studio</span>
+    <h1>Hair that turns <em>every</em> head in the room.</h1>
+    <p>At Mane &amp; Co. we craft cuts, color, and styling with an obsession for detail — walk out feeling like the most polished version of yourself.</p>
+    <div class="hero-cta">
+      <a href="tel:+15555301190" class="btn btn-solid">Book your appointment</a>
+      <a href="#services" class="btn btn-line">Our services</a>
+    </div>
+  </div>
+  <div class="hero-r reveal">
+    <img src="img/hero.png" alt="Mane & Co. salon interior">
+    <div class="badge">Quiet luxury, in every chair.</div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="strip">
+  <div class="run">
+    <span>Precision <b>cuts</b></span><span>·</span><span>hand-painted <b>balayage</b></span><span>·</span><span>glass <b>blowouts</b></span><span>·</span><span>master <b>stylists</b></span><span>·</span>
+    <span>Precision <b>cuts</b></span><span>·</span><span>hand-painted <b>balayage</b></span><span>·</span><span>glass <b>blowouts</b></span><span>·</span><span>master <b>stylists</b></span><span>·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-img reveal"><img src="img/station.png" alt="Mane & Co. styling station"></div>
+    <div class="about-copy reveal">
+      <span class="label">Our story</span>
+      <h2>A salon built on craft and quiet luxury.</h2>
+      <p>Mane &amp; Co. was imagined as a refuge from the rushed and the ordinary. Great hair is part artistry and part listening, so we take the time to understand you before a single snip.</p>
+      <p>Every stylist on our floor is endlessly curious, forever refining their craft and treating your hair as the canvas it is — effortless, intentional, unmistakably you.</p>
+      <div class="sig">Where your best hair day becomes every day.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="svc-head reveal">
+      <span class="label">What we do</span>
+      <h2>Services made for you</h2>
+      <p>From a fresh shape to a head-turning transformation, every appointment begins with a real conversation about the look you want.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc reveal"><span class="n">01</span><h3>Precision Cuts</h3><p>A bespoke shape built around your face, your hair, and the way you actually style it at home.</p></div>
+      <div class="svc reveal"><span class="n">02</span><h3>Color &amp; Highlights</h3><p>Rich, dimensional color and luminous highlights tailored to flatter your tone and lift your features.</p></div>
+      <div class="svc reveal"><span class="n">03</span><h3>Balayage</h3><p>Hand-painted, sun-kissed depth that grows out beautifully and softens with every wash.</p></div>
+      <div class="svc reveal"><span class="n">04</span><h3>Blowouts &amp; Styling</h3><p>Volume, movement, and shine for date night, the big meeting, or simply because you deserve it.</p></div>
+      <div class="svc reveal"><span class="n">05</span><h3>Deep Conditioning</h3><p>Restorative masques that nourish, strengthen, and bring tired strands back to life.</p></div>
+      <div class="svc reveal"><span class="n">06</span><h3>Extensions</h3><p>Seamless length and fullness, applied with care so the finish looks entirely your own.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <div class="svc-head reveal">
+      <span class="label">The work</span>
+      <h2>A glimpse of the gallery</h2>
+      <p>A small look at the textures, tones, and finishes we love to create.</p>
+    </div>
+    <div class="collage">
+      <figure class="big reveal"><img src="img/styling.png" alt="Styling soft waves"><figcaption>The Styling</figcaption></figure>
+      <figure class="reveal"><img src="img/texture.png" alt="Honey blonde balayage"><figcaption>Honey Blonde</figcaption></figure>
+      <figure class="reveal"><img src="img/station.png" alt="Styling station"><figcaption>The Studio</figcaption></figure>
+      <figure class="reveal"><img src="img/hero.png" alt="Salon interior"><figcaption>The Floor</figcaption></figure>
+      <figure class="reveal"><img src="img/texture.png" alt="Glossy waves" style="object-position:center 40%"><figcaption>Glass Finish</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <span class="label">Get in touch</span>
+      <h2>Ready for your appointment?</h2>
+      <p class="lead">Call us and we will find the perfect time. New guests are always welcome, and we love a fresh face in the chair.</p>
+      <a href="tel:+15555301190" class="phone-big">(555) 530 1190</a>
+      <div><a href="tel:+15555301190" class="btn btn-solid">Call to book</a></div>
+    </div>
+    <ul class="info reveal">
+      <li><span class="k">Visit</span><span class="v">Conveniently in your city</span></li>
+      <li><span class="k">Phone</span><span class="v">(555) 530 1190</span></li>
+      <li><span class="k">Hours</span><span class="v">Tue – Sat · 9 to 7</span></li>
+      <li><span class="k">Closed</span><span class="v">Sunday &amp; Monday</span></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div class="fb">Mane <span>&amp;</span> Co.</div>
+    <div class="credit"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · Website by <a href="../../index.html">Pergola Performance</a> · pergolaperformance@gmail.com</div>
+  </div>
+</footer>
+
+<div class="mcta">
+  <a class="c1" href="tel:+15555301190">Call</a>
+  <a class="c2" href="#contact">Book now</a>
+</div>
+
+<script>
+(function(){
+  var toggle=document.getElementById('navToggle'),links=document.getElementById('navLinks');
+  if(toggle){toggle.addEventListener('click',function(){links.classList.toggle('open');});
+    links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});}
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items=document.querySelectorAll('.reveal');
+  if(reduce||!('IntersectionObserver'in window)){items.forEach(function(el){el.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.14,rootMargin:'0px 0px -40px 0px'});
+  items.forEach(function(el){io.observe(el)});
+})();
+</script>
+</body>
+</html>

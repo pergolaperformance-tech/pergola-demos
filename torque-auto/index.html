@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TORQUE Auto Studio — Performance, Repair &amp; Detailing</title>
+<meta name="description" content="TORQUE Auto Studio — a high-end performance, repair and detailing shop. Upfront pricing, warranty-backed work, in-house specialists. Concept demo by Pergola Performance.">
+<meta name="theme-color" content="#0e0f12">
+<!-- inline SVG favicon: amber hex-nut brand mark on ink — kills the missing-favicon 404 and brands the tab -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%230e0f12'/%3E%3Cpath d='M11 6h10l5 10-5 10H11L6 16z' fill='%23ff9e2c'/%3E%3Ccircle cx='16' cy='16' r='3.6' fill='%230e0f12'/%3E%3C/svg%3E">
+<meta property="og:title" content="TORQUE Auto Studio">
+<meta property="og:description" content="Performance. Precision. Finish. A premium auto studio concept — build your quote and book a visit.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/hero.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Mulish:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* surfaces */
+  --ink:#0e0f12;
+  --panel:#16181d;
+  --panel-2:#1d2027;
+  --line:rgba(255,255,255,.08);
+  --line-2:rgba(255,255,255,.14);
+  /* text */
+  --bone:#efece4;
+  --mut:#9a9b9f;
+  --mut-2:#71737a;
+  /* accent — amber is reserved for true CTAs and money */
+  --amber:#ff9e2c;
+  --amber-2:#ffb24d;
+  --amber-dim:rgba(255,158,44,.14);
+  /* secondary register — cool steel/graphite for non-CTA chrome so amber keeps its impact */
+  --steel:#7f93a8;
+  --steel-2:#9fb1c4;
+  --steel-dim:rgba(127,147,168,.14);
+  /* type */
+  --display:'Sora',system-ui,sans-serif;
+  --body:'Mulish',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  /* spacing scale (8px) */
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+  /* radius */
+  --r:3px; --r2:4px;
+  /* shadow */
+  --shadow:0 24px 60px -28px rgba(0,0,0,.8);
+  --maxw:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+/* keep anchored headings clear of the fixed nav when targeted directly */
+section[id],header[id]{scroll-margin-top:84px}
+body{
+  background:var(--ink);
+  color:var(--bone);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+img,video{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:2px}
+
+/* ---------- typography helpers ---------- */
+.eyebrow{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--amber);
+  font-weight:500;
+}
+.eyebrow.mut{color:var(--mut)}
+/* steel eyebrow for non-conversion sections, so amber eyebrows flag the quote/booking path */
+.eyebrow.steel{color:var(--steel-2)}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.04;letter-spacing:-.02em}
+.section-head{max-width:680px;margin-bottom:var(--s6)}
+.section-head h2{font-size:clamp(2rem,4.4vw,3.1rem);margin:var(--s2) 0 var(--s2)}
+.section-head p{color:var(--mut);font-size:1.06rem;max-width:560px}
+
+/* ---------- layout shells ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--s3)}
+section{padding:var(--s8) 0}
+@media(max-width:720px){section{padding:var(--s7) 0}}
+.hairline{height:1px;background:var(--line);border:0}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px clamp(16px,4vw,40px);
+  transition:background .4s ease,border-color .4s ease,backdrop-filter .4s ease;
+  border-bottom:1px solid transparent;
+}
+.nav.scrolled{
+  background:rgba(14,15,18,.82);
+  backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.05rem;letter-spacing:.02em}
+/* brand mark — a small hex-nut/bolt silhouette (torque motif) rather than a generic rotated square */
+.brand .dot{width:13px;height:13px;background:var(--amber);
+  clip-path:polygon(25% 2%,75% 2%,98% 50%,75% 98%,25% 98%,2% 50%);
+  box-shadow:0 0 14px rgba(255,158,44,.55)}
+.brand span.mono{font-family:var(--mono);font-weight:500;font-size:.62rem;letter-spacing:.24em;color:var(--mut);align-self:center;margin-left:4px}
+.nav-links{display:flex;align-items:center;gap:var(--s4)}
+.nav-links a{font-size:.9rem;color:var(--mut);transition:color .2s}
+.nav-links a:hover{color:var(--bone)}
+.nav-cta{
+  font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:10px 18px;border:1px solid var(--line-2);border-radius:var(--r);color:var(--bone);
+  transition:border-color .25s,background .25s;
+}
+.nav-cta:hover{border-color:var(--amber);background:var(--amber-dim)}
+@media(max-width:860px){.nav-links a{display:none}.nav-links .nav-cta{display:inline-block}}
+@media(max-width:430px){
+  .nav{padding:14px 18px}
+  .brand span.mono{display:none}
+  .nav-cta{padding:9px 14px;font-size:.68rem}
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  padding:15px 26px;border-radius:var(--r);transition:transform .2s ease,box-shadow .25s ease,background .25s,border-color .25s;
+  border:1px solid transparent;
+}
+.btn:active{transform:translateY(1px)}
+.btn-amber{background:var(--amber);color:#1a1206;font-weight:600;box-shadow:0 10px 30px -10px rgba(255,158,44,.5)}
+.btn-amber:hover{background:var(--amber-2);box-shadow:0 14px 38px -10px rgba(255,158,44,.65)}
+.btn-ghost{border-color:var(--line-2);color:var(--bone)}
+.btn-ghost:hover{border-color:var(--bone);background:rgba(255,255,255,.04)}
+.btn .arr{transition:transform .25s}
+.btn:hover .arr{transform:translateX(4px)}
+
+/* ---------- hero ---------- */
+/* ~86vh so a sliver of the services grid peeks above the fold as a scroll affordance,
+   instead of a full-screen video that buries the value prop. */
+.hero{position:relative;min-height:86svh;display:flex;align-items:flex-end;padding-bottom:var(--s7);overflow:hidden}
+.hero-media{position:absolute;inset:0;z-index:0}
+.hero-media video,.hero-media img{width:100%;height:100%;object-fit:cover}
+.hero-scrim{
+  position:absolute;inset:0;z-index:1;
+  /* stronger left-edge + extended midpoint so body text clears AA over the brightest footage */
+  background:
+    linear-gradient(90deg,rgba(14,15,18,.98) 0%,rgba(14,15,18,.82) 55%,rgba(14,15,18,0) 82%),
+    linear-gradient(0deg,rgba(14,15,18,.97) 0%,rgba(14,15,18,.45) 36%,rgba(14,15,18,0) 62%);
+}
+.hero-grain{position:absolute;inset:0;z-index:2;opacity:.5;pointer-events:none;
+  background-image:radial-gradient(circle at 50% 50%,transparent 0,rgba(0,0,0,.18) 100%)}
+.hero-inner{position:relative;z-index:3;width:100%}
+.hero h1{font-size:clamp(2.8rem,8vw,6.6rem);max-width:18ch;margin:var(--s3) 0 var(--s3)}
+.hero h1 em{font-style:normal;color:var(--amber);display:block;letter-spacing:-.04em}
+.hero-sub{color:var(--bone);font-size:clamp(1.08rem,1.7vw,1.22rem);max-width:46ch;margin-bottom:var(--s5)}
+.hero-ctas{display:flex;gap:var(--s2);flex-wrap:wrap}
+.hero-meta{
+  position:absolute;right:clamp(16px,4vw,40px);bottom:var(--s7);z-index:3;
+  display:flex;flex-direction:column;gap:6px;text-align:right;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;color:var(--mut);text-transform:uppercase;
+}
+.hero-meta b{color:var(--bone);font-weight:600}
+@media(max-width:860px){.hero-meta{display:none}}
+.scroll-cue{position:absolute;left:50%;bottom:22px;z-index:3;transform:translateX(-50%);
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.3em;color:var(--mut);text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-cue .bar{width:1px;height:40px;background:linear-gradient(var(--amber),transparent)}
+.scroll-cue .chev{width:14px;height:14px;color:var(--amber);animation:cue 2s ease-in-out infinite}
+@keyframes cue{0%,100%{opacity:.35;transform:translateY(-3px)}50%{opacity:1;transform:translateY(3px)}}
+
+/* ---------- marquee strip ---------- */
+.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel);overflow:hidden;padding:0;
+  /* faint brushed-metal grain so the strip reads as a machined surface, not flat panel */
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.022) 0 1px,transparent 1px 3px)}
+.strip-track{display:flex;gap:var(--s6);padding:18px var(--s3);white-space:nowrap;animation:slide 32s linear infinite;will-change:transform}
+.strip-track span{font-family:var(--mono);font-size:.78rem;letter-spacing:.2em;color:var(--mut);text-transform:uppercase;display:inline-flex;align-items:center;gap:14px}
+/* steel bullets — these are decorative chrome, not actions, so they sit in the secondary register */
+.strip-track span::before{content:"";width:6px;height:6px;background:var(--steel);transform:rotate(45deg)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ---------- services ---------- */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s2)}
+@media(max-width:900px){.services-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.services-grid{grid-template-columns:1fr}}
+.svc{
+  position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
+  padding:var(--s4) var(--s3) var(--s3);transition:border-color .3s,transform .3s,background .3s;overflow:hidden;
+}
+.svc::after{content:"";position:absolute;left:0;top:0;height:2px;width:0;background:var(--amber);transition:width .4s ease}
+.svc:hover{border-color:var(--line-2);transform:translateY(-4px);background:var(--panel-2)}
+.svc:hover::after{width:100%}
+/* icon tile sits in the steel register (chrome), with a heavier stroke so the set
+   reads as a custom motif rather than generic 1.6px line icons. amber is freed for the price. */
+.svc-ico{width:44px;height:44px;border:1px solid var(--steel-dim);border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin-bottom:var(--s3);color:var(--steel-2);background:linear-gradient(160deg,rgba(159,177,196,.08),transparent)}
+.svc-ico svg{width:22px;height:22px;stroke-width:2}
+.svc:hover .svc-ico{color:var(--steel-2);border-color:var(--steel)}
+.svc h3{font-size:1.18rem;margin-bottom:10px;font-weight:700}
+.svc p{color:var(--mut);font-size:.94rem;margin-bottom:var(--s3);min-height:3.2em}
+.svc-price{font-family:var(--mono);font-size:.82rem;letter-spacing:.08em;color:var(--bone);display:flex;align-items:baseline;gap:8px}
+.svc-price small{color:var(--mut-2);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase}
+.svc-price b{color:var(--amber);font-size:1.05rem;font-weight:600}
+/* helper/CTA tile — visually un-numbered so it reads as a utility card, not a 6th discipline */
+.svc.svc-cta{background:var(--panel-2);border-style:dashed;border-color:var(--line-2);justify-content:center}
+.svc.svc-cta::after{display:none}
+.svc.svc-cta:hover{transform:translateY(-4px);background:var(--panel-2)}
+.svc.svc-cta .svc-tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mut-2);margin-bottom:10px;display:block}
+
+/* ---------- quote builder ---------- */
+#quote{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.quote-grid{display:grid;grid-template-columns:1.55fr .95fr;gap:var(--s5);align-items:start}
+@media(max-width:980px){
+  .quote-grid{grid-template-columns:1fr;gap:var(--s5)}
+  /* on this breakpoint the estimate panel drops below all steps; the qbar carries the live number */
+  .qbar.active{display:block}
+  /* keep the fixed qbar (~72px) from covering the last option row or the panel CTA */
+  #quote{padding-bottom:calc(var(--s8) + 96px)}
+}
+.qstep{margin-bottom:var(--s5)}
+.qstep:last-child{margin-bottom:0}
+.qstep-head{display:flex;align-items:center;gap:14px;margin-bottom:var(--s3)}
+.qstep-num{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:var(--amber);border:1px solid var(--amber);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex:none}
+.qstep-head h3{font-size:1.12rem;font-weight:700}
+.qstep-head .hint{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;color:var(--mut-2);text-transform:uppercase;margin-left:auto}
+/* equal-width chips on an auto-fit grid so rows pack full and never leave a trailing orphan */
+.opt-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.opt{
+  position:relative;border:1px solid var(--line);background:var(--panel-2);border-radius:var(--r);
+  padding:12px 16px;display:flex;flex-direction:column;gap:3px;width:100%;
+  transition:border-color .2s,background .2s,box-shadow .2s;text-align:left;
+}
+/* phones: force a clean 2-up grid (no lone EV row with dead space) */
+@media(max-width:480px){.opt-row{grid-template-columns:1fr 1fr}}
+.opt .ot{font-size:.92rem;font-weight:600;color:var(--bone)}
+.opt .op{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--mut)}
+.opt:hover{border-color:var(--line-2)}
+.opt[aria-pressed="true"],.opt[aria-checked="true"]{
+  border-color:var(--amber);background:linear-gradient(180deg,var(--amber-dim),transparent);
+  box-shadow:0 0 0 1px var(--amber) inset,0 10px 30px -16px rgba(255,158,44,.6);
+}
+.opt[aria-pressed="true"] .op,.opt[aria-checked="true"] .op{color:var(--amber-2)}
+.opt .check{position:absolute;top:8px;right:10px;width:14px;height:14px;opacity:0;transition:opacity .2s;color:var(--amber)}
+.opt[aria-pressed="true"] .check,.opt[aria-checked="true"] .check{opacity:1}
+
+/* estimate panel */
+.estimate{
+  position:sticky;top:96px;background:var(--ink);border:1px solid var(--line-2);border-radius:var(--r2);
+  padding:var(--s4) var(--s3);box-shadow:var(--shadow);
+  /* faint brushed-metal sheen so the quote surface feels machined, not flat #16181d */
+  background-image:
+    linear-gradient(180deg,rgba(159,177,196,.05),transparent 40%),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.015) 0 1px,transparent 1px 4px);
+}
+.estimate .elabel{font-family:var(--mono);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mut)}
+.estimate .etotal{font-family:var(--display);font-weight:800;font-size:clamp(2.4rem,5vw,3.1rem);color:var(--bone);line-height:1.05;margin:6px 0 2px;letter-spacing:-.02em}
+.estimate .etotal .cur{color:var(--amber);font-size:.5em;vertical-align:baseline;position:relative;top:-.02em;margin-right:1px}
+.estimate .esub{font-family:var(--mono);font-size:.74rem;color:var(--mut);letter-spacing:.06em;margin-bottom:var(--s3)}
+.eline{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-top:1px solid var(--line);font-size:.9rem}
+.eline .k{color:var(--mut)}
+.eline .v{font-family:var(--mono);color:var(--bone);font-size:.84rem}
+.eline.time .v{color:var(--amber-2)}
+.ebreak{margin:var(--s2) 0;max-height:160px;overflow:auto}
+.ebreak .bl{display:flex;justify-content:space-between;font-size:.82rem;color:var(--mut);padding:4px 0}
+.ebreak .bl span:last-child{font-family:var(--mono);color:var(--bone)}
+.ebreak .empty{color:var(--mut-2);font-style:italic;font-size:.84rem;padding:6px 0}
+.estimate .btn{width:100%;justify-content:center;margin-top:var(--s2)}
+.estimate .enote{font-size:.72rem;color:var(--mut-2);margin-top:14px;line-height:1.5}
+/* itemised ledger — base -> adjustment -> subtotal grouped tightly with NO interior rules,
+   then ONE heavier rule before the range, which is the only line that competes with the headline */
+.eledger{margin-top:var(--s2);padding-top:var(--s2);border-top:1px solid var(--line)}
+.eledger .eline{border-top:0;padding:5px 0}
+.eledger .eline.adj .v{color:var(--amber-2)}
+.eledger .eline.subtotal{padding-top:9px}
+.eledger .eline.subtotal .k{color:var(--bone);font-weight:600}
+.eledger .eline.subtotal .v{color:var(--bone);font-weight:600}
+.eledger .eline.range{margin-top:11px;padding-top:13px;border-top:1px solid var(--line-2)}
+.eledger .eline.range .k{color:var(--bone);font-weight:600}
+.eledger .eline.range .v{color:var(--amber);font-size:.94rem}
+.eledger .eline.range small{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.04em;color:var(--mut-2);text-transform:none}
+
+/* ---------- mobile live-total bar ---------- */
+/* On phones the estimate panel falls below all three steps, so the live number
+   is off-screen while tapping. This compact bar pins it to the viewport bottom
+   and expands to the full breakdown on tap. Hidden on desktop / by default. */
+.qbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;
+  background:rgba(14,15,18,.92);backdrop-filter:blur(14px) saturate(140%);
+  border-top:1px solid var(--line-2);box-shadow:0 -18px 40px -24px rgba(0,0,0,.9);
+}
+.qbar-row{display:flex;align-items:center;gap:14px;padding:12px clamp(16px,4vw,24px) calc(12px + env(safe-area-inset-bottom))}
+.qbar-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.qbar-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mut)}
+.qbar-total{font-family:var(--display);font-weight:800;font-size:1.25rem;color:var(--bone);letter-spacing:-.02em;line-height:1.1;white-space:nowrap}
+.qbar-total .cur{color:var(--amber);font-size:.62em;vertical-align:baseline;position:relative;top:-.02em;margin-right:1px}
+.qbar-toggle{margin-left:auto;flex:none;font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);border:1px solid var(--line-2);border-radius:var(--r);padding:8px 12px;display:inline-flex;align-items:center;gap:8px;background:none}
+.qbar-toggle .chev{width:12px;height:12px;color:var(--amber);transition:transform .25s}
+.qbar.open .qbar-toggle .chev{transform:rotate(180deg)}
+.qbar-book{flex:none;font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--amber);color:#1a1206;border-radius:var(--r);padding:10px 14px}
+.qbar-panel{display:none;max-height:46vh;overflow:auto;padding:0 clamp(16px,4vw,24px) 16px;border-top:1px solid var(--line)}
+.qbar.open .qbar-panel{display:block}
+.qbar-panel .eline,.qbar-panel .bl{font-size:.84rem}
+
+/* ---------- work gallery ---------- */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:210px;gap:12px}
+@media(max-width:900px){.gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:190px}}
+@media(max-width:520px){.gallery{grid-template-columns:1fr;grid-auto-rows:230px}}
+.gitem{position:relative;overflow:hidden;border-radius:var(--r2);border:1px solid var(--line);cursor:zoom-in;background:var(--panel)}
+/* desktop mosaic: 4 cols x 2 rows, packs with no gaps */
+.gitem.tall{grid-row:span 2}
+.gitem.wide{grid-column:span 2}
+@media(max-width:900px){
+  /* 2-col: tall keeps its height, wide spans both cols */
+  .gitem.tall{grid-row:span 1}
+  .gitem.wide{grid-column:span 2}
+}
+@media(max-width:520px){.gitem.tall,.gitem.wide{grid-row:auto;grid-column:auto}}
+.gitem img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1);filter:saturate(1.02)}
+.gitem:hover img{transform:scale(1.07)}
+.gitem .gcap{
+  position:absolute;left:0;right:0;bottom:0;padding:16px;z-index:2;
+  background:linear-gradient(0deg,rgba(14,15,18,.88),transparent);
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--bone);
+  transform:translateY(8px);opacity:.85;transition:transform .35s,opacity .35s;
+}
+.gitem:hover .gcap{transform:translateY(0);opacity:1}
+.gitem .gcap b{color:var(--amber)}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:90;background:rgba(8,9,11,.94);backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;padding:24px}
+.lightbox.open{display:flex}
+.lightbox img{max-width:92vw;max-height:86vh;border-radius:var(--r2);box-shadow:var(--shadow)}
+.lightbox .lbx-close{position:absolute;top:20px;right:24px;font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;
+  color:var(--bone);border:1px solid var(--line-2);padding:9px 16px;border-radius:var(--r);text-transform:uppercase}
+.lightbox .lbx-close:hover{border-color:var(--amber);color:var(--amber)}
+
+/* ---------- trust ---------- */
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s2)}
+@media(max-width:900px){.trust-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.trust-grid{grid-template-columns:1fr}}
+.tcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:var(--s3)}
+.tcard .tnum{font-family:var(--display);font-weight:800;font-size:1.05rem;color:var(--steel-2);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.tcard .tnum svg{width:20px;height:20px;stroke-width:1.9}
+.tcard h3{font-size:1.02rem;font-weight:700;margin-bottom:6px}
+.tcard p{color:var(--mut);font-size:.9rem}
+.concept-note{
+  margin-top:var(--s4);display:flex;gap:14px;align-items:flex-start;
+  background:var(--amber-dim);border:1px solid rgba(255,158,44,.3);border-radius:var(--r2);
+  padding:var(--s3);font-size:.9rem;color:var(--bone);
+}
+.concept-note svg{width:22px;height:22px;color:var(--amber);flex:none;margin-top:2px}
+.concept-note b{color:var(--amber)}
+
+/* ---------- booking ---------- */
+#book{background:var(--panel);border-top:1px solid var(--line)}
+.book-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:var(--s6);align-items:start}
+@media(max-width:900px){.book-grid{grid-template-columns:1fr;gap:var(--s5)}}
+.book-info h2{font-size:clamp(2rem,4.4vw,3rem);margin:var(--s2) 0 var(--s3)}
+.book-info p{color:var(--mut);margin-bottom:var(--s3);max-width:42ch}
+.book-detail{display:flex;flex-direction:column;gap:var(--s2);margin-top:var(--s4)}
+.book-detail .bd{display:flex;gap:14px;align-items:center;font-size:.94rem}
+.book-detail .bd svg{width:18px;height:18px;color:var(--amber);flex:none}
+.book-detail .bd span{color:var(--mut)}
+.book-detail .bd b{color:var(--bone);font-weight:600;font-family:var(--mono);font-size:.86rem;letter-spacing:.04em}
+form{background:var(--ink);border:1px solid var(--line-2);border-radius:var(--r2);padding:var(--s4);box-shadow:var(--shadow)}
+.field{margin-bottom:var(--s3)}
+.field:last-of-type{margin-bottom:var(--s4)}
+.field label{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+.field label .req{color:var(--amber)}
+.field input,.field select,.field textarea{
+  width:100%;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r);
+  padding:13px 14px;color:var(--bone);font-family:var(--body);font-size:.95rem;transition:border-color .2s,background .2s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--amber);background:var(--panel)}
+.field textarea{resize:vertical;min-height:90px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}
+@media(max-width:480px){.field-row{grid-template-columns:1fr}}
+form .btn{width:100%;justify-content:center}
+.form-note{font-size:.74rem;color:var(--mut-2);margin-top:14px;text-align:center;line-height:1.5}
+.form-note a{color:var(--mut);text-decoration:underline;text-underline-offset:2px}
+.form-success{display:none;text-align:center;padding:var(--s5) var(--s3)}
+.form-success.show{display:block}
+.form-success .ok{width:56px;height:56px;border-radius:50%;background:var(--amber-dim);border:1px solid var(--amber);display:flex;align-items:center;justify-content:center;margin:0 auto var(--s3);color:var(--amber)}
+.form-success h3{font-size:1.3rem;margin-bottom:10px}
+.form-success p{color:var(--mut);font-size:.94rem;max-width:34ch;margin:0 auto}
+
+/* ---------- footer ---------- */
+footer{padding:var(--s7) 0 var(--s5)}
+.foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--s5);padding-bottom:var(--s5)}
+.foot-brand{max-width:30ch}
+.foot-brand p{color:var(--mut);font-size:.9rem;margin-top:14px}
+.foot-cols{display:flex;gap:var(--s7);flex-wrap:wrap}
+.foot-col h4{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mut-2);margin-bottom:16px}
+.foot-col a,.foot-col span{display:block;font-size:.9rem;color:var(--mut);margin-bottom:10px;transition:color .2s}
+.foot-col a:hover{color:var(--amber)}
+.foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;padding-top:var(--s4);border-top:1px solid var(--line);font-size:.8rem;color:var(--mut-2)}
+.foot-bottom .concept{color:var(--mut);font-family:var(--mono);font-size:.72rem;letter-spacing:.06em}
+.foot-bottom .concept b{color:var(--amber)}
+
+/* ---------- reveal animation ---------- */
+/* progressive enhancement: only hide content when JS is present (root .js class).
+   No-JS users, crawlers, prerenders and deep links get full content immediately. */
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.06s}.reveal.d2{transition-delay:.12s}.reveal.d3{transition-delay:.18s}.reveal.d4{transition-delay:.24s}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  .gitem img,.btn,.svc{transition:none!important}
+  .strip-track{animation:none!important}
+  .hero-media video{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="nav" id="nav" aria-label="Primary">
+  <a class="brand" href="#top" aria-label="TORQUE Auto Studio home">
+    <span class="dot" aria-hidden="true"></span>TORQUE<span class="mono">AUTO&nbsp;STUDIO</span>
+  </a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#quote">Quote builder</a>
+    <a href="#work">Work</a>
+    <a href="#book">Visit</a>
+    <a class="nav-cta" href="#quote">Build your quote</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="top">
+  <div class="hero-media" id="heroMedia" aria-hidden="true">
+    <img src="img/hero.webp" alt="" fetchpriority="high">
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+  <div class="hero-inner wrap">
+    <p class="eyebrow reveal">Performance · Repair · Detailing</p>
+    <h1 class="reveal d1">Your car,<em>dialed in.</em></h1>
+    <p class="hero-sub reveal d2">A precision auto studio for people who care how their car drives, stops and shines. Upfront pricing, warranty-backed work, no upsell — just sharp craft.</p>
+    <div class="hero-ctas reveal d3">
+      <a class="btn btn-amber" href="#quote">Build your quote <span class="arr" aria-hidden="true">→</span></a>
+      <a class="btn btn-ghost" href="#book">Book a visit</a>
+    </div>
+  </div>
+  <div class="hero-meta" aria-hidden="true">
+    <span>Est. <b>Studio Bay 01</b></span>
+    <span>Mon–Sat <b>8:00 – 18:00</b></span>
+    <span>By appointment</span>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span class="bar"></span>Scroll<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg></div>
+</header>
+
+<style>
+  /* cursor-driven parallax hero — an interactive "skill" demo (vs the wedding's video). Continuous, no loop. */
+  .hero{perspective:1200px}
+  .hero-media{will-change:transform}
+  .hero-media img{width:100%;height:100%;object-fit:cover;display:block}
+  .hero-parallax .hero-media{transform:scale(1.08)}
+  .hero-parallax .hero-inner{will-change:transform}
+  @media(prefers-reduced-motion:reduce){.hero-media{transform:none!important}}
+  #qTotal,#qbarTotal{white-space:nowrap}
+  @keyframes qBump{0%{opacity:.5;transform:translateY(4px) scale(.985)}100%{opacity:1;transform:none}}
+  #qTotal.bump,#qbarTotal.bump{animation:qBump .4s cubic-bezier(.22,1,.36,1)}
+  @media(prefers-reduced-motion:reduce){#qTotal.bump,#qbarTotal.bump{animation:none}}
+</style>
+<!-- ===== MARQUEE STRIP ===== -->
+<div class="strip" aria-hidden="true">
+  <div class="strip-track">
+    <span>Brake systems</span><span>Ceramic detailing</span><span>Vinyl wrap</span><span>Window tint</span><span>Performance tuning</span><span>Paint correction</span><span>Forged wheels</span>
+    <span>Brake systems</span><span>Ceramic detailing</span><span>Vinyl wrap</span><span>Window tint</span><span>Performance tuning</span><span>Paint correction</span><span>Forged wheels</span>
+  </div>
+</div>
+
+<!-- ===== SERVICES ===== -->
+<style>
+  .tabbar{position:sticky;top:62px;z-index:30;display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:13px 16px;background:rgba(14,15,18,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .tabbar .tab{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);background:transparent;border:1px solid var(--line);border-radius:4px;padding:11px 20px;cursor:pointer;transition:color .2s,background .2s,border-color .2s,box-shadow .2s;min-height:44px}
+  .tabbar .tab[aria-selected="true"]{color:var(--ink);background:var(--amber);border-color:var(--amber);box-shadow:0 6px 18px -8px rgba(255,158,44,.6)}
+  @media(hover:hover){.tabbar .tab[aria-selected="false"]:hover{color:var(--bone);border-color:var(--mut)}}
+  #services[hidden],#quote[hidden],#work[hidden]{display:none!important}
+  body:not(.tab-quote) #qbar{display:none!important}
+  @media(max-width:560px){.tabbar{top:54px;padding:9px 8px;gap:4px}.tabbar .tab{padding:10px 13px;font-size:.64rem;letter-spacing:.06em}}
+</style>
+<div class="tabbar" role="tablist" aria-label="Browse TORQUE">
+  <button class="tab" id="tab-quote" role="tab" aria-selected="true" aria-controls="quote" data-panel="quote">Quote Builder</button>
+  <button class="tab" id="tab-work" role="tab" aria-selected="false" aria-controls="work" data-panel="work">Our Work</button>
+  <button class="tab" id="tab-services" role="tab" aria-selected="false" aria-controls="services" data-panel="services">Services</button>
+</div>
+<section id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">What we do</p>
+      <h2>Five disciplines, one bay.</h2>
+      <p>Everything under one roof, handled by in-house specialists. Honest scopes, honest prices — the figure you see is where the work starts.</p>
+    </div>
+    <div class="services-grid">
+
+      <article class="svc reveal">
+        <div class="svc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg></div>
+        <h3>Brakes &amp; pads</h3>
+        <p>Pads, rotors, fluid and lines — diagnosed, replaced and bedded in properly so the pedal feels right the first time.</p>
+        <div class="svc-price"><small>from</small><b>$189</b></div>
+      </article>
+
+      <article class="svc reveal d1">
+        <div class="svc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 8V5a1 1 0 0 1 1-1h2v4"/><path d="M9 8h4l2 3v9a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-9z"/><path d="M12 4h3l2 2M17 6v3"/><path d="M9 13h4"/></svg></div>
+        <h3>Detailing</h3>
+        <p>Multi-stage hand wash, decon and interior reset. Your car leaves looking the way it did the day you wanted it.</p>
+        <div class="svc-price"><small>from</small><b>$149</b></div>
+      </article>
+
+      <article class="svc reveal d2">
+        <div class="svc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="7" cy="7" rx="4" ry="2.2"/><path d="M3 7v3c0 1.2 1.8 2.2 4 2.2s4-1 4-2.2V7"/><path d="M11 9l9 2.5a1 1 0 0 1 .7 1.2l-.8 3a1 1 0 0 1-1.2.7L8 16"/></svg></div>
+        <h3>Vinyl wrap</h3>
+        <p>Full and partial wraps in matte, satin or gloss. Clean edges, tucked seams, and a finish that survives the car wash.</p>
+        <div class="svc-price"><small>from</small><b>$1,900</b></div>
+      </article>
+
+      <article class="svc reveal">
+        <div class="svc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 7a2 2 0 0 1 2-2h7l5 5v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M5 13h14"/><circle cx="9" cy="9.5" r="1.6"/><path d="M9 6.4v1M9 11.6v1M6.4 9.5h1M11.6 9.5h-1"/></svg></div>
+        <h3>Window tint</h3>
+        <p>Ceramic films with real heat rejection, legal-grade options and a lifetime no-bubble, no-fade warranty on the install.</p>
+        <div class="svc-price"><small>from</small><b>$249</b></div>
+      </article>
+
+      <article class="svc reveal d1">
+        <div class="svc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg></div>
+        <h3>Performance</h3>
+        <p>ECU tuning, intake, exhaust and suspension — built around how you actually drive, then road-tested before handover.</p>
+        <div class="svc-price"><small>from</small><b>$399</b></div>
+      </article>
+
+      <article class="svc svc-cta reveal d2" style="display:flex;flex-direction:column">
+        <span class="svc-tag">Start here</span>
+        <h3 style="font-size:1.3rem">Not sure where to start?</h3>
+        <p style="min-height:auto">Use the quote builder — pick your vehicle and what it needs, and watch a real estimate and timeframe come together.</p>
+        <a class="btn btn-ghost" href="#quote" style="align-self:flex-start;margin-top:4px">Open quote builder <span class="arr" aria-hidden="true">→</span></a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== QUOTE BUILDER ===== -->
+<section id="quote">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Build your quote</p>
+      <h2>An estimate in three steps.</h2>
+      <p>Tell us the car and what it needs — your live estimate updates as you choose. Final price is confirmed at drop-off, with no surprises.</p>
+    </div>
+
+    <div class="quote-grid">
+      <div>
+        <!-- STEP 1 : VEHICLE -->
+        <style>
+          .vlookup{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 12px}
+          .vsel{display:flex;flex-direction:column;gap:6px}
+          .vsel label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+          .vsel select{appearance:none;-webkit-appearance:none;background:var(--panel-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23ff9e2c' stroke-width='2'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid var(--line);border-radius:4px;color:var(--bone);font-family:'Mulish',sans-serif;font-size:.92rem;padding:11px 30px 11px 12px;cursor:pointer;min-height:44px}
+          .vsel select:focus{outline:none;border-color:var(--amber)}
+          .vsel select:disabled{opacity:.45;cursor:default}
+          .vnote{font-size:.82rem;color:var(--mut);margin:0 0 16px}
+          .vnote b{color:var(--amber);font-weight:600}
+          .tier-lbl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:0 0 9px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+          .tier-lbl span{letter-spacing:.02em;text-transform:none;font-family:'Mulish',sans-serif;font-size:.74rem;color:var(--mut)}
+          @media(max-width:560px){.vlookup{grid-template-columns:1fr}}
+        </style>
+        <div class="qstep reveal" id="qVeh">
+          <div class="qstep-head">
+            <span class="qstep-num">1</span>
+            <h3>Your vehicle</h3>
+            <span class="hint">Year · Make · Model</span>
+          </div>
+          <div class="vlookup">
+            <div class="vsel"><label for="vYear">Year</label><select id="vYear" aria-label="Vehicle year"></select></div>
+            <div class="vsel"><label for="vMake">Make</label><select id="vMake" aria-label="Vehicle make"><option value="">Select make…</option></select></div>
+            <div class="vsel"><label for="vModel">Model</label><select id="vModel" aria-label="Vehicle model" disabled><option value="">Select make first…</option></select></div>
+          </div>
+          <p class="vnote" id="vNote">Pick your exact vehicle — your pricing tier sets automatically. Don't see it? Choose a tier below.</p>
+          <div class="tier-lbl">Service tier <span>auto-set from your vehicle · adjust if needed</span></div>
+          <div class="opt-row" role="radiogroup" aria-label="Service tier">
+            <button class="opt" type="button" role="radio" aria-checked="true" data-veh="Sedan" data-factor="1">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">Sedan</span><span class="op">standard rate</span>
+            </button>
+            <button class="opt" type="button" role="radio" aria-checked="false" data-veh="SUV" data-factor="1.18">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">SUV</span><span class="op">+18%</span>
+            </button>
+            <button class="opt" type="button" role="radio" aria-checked="false" data-veh="Truck" data-factor="1.28">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">Truck</span><span class="op">+28%</span>
+            </button>
+            <button class="opt" type="button" role="radio" aria-checked="false" data-veh="Luxury" data-factor="1.4">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">Luxury</span><span class="op">+40%</span>
+            </button>
+            <button class="opt" type="button" role="radio" aria-checked="false" data-veh="EV" data-factor="1.22">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">EV</span><span class="op">+22%</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2 : SERVICES -->
+        <div class="qstep reveal d1" id="qSvc">
+          <div class="qstep-head">
+            <span class="qstep-num">2</span>
+            <h3>Select services</h3>
+            <span class="hint">Choose any</span>
+          </div>
+          <div class="opt-row" role="group" aria-label="Services">
+            <button class="opt" type="button" aria-pressed="false" data-svc="Brakes" data-price="189" data-hrs="2.5">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">Brakes</span><span class="op">from $189</span>
+            </button>
+            <button class="opt" type="button" aria-pressed="false" data-svc="Detailing" data-price="149" data-hrs="4">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">Detailing</span><span class="op">from $149</span>
+            </button>
+            <button class="opt" type="button" aria-pressed="false" data-svc="Wrap" data-price="1900" data-hrs="20">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">Vinyl wrap</span><span class="op">from $1,900</span>
+            </button>
+            <button class="opt" type="button" aria-pressed="false" data-svc="Tint" data-price="249" data-hrs="3">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">Window tint</span><span class="op">from $249</span>
+            </button>
+            <button class="opt" type="button" aria-pressed="false" data-svc="Performance" data-price="399" data-hrs="5">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">Performance</span><span class="op">from $399</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3 : ADD-ONS -->
+        <div class="qstep reveal d2" id="qAdd">
+          <div class="qstep-head">
+            <span class="qstep-num">3</span>
+            <h3>Add finishing touches</h3>
+            <span class="hint">Optional</span>
+          </div>
+          <div class="opt-row" role="group" aria-label="Add-ons">
+            <button class="opt" type="button" aria-pressed="false" data-add="Ceramic coating" data-price="650" data-hrs="6">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">Ceramic coating</span><span class="op">+$650</span>
+            </button>
+            <button class="opt" type="button" aria-pressed="false" data-add="Paint correction" data-price="450" data-hrs="8">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">Paint correction</span><span class="op">+$450</span>
+            </button>
+            <button class="opt" type="button" aria-pressed="false" data-add="Loaner car" data-price="120" data-hrs="0">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">Loaner car</span><span class="op">+$120</span>
+            </button>
+            <button class="opt" type="button" aria-pressed="false" data-add="Rush service" data-price="200" data-hrs="0" data-rush="1">
+              <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11"/></svg></span>
+              <span class="ot">Rush service</span><span class="op">+$200</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESTIMATE PANEL -->
+      <aside class="estimate reveal d1" aria-live="polite">
+        <p class="elabel">Estimated total</p>
+        <div class="etotal" id="qTotal"><span class="cur">$</span>0</div>
+        <p class="esub" id="qTime">Select a service to estimate time</p>
+
+        <!-- itemised ledger: base 'from' prices -> vehicle adjustment -> subtotal -> range -->
+        <div class="ebreak" id="qBreak">
+          <p class="empty">Your selected services will appear here.</p>
+        </div>
+        <div class="eledger" id="qLedger" hidden>
+          <div class="eline"><span class="k">Subtotal (base rates)</span><span class="v" id="qBase">$0</span></div>
+          <div class="eline adj" id="qAdjRow" hidden><span class="k" id="qAdjLabel">Vehicle adjustment</span><span class="v" id="qAdj">+$0</span></div>
+          <div class="eline subtotal"><span class="k">Subtotal</span><span class="v" id="qSubtotal">$0</span></div>
+          <div class="eline range"><span class="k">Estimate range <small>(+0–18% variance)</small></span><span class="v" id="qRange">$0 – $0</span></div>
+        </div>
+
+        <div class="eline time"><span class="k">Estimated time in bay</span><span class="v" id="qTimeShort">—</span></div>
+        <button class="btn btn-amber" type="button" id="qBook">Book this build <span class="arr" aria-hidden="true">→</span></button>
+        <p class="enote">Range covers parts and condition variance — final price is confirmed in person after a quick inspection. No deposit to get a quote.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORK GALLERY ===== -->
+<section id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow steel">Inside the studio</p>
+      <h2>The work, up close.</h2>
+      <p>A look at the bay and the kind of finish we hold ourselves to. Tap any frame to view it larger.</p>
+    </div>
+    <div class="gallery">
+      <button class="gitem tall reveal" type="button" data-full="img/gal-detail.webp" data-cap="Hand-finished gloss correction">
+        <img src="img/gal-detail.webp" alt="Gloved hands buffing a black sedan's hood to a mirror finish" loading="lazy">
+        <span class="gcap"><b>Detailing</b> — gloss correction</span>
+      </button>
+      <button class="gitem wide reveal d1" type="button" data-full="img/gal-sedan.webp" data-cap="A freshly detailed sedan">
+        <img src="img/gal-sedan.webp" alt="A clean silver sedan freshly detailed in the service bay" loading="lazy">
+        <span class="gcap"><b>Detailing</b> — finished sedan</span>
+      </button>
+      <button class="gitem reveal d2" type="button" data-full="img/gal-tech.webp" data-cap="Diagnostics in the bay">
+        <img src="img/gal-tech.webp" alt="A technician inspecting the open engine bay of a sedan" loading="lazy">
+        <span class="gcap"><b>In the bay</b> — diagnostics</span>
+      </button>
+      <button class="gitem wide reveal" type="button" data-full="img/gal-truck.webp" data-cap="A daily pickup, dialed in">
+        <img src="img/gal-truck.webp" alt="A grey full-size pickup truck in the service bay" loading="lazy">
+        <span class="gcap"><b>Service</b> — daily pickup</span>
+      </button>
+      <button class="gitem reveal d1" type="button" data-full="img/gal-suv.webp" data-cap="An everyday SUV in for service">
+        <img src="img/gal-suv.webp" alt="A clean dark blue compact SUV in the service bay" loading="lazy">
+        <span class="gcap"><b>Service</b> — daily SUV</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRUST ===== -->
+<section id="trust">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow steel">Why this studio</p>
+      <h2>How we keep it honest.</h2>
+      <p>No gimmicks, no pressure. These are the standards the studio is built on — the things you can actually hold us to.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="tcard reveal">
+        <div class="tnum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Warranty-backed work</h3>
+        <p>Parts and labour come with a written warranty. If something we touched isn't right, we make it right.</p>
+      </div>
+      <div class="tcard reveal d1">
+        <div class="tnum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+        <h3>Upfront pricing</h3>
+        <p>You approve the number before a single bolt turns. No mystery line items, no "while we were in there."</p>
+      </div>
+      <div class="tcard reveal d2">
+        <div class="tnum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>No upsell, ever</h3>
+        <p>We quote what your car needs — not what pads the invoice. If a job can wait, we'll tell you it can wait.</p>
+      </div>
+      <div class="tcard reveal d3">
+        <div class="tnum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 2l2.5 5 5.5.8-4 3.9 1 5.5L12 20l-5 2.7 1-5.5-4-3.9 5.5-.8z"/></svg></div>
+        <h3>In-house specialists</h3>
+        <p>One team, one bay. The person who quotes your job is the person who does it — and signs off on it.</p>
+      </div>
+    </div>
+
+    <div class="concept-note reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <div><b>Concept note:</b> TORQUE Auto Studio is an invented demonstration shop. We deliberately show no star ratings, review counts or certifications, because there is no real business behind them yet. The value props above describe how a studio like this <em>would</em> operate — they are standards, not claims about a real track record.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BOOKING ===== -->
+<section id="book">
+  <div class="wrap">
+    <div class="book-grid">
+      <div class="book-info reveal">
+        <p class="eyebrow">Book a visit</p>
+        <h2>Let's get your car in.</h2>
+        <p>Send a few details and we'll come back with a time and a firm quote. Already used the quote builder? Hit "Book this build" and it drops straight into this form.</p>
+        <div class="book-detail">
+          <div class="bd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 5h4l1 5-2 1a12 12 0 0 0 6 6l1-2 5 1v4a2 2 0 0 1-2 2A16 16 0 0 1 3 7 2 2 0 0 1 3 5z"/></svg><span>Phone&nbsp; <b>(555) 010-8420</b></span></div>
+          <div class="bd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Studio&nbsp; <b>Bay 01, Ironside District</b></span></div>
+          <div class="bd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Hours&nbsp; <b>Mon–Sat · 8:00–18:00</b></span></div>
+        </div>
+      </div>
+
+      <div class="reveal d1">
+        <form id="bookForm" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="bName">Name <span class="req" aria-hidden="true">*</span></label>
+              <input id="bName" name="name" type="text" autocomplete="name" required placeholder="Jordan Rivera">
+            </div>
+            <div class="field">
+              <label for="bPhone">Phone <span class="req" aria-hidden="true">*</span></label>
+              <input id="bPhone" name="phone" type="tel" autocomplete="tel" required placeholder="(555) 010-8420">
+            </div>
+          </div>
+          <div class="field">
+            <label for="bVehicle">Vehicle</label>
+            <input id="bVehicle" name="vehicle" type="text" placeholder="2021 BMW M340i">
+          </div>
+          <div class="field">
+            <label for="bService">Service needed</label>
+            <select id="bService" name="service">
+              <option value="">Select a service…</option>
+              <option>Brakes &amp; pads</option>
+              <option>Detailing</option>
+              <option>Vinyl wrap</option>
+              <option>Window tint</option>
+              <option>Performance tuning</option>
+              <option>Multiple / not sure</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="bMessage">Message</label>
+            <textarea id="bMessage" name="message" placeholder="Tell us what the car needs, or paste your quote build here…"></textarea>
+          </div>
+          <button class="btn btn-amber" type="submit">Request my appointment <span class="arr" aria-hidden="true">→</span></button>
+          <p class="form-note">Demo form — nothing is sent or stored. See our <a href="privacy.html">privacy policy</a>.</p>
+        </form>
+
+        <div class="form-success" id="formSuccess" role="status">
+          <div class="ok" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" width="26" height="26"><path d="M5 13l4 4L19 7"/></svg></div>
+          <h3>Request received</h3>
+          <p>Thanks — in a real studio we'd confirm your slot within one business day. This is a concept demo, so nothing was actually sent.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="brand" href="#top"><span class="dot" aria-hidden="true"></span>TORQUE<span class="mono">AUTO&nbsp;STUDIO</span></a>
+        <p>A precision performance, repair and detailing studio — built for people who care how their car drives and looks.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Studio</h4>
+          <a href="#services">Services</a>
+          <a href="#quote">Quote builder</a>
+          <a href="#work">Work</a>
+          <a href="#book">Book a visit</a>
+        </div>
+        <div class="foot-col">
+          <h4>Legal</h4>
+          <a href="privacy.html">Privacy policy</a>
+          <a href="terms.html">Terms of service</a>
+          <a href="terms.html#refunds">Refund policy</a>
+        </div>
+        <div class="foot-col">
+          <h4>Visit</h4>
+          <span>Bay 01, Ironside District</span>
+          <span>Mon–Sat · 8:00–18:00</span>
+          <span>(555) 010-8420</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="concept"><b>CONCEPT SITE</b> — not a real business and not an actual client. Demo by Pergola Performance.</span>
+      <span>© 2026 TORQUE Auto Studio (fictional). All imagery for demonstration.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== MOBILE LIVE-TOTAL BAR ===== -->
+<div class="qbar" id="qbar" aria-live="polite">
+  <div class="qbar-panel" id="qbarPanel">
+    <div class="ebreak" id="qbarBreak"></div>
+    <div class="eledger">
+      <div class="eline"><span class="k">Subtotal (base rates)</span><span class="v" id="qbarBase">$0</span></div>
+      <div class="eline adj" id="qbarAdjRow" hidden><span class="k" id="qbarAdjLabel">Vehicle adjustment</span><span class="v" id="qbarAdj">+$0</span></div>
+      <div class="eline subtotal"><span class="k">Subtotal</span><span class="v" id="qbarSubtotal">$0</span></div>
+      <div class="eline range"><span class="k">Estimate range <small>(+0–18% variance)</small></span><span class="v" id="qbarRange">$0 – $0</span></div>
+      <div class="eline time"><span class="k">Time in bay</span><span class="v" id="qbarTime">—</span></div>
+    </div>
+  </div>
+  <div class="qbar-row">
+    <div class="qbar-info">
+      <span class="qbar-label">Live estimate</span>
+      <span class="qbar-total" id="qbarTotal"><span class="cur">$</span>0</span>
+    </div>
+    <button class="qbar-toggle" type="button" id="qbarToggle" aria-expanded="false" aria-controls="qbarPanel">
+      Breakdown <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+    <button class="qbar-book" type="button" id="qbarBook">Book →</button>
+  </div>
+</div>
+
+<!-- ===== LIGHTBOX ===== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image">
+  <button class="lbx-close" id="lbxClose" type="button">Close ✕</button>
+  <img id="lbxImg" src="" alt="">
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- progressive-enhancement gate ----------
+     Add `js` to <html> as the FIRST thing the script does so the .reveal
+     opacity:0 styles only apply once JS is confirmed running. */
+  var docEl=document.documentElement;
+  docEl.classList.add('js');
+
+  /* ---------- nav scroll state ---------- */
+  var nav=document.getElementById('nav');
+  var onScroll=function(){ nav.classList.toggle('scrolled', window.scrollY>40); };
+  onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+
+  /* ---------- reveal on scroll ---------- */
+  var reveals=document.querySelectorAll('.reveal');
+  function revealAll(){ reveals.forEach(function(el){ el.classList.add('in'); }); }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+    /* observing already triggers the callback for anything in/near the viewport,
+       so above-the-fold content reveals on first paint, not just on scroll. */
+    reveals.forEach(function(el){ io.observe(el); });
+    /* safety net: if the observer never fires (slow/blocked JS, odd browsers),
+       force everything visible after a short beat so the page is never stuck blank. */
+    window.setTimeout(revealAll,1200);
+  } else {
+    revealAll();
+  }
+
+  /* ---------- helpers ---------- */
+  var fmt=function(n){ return n.toLocaleString('en-US'); };
+
+  /* ---------- QUOTE BUILDER ---------- */
+  var vehBtns=document.querySelectorAll('#qVeh .opt');
+  var svcBtns=document.querySelectorAll('#qSvc .opt');
+  var addBtns=document.querySelectorAll('#qAdd .opt');
+  var elTotal=document.getElementById('qTotal');
+  var elTime=document.getElementById('qTime');
+  var elTimeShort=document.getElementById('qTimeShort');
+  var elFactor=document.getElementById('qFactor'); // removed from DOM; vehicle factor now shown inline in the ledger adjustment row
+  var elBreak=document.getElementById('qBreak');
+  var elBookBtn=document.getElementById('qBook');
+  /* ledger rows (desktop panel) */
+  var elLedger=document.getElementById('qLedger');
+  var elBaseRow=document.getElementById('qBase');
+  var elAdjRow=document.getElementById('qAdjRow');
+  var elAdjLabel=document.getElementById('qAdjLabel');
+  var elAdj=document.getElementById('qAdj');
+  var elSubtotal=document.getElementById('qSubtotal');
+  var elRange=document.getElementById('qRange');
+  /* mobile live-total bar */
+  var qbar=document.getElementById('qbar');
+  var qbarTotal=document.getElementById('qbarTotal');
+  var qbarBreak=document.getElementById('qbarBreak');
+  var qbarBase=document.getElementById('qbarBase');
+  var qbarAdjRow=document.getElementById('qbarAdjRow');
+  var qbarAdjLabel=document.getElementById('qbarAdjLabel');
+  var qbarAdj=document.getElementById('qbarAdj');
+  var qbarSubtotal=document.getElementById('qbarSubtotal');
+  var qbarRange=document.getElementById('qbarRange');
+  var qbarTime=document.getElementById('qbarTime');
+
+  var state={ veh:'Sedan', factor:1, svc:[], add:[] };
+
+  /* count-up animation for the headline total range, so cause->effect is felt on each toggle */
+  /* Snap to the final total in one step (no per-frame count-up) + a smooth scale/fade bump,
+     matching the wedding planner. No digit jitter on rapid toggles. */
+  function setTotalDisplay(low,high){
+    var html=(low<=0)?'<span class="cur">$</span>0':'<span class="cur">$</span>'+fmt(low)+' – '+fmt(high);
+    var changed=(elTotal.innerHTML!==html);
+    elTotal.innerHTML=html; qbarTotal.innerHTML=html;
+    if(!changed) return;
+    var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(reduce) return;
+    [elTotal,qbarTotal].forEach(function(el){ if(!el) return; el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); });
+  }
+
+  /* build a breakdown DOM (base 'from' prices, textContent only) into a target container */
+  function paintBreak(target,lines){
+    target.textContent='';
+    if(lines.length===0){
+      var em=document.createElement('p'); em.className='empty';
+      em.textContent='Your selected services will appear here.';
+      target.appendChild(em);
+      return;
+    }
+    lines.forEach(function(l){
+      var row=document.createElement('div'); row.className='bl';
+      var a=document.createElement('span'); a.textContent=l.label;
+      var v=document.createElement('span'); v.textContent='from $'+fmt(l.val);
+      row.appendChild(a); row.appendChild(v); target.appendChild(row);
+    });
+  }
+
+  function recompute(){
+    state.svc=[]; state.add=[];
+    var base=0, hrs=0, rush=false;
+    var lines=[];
+
+    svcBtns.forEach(function(b){
+      if(b.getAttribute('aria-pressed')==='true'){
+        var p=parseFloat(b.dataset.price), h=parseFloat(b.dataset.hrs);
+        state.svc.push({name:b.dataset.svc,price:p,hrs:h});
+        base+=p; hrs+=h;
+        lines.push({label:b.dataset.svc, val:p}); // show base 'from' price; factor shown as its own row
+      }
+    });
+    addBtns.forEach(function(b){
+      if(b.getAttribute('aria-pressed')==='true'){
+        var p=parseFloat(b.dataset.price), h=parseFloat(b.dataset.hrs);
+        state.add.push({name:b.dataset.add,price:p,hrs:h});
+        base+=p; hrs+=h;
+        if(b.dataset.rush) rush=true;
+        lines.push({label:b.dataset.add, val:p});
+      }
+    });
+
+    /* explicit ledger: base subtotal -> vehicle adjustment -> subtotal -> range.
+       Round every figure to $10 so the headline and the ledger reconcile exactly. */
+    var baseRounded=Math.round(base/10)*10;
+    var subtotalRaw=base*state.factor;
+    var subtotal=Math.round(subtotalRaw/10)*10;
+    var adjustment=subtotal-baseRounded;            // dollar value of the vehicle factor
+    var low=subtotal;                               // low end = subtotal as quoted
+    var high=Math.round((subtotalRaw*1.18)/10)*10;  // +0–18% contingency for parts/condition variance
+    var billHrs=hrs*state.factor;
+    if(rush) billHrs=billHrs*0.6; // rush compresses calendar time
+
+    var timeStr='', timeShort='—';
+    if(subtotal>0){
+      if(billHrs<=8){ timeStr=(Math.round(billHrs*2)/2)+' hrs in the bay'; timeShort=(Math.round(billHrs*2)/2)+' hrs'; }
+      else { var days=Math.max(1,Math.round(billHrs/8)); timeStr='≈ '+days+' day'+(days>1?'s':'')+' in the bay'; timeShort='≈ '+days+'d'; }
+      if(rush){ timeStr+=' · rushed'; }
+    }
+
+    /* total display + time copy */
+    if(subtotal<=0){
+      setTotalDisplay(0,0);
+      elTime.textContent='Select a service to estimate time';
+      elTimeShort.textContent='—';
+      qbarTime.textContent='—';
+    } else {
+      setTotalDisplay(low,high);
+      elTime.textContent='Estimated '+timeStr;
+      elTimeShort.textContent=timeShort;
+      qbarTime.textContent=timeShort;
+    }
+
+    /* factor line (legacy standalone row removed; the vehicle factor now lives in the ledger
+       adjustment row label, so guard against the missing node) */
+    if(elFactor){ elFactor.textContent=state.veh+' ·'+state.factor.toFixed(2)+'×'; }
+
+    /* ----- itemised ledger (desktop + mobile mirror) ----- */
+    var hasAdj=adjustment>0;
+    var adjLabelTxt=state.veh+' +'+Math.round((state.factor-1)*100)+'%';
+    function fillLedger(ledger,baseEl,adjRowEl,adjLabelEl,adjEl,subEl,rangeEl){
+      baseEl.textContent='$'+fmt(baseRounded);
+      if(hasAdj){
+        adjRowEl.hidden=false;
+        adjLabelEl.textContent=adjLabelTxt;
+        adjEl.textContent='+$'+fmt(adjustment);
+      } else { adjRowEl.hidden=true; }
+      subEl.textContent='$'+fmt(subtotal);
+      rangeEl.textContent='$'+fmt(low)+' – $'+fmt(high);
+      if(ledger){ ledger.hidden = subtotal<=0; }
+    }
+    fillLedger(elLedger,elBaseRow,elAdjRow,elAdjLabel,elAdj,elSubtotal,elRange);
+    fillLedger(null,qbarBase,qbarAdjRow,qbarAdjLabel,qbarAdj,qbarSubtotal,qbarRange);
+
+    /* breakdown lists (textContent only — labels are from our own dataset) */
+    paintBreak(elBreak,lines);
+    paintBreak(qbarBreak,lines);
+  }
+
+  /* reveal the mobile live-total bar once the user touches the builder, so it
+     only appears when relevant (not floating over the whole page). */
+  function activateBar(){ if(qbar){ qbar.classList.add('active'); } }
+
+  /* vehicle = single-select radio */
+  vehBtns.forEach(function(b){
+    b.addEventListener('click',function(){
+      vehBtns.forEach(function(o){ o.setAttribute('aria-checked','false'); });
+      b.setAttribute('aria-checked','true');
+      state.veh=b.dataset.veh; state.factor=parseFloat(b.dataset.factor);
+      activateBar(); recompute();
+    });
+  });
+
+  /* services + add-ons = multi toggle */
+  function toggle(b){
+    var on=b.getAttribute('aria-pressed')==='true';
+    b.setAttribute('aria-pressed', on?'false':'true');
+    activateBar(); recompute();
+  }
+  svcBtns.forEach(function(b){ b.addEventListener('click',function(){ toggle(b); }); });
+  addBtns.forEach(function(b){ b.addEventListener('click',function(){ toggle(b); }); });
+
+  /* ---------- book this build -> populate form (textContent/value only) ---------- */
+  var bMessage=document.getElementById('bMessage');
+  var bService=document.getElementById('bService');
+  function flashNeedService(btn,fallbackHTML){
+    btn.textContent='Pick a service first ↑';
+    setTimeout(function(){ btn.innerHTML=fallbackHTML; },1800);
+  }
+  function bookThisBuild(){
+    if(state.svc.length===0 && state.add.length===0){ return false; }
+    var parts=[];
+    parts.push('— Quote build —');
+    parts.push('Vehicle: '+(window.__torqueVehLabel ? window.__torqueVehLabel+' ('+state.veh+' tier)' : state.veh));
+    if(state.svc.length){ parts.push('Services: '+state.svc.map(function(s){return s.name;}).join(', ')); }
+    if(state.add.length){ parts.push('Add-ons: '+state.add.map(function(a){return a.name;}).join(', ')); }
+    parts.push('Estimate: '+elTotal.textContent.trim());
+    parts.push('Time: '+elTime.textContent.replace(/^Estimated\s*/,''));
+    bMessage.value=parts.join('\n');           // .value is safe (not parsed as HTML)
+    bService.value='Multiple / not sure';
+    document.getElementById('book').scrollIntoView({behavior:'smooth',block:'start'});
+    setTimeout(function(){ document.getElementById('bName').focus(); },650);
+    return true;
+  }
+  elBookBtn.addEventListener('click',function(){
+    if(!bookThisBuild()){ flashNeedService(elBookBtn,'Book this build <span class="arr" aria-hidden="true">→</span>'); }
+  });
+
+  /* ---------- mobile bar: expand/collapse + book ---------- */
+  var qbarToggle=document.getElementById('qbarToggle');
+  var qbarBook=document.getElementById('qbarBook');
+  if(qbarToggle){
+    qbarToggle.addEventListener('click',function(){
+      var open=qbar.classList.toggle('open');
+      qbarToggle.setAttribute('aria-expanded', open?'true':'false');
+    });
+  }
+  if(qbarBook){
+    qbarBook.addEventListener('click',function(){
+      qbar.classList.remove('open');
+      qbarToggle.setAttribute('aria-expanded','false');
+      if(!bookThisBuild()){ flashNeedService(qbarBook,'Book →'); }
+    });
+  }
+
+  recompute();
+
+  /* ---------- booking form demo submit ---------- */
+  var form=document.getElementById('bookForm');
+  var success=document.getElementById('formSuccess');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!form.checkValidity()){ form.reportValidity(); return; }
+    form.style.display='none';
+    success.classList.add('show');
+    success.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+
+  /* ---------- lightbox ---------- */
+  var lb=document.getElementById('lightbox');
+  var lbImg=document.getElementById('lbxImg');
+  var lbClose=document.getElementById('lbxClose');
+  var lastTrigger=null;
+  document.querySelectorAll('.gitem').forEach(function(g){
+    g.addEventListener('click',function(){
+      lastTrigger=g;
+      lbImg.setAttribute('src', g.dataset.full);
+      lbImg.setAttribute('alt', g.dataset.cap || '');
+      lb.classList.add('open');
+      lbClose.focus();
+    });
+  });
+  function closeLb(){ lb.classList.remove('open'); lbImg.setAttribute('src',''); if(lastTrigger) lastTrigger.focus(); }
+  lbClose.addEventListener('click',closeLb);
+  lb.addEventListener('click',function(e){ if(e.target===lb) closeLb(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && lb.classList.contains('open')) closeLb(); });
+
+})();
+</script>
+<script>
+/* TORQUE — real Year/Make/Model lookup. Bundled dataset (real makes+models, works offline/instant)
+   + progressive NHTSA vPIC live expansion. Drives the existing pricing tier chips; never blocks. */
+(function(){
+  var Y=document.getElementById('vYear'), M=document.getElementById('vMake'), MO=document.getElementById('vModel'), NOTE=document.getElementById('vNote');
+  if(!Y||!M||!MO) return;
+  var CLS={S:'Sedan',U:'SUV',T:'Truck',L:'Luxury',E:'EV'};
+  var DATA={
+    "Acura":{"Integra":"L","TLX":"L","MDX":"U","RDX":"U"},
+    "Audi":{"A4":"L","A6":"L","Q5":"U","Q7":"U","e-tron":"E","R8":"L"},
+    "BMW":{"3 Series":"L","5 Series":"L","X3":"U","X5":"U","M3":"L","i4":"E"},
+    "Buick":{"Encore":"U","Enclave":"U","Envision":"U"},
+    "Cadillac":{"CT5":"L","Escalade":"U","XT5":"U","Lyriq":"E"},
+    "Chevrolet":{"Silverado 1500":"T","Camaro":"L","Corvette":"L","Tahoe":"U","Equinox":"U","Malibu":"S","Colorado":"T","Bolt EV":"E","Traverse":"U"},
+    "Chrysler":{"300":"S","Pacifica":"U"},
+    "Dodge":{"Charger":"L","Challenger":"L","Durango":"U"},
+    "Ford":{"F-150":"T","F-250":"T","Mustang":"L","Explorer":"U","Escape":"U","Bronco":"U","Ranger":"T","Mustang Mach-E":"E","Maverick":"T","Expedition":"U"},
+    "GMC":{"Sierra 1500":"T","Yukon":"U","Acadia":"U","Canyon":"T"},
+    "Honda":{"Civic":"S","Accord":"S","CR-V":"U","Pilot":"U","Ridgeline":"T","HR-V":"U","Odyssey":"U"},
+    "Hyundai":{"Elantra":"S","Sonata":"S","Tucson":"U","Santa Fe":"U","Palisade":"U","Ioniq 5":"E"},
+    "Jeep":{"Wrangler":"U","Grand Cherokee":"U","Cherokee":"U","Gladiator":"T","Compass":"U"},
+    "Kia":{"Forte":"S","K5":"S","Sportage":"U","Telluride":"U","Sorento":"U","EV6":"E"},
+    "Lexus":{"ES":"L","IS":"L","RX":"L","NX":"L","GX":"L"},
+    "Mazda":{"Mazda3":"S","CX-5":"U","CX-50":"U","CX-90":"U","MX-5 Miata":"L"},
+    "Mercedes-Benz":{"C-Class":"L","E-Class":"L","GLC":"U","GLE":"U","S-Class":"L","EQS":"E"},
+    "Nissan":{"Altima":"S","Sentra":"S","Rogue":"U","Pathfinder":"U","Frontier":"T","Titan":"T","Leaf":"E","GT-R":"L"},
+    "Porsche":{"911":"L","Cayenne":"L","Macan":"L","Panamera":"L","Taycan":"E"},
+    "Ram":{"1500":"T","2500":"T","3500":"T"},
+    "Subaru":{"Impreza":"S","Outback":"U","Forester":"U","Crosstrek":"U","WRX":"L","Ascent":"U"},
+    "Tesla":{"Model 3":"E","Model Y":"E","Model S":"E","Model X":"E","Cybertruck":"E"},
+    "Toyota":{"Camry":"S","Corolla":"S","RAV4":"U","Highlander":"U","Tacoma":"T","Tundra":"T","4Runner":"U","Supra":"L","Prius":"E","Sequoia":"U"},
+    "Volkswagen":{"Jetta":"S","Passat":"S","Tiguan":"U","Atlas":"U","Golf":"S","ID.4":"E"},
+    "Volvo":{"S60":"L","XC60":"L","XC90":"L","XC40":"L"},
+    "Rivian":{"R1T":"E","R1S":"E"},
+    "Lamborghini":{"Huracan":"L","Urus":"L","Revuelto":"L"},
+    "Ferrari":{"Roma":"L","296 GTB":"L","SF90":"L","Purosangue":"L"}
+  };
+  /* earliest model years — keeps the OFFLINE fallback from showing anachronistic models (NHTSA live is already year-exact) */
+  var MINYEAR={'Mustang Mach-E':2021,'Ioniq 5':2022,'EV6':2022,'ID.4':2021,'Cybertruck':2024,'Maverick':2022,'Bronco':2021,'Supra':2020,'Lyriq':2023,'Taycan':2020,'EQS':2022,'i4':2022,'Bolt EV':2017,'Leaf':2011,'Model 3':2017,'Model Y':2020,'Model X':2016,'R1T':2022,'R1S':2022,'Integra':2023,'Telluride':2020,'Palisade':2020,'K5':2021,'CX-50':2023,'CX-90':2024,'Ascent':2019};
+  for(var y=2026;y>=2005;y--){ var o=document.createElement('option'); o.value=y; o.textContent=y; Y.appendChild(o); }
+  Y.value='2023';
+  Object.keys(DATA).sort().forEach(function(mk){ var o=document.createElement('option'); o.value=mk; o.textContent=mk; M.appendChild(o); });
+  function chipFor(cls){ var c=document.querySelectorAll('#qVeh .opt'); for(var i=0;i<c.length;i++){ if(c[i].dataset.veh===cls) return c[i]; } return null; }
+  function heuristic(make,model){
+    var s=(make+' '+model).toLowerCase(), mk=make.toLowerCase();
+    if(/tesla|rivian|lucid|polestar/.test(mk)) return 'EV';
+    if(/mach-e|ioniq|ev6|bolt|leaf|e-tron|i4|ix|eqs|eqe|eqb|id\.|ariya|solterra|bz4x|lyriq|taycan|recharge/.test(s)) return 'EV';
+    if(/f-?[1-3]50|silverado|sierra|\bram\b|1500|2500|3500|tacoma|tundra|ranger|colorado|canyon|frontier|titan|gladiator|maverick|ridgeline|cybertruck/.test(s)) return /cybertruck/.test(s)?'EV':'Truck';
+    if(/rav4|cr-?v|explorer|tahoe|suburban|highlander|pilot|4runner|wrangler|cherokee|rogue|pathfinder|equinox|traverse|telluride|palisade|tucson|santa fe|outback|forester|cx-5|cx-9|cx-50|cx-90|tiguan|atlas|q5|q7|q8|x3|x5|x7|glc|gle|gls|\brx\b|\bnx\b|\bgx\b|\blx\b|mdx|rdx|xc60|xc90|xc40|bronco|escape|expedition|sequoia|durango|cayenne|macan|urus|defender|range rover|discovery|grand cherokee|compass|renegade|kona|venza|aviator|navigator|enclave|encore|envision|acadia|yukon|ascent|crosstrek/.test(s)) return 'SUV';
+    if(/corvette|camaro|mustang|challenger|charger|gt-?r|supra|911|cayman|boxster|miata|mx-5|wrx|type r|gt3|gt4|\bm3\b|\bm4\b|\bm5\b|amg|\brs\b|f-type|huracan|aventador|roma|296|sf90|ghibli|quattroporte|revuelto|purosangue/.test(s)) return 'Luxury';
+    if(/bmw|mercedes|audi|lexus|porsche|ferrari|lamborghini|acura|cadillac|volvo|genesis|maserati|bentley|aston|jaguar|land rover|alfa|infiniti|lincoln|rolls/.test(mk)) return 'Luxury';
+    return 'Sedan';
+  }
+  function fillModels(make,year){
+    MO.innerHTML='<option value="">Loading models…</option>'; MO.disabled=true;
+    var bundled=DATA[make]||{};
+    function fallback(){
+      MO.innerHTML='<option value="">Select model…</option>'; MO.disabled=false;
+      Object.keys(bundled).forEach(function(nm){
+        if(MINYEAR[nm] && (+year)<MINYEAR[nm]) return;           // year-aware: hide models not yet made
+        var o=document.createElement('option'); o.value=nm; o.textContent=nm; o.dataset.cls=CLS[bundled[nm]]; MO.appendChild(o);
+      });
+    }
+    var done=false;
+    var timer=setTimeout(function(){ if(!done){ done=true; fallback(); } }, 3500);   // offline/slow -> bundled
+    try{
+      fetch('https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/'+encodeURIComponent(make)+'/modelyear/'+year+'?format=json')
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          if(done) return; done=true; clearTimeout(timer);
+          var names=(d&&d.Results)?d.Results.map(function(x){ return x.Model_Name; }).filter(function(n){
+            return n && !/\b(inc|ltd|llc|mfg|manufacturing|fabrication|trailers?|welding|radiator|steel|aluminum|tank|chassis|motorhome|incomplete|stripped|industries|corp|company|enterprises|conversion|upfit|built|park|cab forward)\b/i.test(n);
+          }):[];
+          if(!names.length){ fallback(); return; }
+          var seen={}, uniq=[];
+          names.forEach(function(n){ var k=n.toLowerCase(); if(!seen[k]){ seen[k]=1; uniq.push(n); } });
+          uniq.sort();
+          MO.innerHTML='<option value="">Select model…</option>'; MO.disabled=false;
+          uniq.forEach(function(nm){                              // NHTSA list is already year-exact
+            var cls=bundled[nm]?CLS[bundled[nm]]:heuristic(make,nm);
+            var o=document.createElement('option'); o.value=nm; o.textContent=nm; o.dataset.cls=cls; MO.appendChild(o);
+          });
+        }).catch(function(){ if(!done){ done=true; clearTimeout(timer); fallback(); } });
+    }catch(e){ if(!done){ done=true; clearTimeout(timer); fallback(); } }
+  }
+  function selectModel(){
+    var make=M.value, year=Y.value, model=MO.value;
+    if(!make||!model){ window.__torqueVehLabel=null; return; }
+    var opt=MO.options[MO.selectedIndex];
+    var cls=(opt&&opt.dataset.cls)||heuristic(make,model);
+    var chip=chipFor(cls); if(chip){ chip.click(); }
+    window.__torqueVehLabel=year+' '+make+' '+model;
+    NOTE.innerHTML='Selected: <b>'+year+' '+make+' '+model+'</b> · '+cls+' tier';
+  }
+  M.addEventListener('change',function(){ if(M.value){ fillModels(M.value,Y.value); } else { MO.innerHTML='<option value="">Select make first…</option>'; MO.disabled=true; window.__torqueVehLabel=null; } });
+  Y.addEventListener('change',function(){ if(M.value){ fillModels(M.value,Y.value); if(MO.value) selectModel(); } });
+  MO.addEventListener('change',selectModel);
+})();
+</script>
+<script>
+/* TORQUE — cursor-driven parallax hero. The car tilts toward the pointer with eased motion;
+   the headline parallaxes for depth. Continuous (no loop), and disabled on touch / reduced-motion. */
+(function(){
+  var hero=document.querySelector('.hero'), media=document.getElementById('heroMedia'), copy=document.querySelector('.hero-inner');
+  if(!hero||!media) return;
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  hero.classList.add('hero-parallax');
+  var tx=0,ty=0,cx=0,cy=0,raf=null;
+  function loop(){
+    cx+=(tx-cx)*0.08; cy+=(ty-cy)*0.08;
+    media.style.transform='scale(1.08) rotateY('+(cx*4).toFixed(2)+'deg) rotateX('+(-cy*3).toFixed(2)+'deg) translate('+(cx*-14).toFixed(1)+'px,'+(cy*-10).toFixed(1)+'px)';
+    if(copy){ copy.style.transform='translate('+(cx*9).toFixed(1)+'px,'+(cy*6).toFixed(1)+'px)'; }
+    if(Math.abs(tx-cx)>0.002||Math.abs(ty-cy)>0.002){ raf=requestAnimationFrame(loop); } else { raf=null; }
+  }
+  hero.addEventListener('mousemove',function(e){
+    var r=hero.getBoundingClientRect();
+    tx=((e.clientX-r.left)/r.width)*2-1; ty=((e.clientY-r.top)/r.height)*2-1;
+    if(!raf) raf=requestAnimationFrame(loop);
+  });
+  hero.addEventListener('mouseleave',function(){ tx=0; ty=0; if(!raf) raf=requestAnimationFrame(loop); });
+})();
+</script>
+<script>
+/* TORQUE — section tabs (Quote Builder / Our Work / Services). Shows one panel at a time;
+   nav links switch tabs; the mobile quote bar only shows on the Quote tab. */
+(function(){
+  var ids=['quote','work','services'], panels={};
+  ids.forEach(function(id){ panels[id]=document.getElementById(id); });
+  var tabs=document.querySelectorAll('.tabbar .tab');
+  if(!tabs.length) return;
+  function show(id){
+    ids.forEach(function(k){ var el=panels[k]; if(!el) return;
+      if(k===id){ el.removeAttribute('hidden'); el.querySelectorAll('.reveal').forEach(function(r){ r.classList.add('in'); r.style.opacity='1'; r.style.transform='none'; }); }
+      else { el.setAttribute('hidden',''); }
+    });
+    tabs.forEach(function(t){ t.setAttribute('aria-selected', t.dataset.panel===id?'true':'false'); });
+    document.body.classList.toggle('tab-quote', id==='quote');
+  }
+  tabs.forEach(function(t){ t.addEventListener('click',function(){ show(t.dataset.panel); var bar=document.querySelector('.tabbar'); if(bar){ var y=bar.getBoundingClientRect().top+window.pageYOffset-60; window.scrollTo({top:Math.max(0,y),behavior:'smooth'}); } }); });
+  document.querySelectorAll('a[href="#quote"],a[href="#work"],a[href="#services"]').forEach(function(a){ a.addEventListener('click',function(){ var id=a.getAttribute('href').slice(1); if(panels[id]) show(id); }); });
+  show('quote');
+})();
+</script>
+<style>
+  /* AI service-desk concierge (scripted demo) — themed in TORQUE graphite/amber */
+  .cc-fab{position:fixed;right:24px;bottom:24px;z-index:60;width:58px;height:58px;border:none;cursor:pointer;background:var(--amber);color:var(--ink);display:grid;place-items:center;border-radius:6px;box-shadow:0 12px 30px -10px rgba(255,158,44,.6);transition:transform .25s,background .25s}
+  .cc-fab:hover{transform:translateY(-2px) scale(1.05)}
+  .cc-fab svg{width:26px;height:26px}
+  .cc-fab .cc-pip{position:absolute;top:-4px;right:-4px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--ink)}
+  .cc-fab.cc-seen .cc-pip{display:none}
+  .cc-panel{position:fixed;right:24px;bottom:96px;z-index:61;width:min(370px,calc(100vw - 32px));height:min(540px,calc(100vh - 140px));background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 40px 90px -30px rgba(0,0,0,.7);display:flex;flex-direction:column;overflow:hidden;opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .25s,transform .25s,visibility .25s}
+  .cc-panel.open{opacity:1;visibility:visible;transform:none}
+  .cc-head{background:var(--panel-2);border-bottom:1px solid var(--line);padding:15px 18px;display:flex;align-items:center;gap:11px}
+  .cc-head .av{width:38px;height:38px;border-radius:5px;background:var(--amber);display:grid;place-items:center;font-family:'Sora',sans-serif;font-weight:800;color:var(--ink);flex:none}
+  .cc-head .t b{font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;color:var(--bone);display:block}
+  .cc-head .t span{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);display:flex;align-items:center;gap:6px}
+  .cc-head .t span::before{content:"";width:7px;height:7px;border-radius:50%;background:#7ddc8a}
+  .cc-head .x{margin-left:auto;background:transparent;border:none;color:var(--mut);cursor:pointer;font-size:1.2rem;width:30px;height:30px;border-radius:4px}
+  .cc-head .x:hover{background:rgba(255,255,255,.06);color:var(--bone)}
+  .cc-log{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:11px}
+  .cc-msg{max-width:85%;padding:10px 14px;border-radius:8px;font-size:.92rem;line-height:1.5;animation:ccPop .25s ease}
+  @keyframes ccPop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .cc-bot{align-self:flex-start;background:var(--panel-2);border:1px solid var(--line);color:var(--bone);border-bottom-left-radius:3px}
+  .cc-bot .pfx{display:block;font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--amber-2);margin-bottom:4px}
+  .cc-user{align-self:flex-end;background:var(--amber);color:var(--ink);border-bottom-right-radius:3px}
+  .cc-bot b{color:var(--amber-2)}
+  .cc-typing{align-self:flex-start;display:flex;gap:4px;padding:13px 15px;background:var(--panel-2);border:1px solid var(--line);border-radius:8px}
+  .cc-typing i{width:6px;height:6px;border-radius:50%;background:var(--mut);animation:ccBlink 1.3s infinite}
+  .cc-typing i:nth-child(2){animation-delay:.2s}.cc-typing i:nth-child(3){animation-delay:.4s}
+  @keyframes ccBlink{0%,60%,100%{opacity:.3}30%{opacity:1}}
+  .cc-chips{display:flex;flex-wrap:wrap;gap:7px;padding:8px 16px 4px}
+  .cc-chip{font-size:.72rem;font-family:'JetBrains Mono',monospace;letter-spacing:.04em;padding:8px 12px;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--bone);cursor:pointer;transition:all .2s}
+  .cc-chip:hover{background:var(--amber);border-color:var(--amber);color:var(--ink)}
+  .cc-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line)}
+  .cc-input input{flex:1;background:var(--panel-2);border:1px solid var(--line);border-radius:4px;padding:11px 14px;color:var(--bone);font-family:'Mulish',sans-serif;font-size:.9rem;min-height:44px}
+  .cc-input input:focus{outline:none;border-color:var(--amber)}
+  .cc-input button{flex:none;width:44px;height:44px;border-radius:4px;border:none;background:var(--amber);color:var(--ink);cursor:pointer;display:grid;place-items:center}
+  .cc-foot{text-align:center;font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);padding:0 0 9px}
+  @media(max-width:560px){.cc-fab{right:16px;bottom:90px}.cc-panel{right:8px;bottom:156px;height:min(480px,calc(100vh - 180px))}}
+  @media(prefers-reduced-motion:reduce){.cc-msg,.cc-panel,.cc-fab{animation:none!important;transition:none!important}}
+</style>
+<button class="cc-fab" id="ccFab" type="button" aria-expanded="false" aria-label="Open the TORQUE service desk (demo)">
+  <span class="cc-pip" aria-hidden="true"></span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.6A8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>
+</button>
+<div class="cc-panel" id="ccPanel" role="dialog" aria-label="TORQUE service desk (demo)">
+  <div class="cc-head">
+    <div class="av" aria-hidden="true">T</div>
+    <div class="t"><b>TORQUE Service Desk</b><span>Bay line · Auto-reply</span></div>
+    <button class="x" id="ccClose" type="button" aria-label="Close chat">✕</button>
+  </div>
+  <div class="cc-log" id="ccLog" aria-live="polite"></div>
+  <div class="cc-chips" id="ccChips"></div>
+  <form class="cc-input" id="ccForm">
+    <input id="ccText" type="text" placeholder="Ask about services, a quote, hours…" autocomplete="off" aria-label="Message">
+    <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+  </form>
+  <div class="cc-foot">/// Scripted demo — by Pergola Performance</div>
+</div>
+<script>
+(function(){
+  "use strict";
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var fab=document.getElementById('ccFab'), panel=document.getElementById('ccPanel'), closeBtn=document.getElementById('ccClose');
+  var log=document.getElementById('ccLog'), chips=document.getElementById('ccChips'), form=document.getElementById('ccForm'), text=document.getElementById('ccText');
+  if(!fab||!panel||!log) return;
+  var seeded=false;
+  var CHIPS=['Services & pricing','Build a quote','Shop hours','Book a visit'];
+  function add(who,html){
+    var d=document.createElement('div'); d.className='cc-msg '+(who==='bot'?'cc-bot':'cc-user');
+    if(who==='bot'){ var p=document.createElement('span'); p.className='pfx'; p.textContent='Service desk'; var bd=document.createElement('span'); bd.innerHTML=html; d.appendChild(p); d.appendChild(bd); }
+    else { d.textContent=html; }   /* user input as text, never HTML */
+    log.appendChild(d); log.scrollTop=log.scrollHeight; return d;
+  }
+  function typing(){ var t=document.createElement('div'); t.className='cc-typing'; t.innerHTML='<i></i><i></i><i></i>'; log.appendChild(t); log.scrollTop=log.scrollHeight; return t; }
+  function botReply(html,delay){ var t=typing(); setTimeout(function(){ t.remove(); add('bot',html); },reduce?0:(delay||700)); }
+  function renderChips(){ chips.innerHTML=''; CHIPS.forEach(function(c){ var b=document.createElement('button'); b.type='button'; b.className='cc-chip'; b.textContent=c; b.addEventListener('click',function(){ handle(c); }); chips.appendChild(b); }); }
+  function answer(q){
+    var s=q.toLowerCase();
+    if(/(price|pricing|cost|service|how much|quote|estimate)/.test(s)) return 'Straight pricing — brakes from <b>$189</b>, detailing from <b>$149</b>, vinyl wrap from <b>$1,900</b>, window tint from <b>$249</b>, performance from <b>$399</b>. Want the <b>quote builder</b>? Pick your year/make/model and it prices it live.';
+    if(/(build|quote|configure|vehicle|year|make|model)/.test(s)) return 'The <b>quote builder</b> up top — choose your exact vehicle, services and add-ons for a live estimate + time in the bay. Want me to open it?';
+    if(/(book|appointment|visit|schedule|drop)/.test(s)) return 'Easy — I&rsquo;ll take you to the booking form. Tell us your vehicle and what it needs and we confirm a slot within one business day.';
+    if(/(hour|open|close|time|when)/.test(s)) return 'Open <b>Mon&ndash;Sat 8:00&ndash;18:00</b>, by appointment. Most jobs are same- or next-day.';
+    if(/(warrant|guarantee)/.test(s)) return 'Every repair is warranty-backed, parts and labor. Honest diagnosis first &mdash; no upsell.';
+    if(/^(hi|hey|hello|yo|sup)\b/.test(s)||s.indexOf('hello')>-1) return 'Hey &mdash; TORQUE service desk. I can talk pricing, build a quote, shop hours, or get you booked. What&rsquo;s up?';
+    return 'Good question &mdash; on the live site this routes straight to the front desk. For the demo I can talk pricing, the quote builder, shop hours, or booking.';
+  }
+  function maybeScroll(q){
+    var s=q.toLowerCase();
+    function go(id){ setTimeout(function(){ if(id==='quote'){ var tb=document.querySelector('.tabbar .tab[data-panel="quote"]'); if(tb)tb.click(); } var el=document.getElementById(id); if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth'}); },reduce?0:1100); }
+    if(/(book|appointment|visit|schedule)/.test(s)) go('book');
+    else if(/(build|quote|price|service|vehicle|estimate)/.test(s)) go('quote');
+  }
+  function handle(q){ add('user',q); botReply(answer(q),700); maybeScroll(q); }
+  function ccFocusables(){ return Array.prototype.slice.call(panel.querySelectorAll('button,input,[href],[tabindex]:not([tabindex="-1"])')).filter(function(el){ return !el.disabled&&el.offsetParent!==null; }); }
+  function openChat(){ panel.classList.add('open'); fab.classList.add('cc-seen'); fab.setAttribute('aria-expanded','true'); if(!seeded){ seeded=true; renderChips(); botReply('TORQUE service desk &mdash; what are you working on? /// Pick a chip or ask away.',400); } setTimeout(function(){ text.focus(); },reduce?0:300); }
+  function closeChat(){ panel.classList.remove('open'); fab.setAttribute('aria-expanded','false'); fab.focus(); }
+  fab.addEventListener('click',function(){ panel.classList.contains('open')?closeChat():openChat(); });
+  closeBtn.addEventListener('click',closeChat);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){ if(panel.classList.contains('open')) closeChat(); return; }
+    if(e.key==='Tab'&&panel.classList.contains('open')){ var f=ccFocusables(); if(!f.length)return; var a=f[0],z=f[f.length-1]; if(e.shiftKey&&document.activeElement===a){ e.preventDefault(); z.focus(); } else if(!e.shiftKey&&document.activeElement===z){ e.preventDefault(); a.focus(); } }
+  });
+  form.addEventListener('submit',function(e){ e.preventDefault(); var v=text.value.trim(); if(!v)return; handle(v); text.value=''; });
+})();
+</script>
+</body>
+</html>

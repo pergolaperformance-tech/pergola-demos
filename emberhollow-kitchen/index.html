@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Set reveal-ready BEFORE paint so the reveal start-state only exists when JS can finish it.
+     No JS = content stays visible. Honors reduced-motion by staying visible. -->
+<script>
+  (function(){
+    try{
+      if(!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+         && 'IntersectionObserver' in window){
+        document.documentElement.className+=' reveal-ready';
+      }
+    }catch(e){}
+  })();
+</script>
+<title>Emberhollow | Wood-Fired American Kitchen</title>
+<meta name="description" content="Emberhollow is a wood-fired American neighborhood restaurant — live-fire cooking, a seasonal menu, and an unhurried dining room. Reserve a table or call ahead.">
+<meta name="theme-color" content="#1a1512">
+<meta name="robots" content="index,follow">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Emberhollow | Wood-Fired American Kitchen">
+<meta property="og:description" content="Live-fire cooking, a seasonal menu, and an unhurried neighborhood dining room.">
+<meta property="og:image" content="img/hero.webp">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Emberhollow | Wood-Fired American Kitchen">
+<meta name="twitter:description" content="Live-fire cooking, a seasonal menu, and an unhurried neighborhood dining room.">
+<meta name="twitter:image" content="img/hero.webp">
+
+<!-- Inline SVG favicon: ember flame -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231a1512'/%3E%3Cpath d='M16 5c2 4-2 5-2 8a3 3 0 0 0 6 0c0-1-.5-2-1-3 2 1 4 3.5 4 7a7 7 0 1 1-14 0c0-4 3-6 4-9 .8 2 2 2.5 3 3 0-2 0-3-1-5z' fill='%23e0712f'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ---- Palette: deep charcoal/espresso base, warm bone text, ONE ember accent ---- */
+    --base:#1a1512;          /* espresso/charcoal ground */
+    --base-deep:#120e0b;     /* darker panel */
+    --base-soft:#221b16;     /* raised surface */
+    --paper:#f4ece0;         /* warm bone (light sections) */
+    --paper-soft:#ece1d2;
+    --bone-text:#f1e7d8;     /* warm bone text on dark */
+    --ink:#241d17;           /* near-black text on bone */
+    --muted-dark:#a89b8b;    /* muted text on dark */
+    --muted-light:#6f6354;   /* muted text on bone */
+    --ember:#e0712f;         /* THE accent — warm ember orange */
+    --ember-deep:#c25a1f;
+    --ember-glow:rgba(224,113,47,.16);
+    --line-dark:rgba(241,231,216,.14);
+    --line-light:rgba(36,29,23,.14);
+
+    /* ---- 8px spacing scale ---- */
+    --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+    /* ---- radii ---- */
+    --r-sm:6px; --r-md:12px; --r-lg:20px; --r-pill:999px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Outfit',system-ui,sans-serif;background:var(--base);color:var(--bone-text);line-height:1.7;font-weight:300;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.04;letter-spacing:.2px}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{width:min(1180px,90%);margin:0 auto}
+  .label{font-family:'Outfit';font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;font-weight:500;color:var(--ember)}
+  section{padding:var(--s7) 0}
+  :where(section,footer)[id]{scroll-margin-top:96px}
+
+  /* ---- Buttons ---- */
+  .btn{display:inline-flex;align-items:center;gap:10px;font-family:'Outfit';font-weight:500;font-size:.84rem;letter-spacing:.1em;text-transform:uppercase;padding:15px 30px;border-radius:var(--r-pill);transition:transform .25s ease,background .25s ease,color .25s ease,border-color .25s ease;cursor:pointer;border:1px solid transparent}
+  .btn-solid{background:var(--ember);color:#1a120b}
+  .btn-solid:hover{background:#f08036;transform:translateY(-2px)}
+  .btn-line{border:1px solid rgba(243,234,216,.55);color:var(--bone-text)}
+  .btn-line:hover{background:var(--bone-text);color:var(--base);transform:translateY(-2px)}
+  .btn-dark{border:1px solid var(--line-light);color:var(--ink)}
+  .btn-dark:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  a.btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:var(--r-sm)}
+
+  /* ---- Concept badge ---- */
+  .concept-bar{background:var(--ember-deep);color:#fff5ec;text-align:center;font-family:'Outfit';font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:7px 16px;position:relative;z-index:40}
+  .concept-bar strong{font-weight:600}
+
+  /* ---- NAV ---- */
+  header.nav{position:sticky;top:0;left:0;right:0;z-index:35;background:rgba(18,14,11,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-dark)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0;color:var(--bone-text)}
+  .brand{font-family:'Fraunces';font-size:1.5rem;font-weight:600;letter-spacing:.4px;color:var(--bone-text);display:flex;align-items:center;gap:9px}
+  .brand .amp{color:var(--ember);font-style:italic;font-weight:400}
+  .nav-links{display:flex;gap:34px;align-items:center}
+  .nav-links a{font-family:'Outfit';font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(241,231,216,.82);transition:color .25s}
+  .nav-links a:hover{color:var(--ember)}
+  .nav-cta{border:1px solid rgba(224,113,47,.6);padding:10px 20px;border-radius:var(--r-pill);color:var(--bone-text)!important}
+  .nav-cta:hover{background:var(--ember);color:#1a120b!important;border-color:var(--ember)}
+
+  /* ---- HERO ---- */
+  .hero{position:relative;min-height:84vh;display:flex;align-items:flex-end;color:var(--bone-text);overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  .hero-bg img{width:100%;height:100%;object-fit:cover}
+  /* Single smooth bottom-anchored scrim (no 90deg layer that caused the left-edge
+     seam) + a soft radial that hugs the copy and fades to nothing over the image,
+     so dimming never reads as a hard rectangular panel. */
+  .hero-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 12% 78%,rgba(18,14,11,.55),transparent 60%),linear-gradient(180deg,rgba(18,14,11,.35) 0%,rgba(18,14,11,.30) 35%,rgba(18,14,11,.78) 78%,rgba(18,14,11,.96) 100%)}
+  .hero-inner{position:relative;z-index:2;padding-bottom:var(--s7);max-width:760px}
+  /* Eyebrow reads as a confident kicker: brighter bone tone, ember underline rule,
+     a hair more tracking — no longer the faintest text on the page. */
+  .hero .label{margin-bottom:var(--s3);display:inline-block;color:var(--bone-text);letter-spacing:.38em;padding-bottom:9px;border-bottom:2px solid var(--ember)}
+  .hero h1{font-size:clamp(2.9rem,6.4vw,4.8rem);line-height:1.0;margin-bottom:var(--s5);font-weight:500;scroll-margin-top:64px}
+  .hero h1 em{font-style:italic;color:var(--ember)}
+  /* Slightly larger lead forms a clear secondary tier; wider CTA gap keeps them
+     off the bottom scrim. */
+  .hero p{font-size:1.22rem;font-weight:300;max-width:540px;margin-bottom:var(--s4);color:rgba(241,231,216,.94)}
+  .hero-ctas{display:flex;gap:var(--s2);flex-wrap:wrap}
+
+  /* ---- STAT STRIP ---- */
+  .strip{background:var(--base-deep);border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark)}
+  .strip .wrap{display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;padding:var(--s4) 0;text-align:center}
+  .strip .item{flex:1;min-width:180px}
+  .strip .item b{font-family:'Fraunces';font-size:1.6rem;font-weight:500;color:var(--ember);display:block;margin-bottom:4px}
+  .strip .item span{display:block;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-dark)}
+
+  /* ---- ABOUT split ---- */
+  .feature{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch}
+  .feature .ph{background:var(--base-soft);overflow:hidden;border-radius:var(--r-md)}
+  .feature .ph img{width:100%;height:100%;object-fit:cover;min-height:460px}
+  .feature .txt{padding:0 0 0 var(--s7);display:flex;flex-direction:column;justify-content:center}
+  .feature .txt h2{font-size:clamp(2.2rem,4.4vw,3.4rem);margin:var(--s2) 0 var(--s3)}
+  .feature .txt p{color:var(--muted-dark);margin-bottom:var(--s2)}
+  .feature .txt .sig{font-family:'Fraunces';font-style:italic;font-size:1.35rem;color:var(--ember);margin-top:var(--s1)}
+
+  /* ---- MENU / SERVICES editorial list ---- */
+  .svc-head{text-align:center;max-width:620px;margin:0 auto var(--s6)}
+  .svc-head h2{font-size:clamp(2.2rem,5vw,3.4rem);margin:14px 0 12px}
+  .svc-head p{color:var(--muted-dark)}
+  .svc-list{max-width:820px;margin:0 auto;border-top:1px solid var(--line-dark)}
+  .svc-row{display:grid;grid-template-columns:auto auto 1fr auto;gap:var(--s2);align-items:baseline;padding:30px 8px;border-bottom:1px solid var(--line-dark);transition:padding .3s ease,background .3s ease}
+  .svc-row:hover{padding-left:22px;background:linear-gradient(90deg,var(--ember-glow),transparent)}
+  /* Row indices recede as quiet labels; only the PRICE carries ember as the value. */
+  .svc-row .n{font-family:'Fraunces';font-style:italic;font-size:1.4rem;color:rgba(241,231,216,.35)}
+  .svc-row h3{font-size:1.55rem;margin-bottom:4px;color:var(--bone-text)}
+  .svc-row p{color:var(--muted-dark);font-size:.96rem;max-width:540px}
+  /* Leader stretches to actually connect name -> price, and is dark enough to read. */
+  .svc-row .lead{align-self:end;width:100%;min-width:24px;border-bottom:1px dotted rgba(241,231,216,.30);transform:translateY(-7px)}
+  .svc-row .price{font-family:'Fraunces';font-size:1.2rem;color:var(--ember);white-space:nowrap}
+  .menu-note{text-align:center;color:var(--muted-dark);font-size:.86rem;margin-top:var(--s5)}
+
+  /* ---- GALLERY collage ---- */
+  .gallery{background:var(--paper);color:var(--ink)}
+  .gallery .label{color:var(--ember-deep)}
+  .gallery .svc-head h2{color:var(--ink)}
+  .gallery .svc-head p{color:var(--muted-light)}
+  .collage{display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-auto-rows:minmax(220px,auto);gap:var(--s2);margin-top:var(--s5)}
+  .collage figure{position:relative;overflow:hidden;border-radius:var(--r-md)}
+  /* Gentle lift so under-exposed dish/plate shots keep their detail instead of
+     reading as near-black empty cells next to the brighter tiles. */
+  .collage img{width:100%;height:100%;object-fit:cover;filter:brightness(1.12) saturate(1.05);transition:transform .6s ease}
+  .collage .c-wide img{object-position:center 35%}
+  .collage figure:hover img{transform:scale(1.06)}
+  /* Caption locked to a consistent baseline + a small solid scrim chip so
+     legibility is uniform tile-to-tile and no longer relies on the full-tile gradient. */
+  .collage figcaption{position:absolute;left:18px;bottom:18px;color:#fff;font-family:'Fraunces';font-style:italic;font-size:1.22rem;letter-spacing:.3px;z-index:2;background:rgba(18,14,11,.55);padding:5px 12px;border-radius:var(--r-pill);backdrop-filter:blur(2px)}
+  /* Lighter full-tile gradient (was .72 from 40%) so it stops compounding dark images. */
+  .collage figure::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(18,14,11,.45));z-index:1}
+  .c-tall{grid-row:span 2}
+  .c-wide{grid-column:span 2}
+
+  /* ---- TRUST ---- */
+  .trust{background:var(--base);padding:var(--s6) 0}
+  .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-top:var(--s5)}
+  .trust-card{background:var(--base-soft);border:1px solid var(--line-dark);border-radius:var(--r-md);padding:var(--s4);transition:transform .3s ease,border-color .3s ease}
+  .trust-card:hover{transform:translateY(-4px);border-color:rgba(224,113,47,.4)}
+  .trust-card .ic{width:42px;height:42px;border-radius:var(--r-sm);background:var(--ember-glow);display:flex;align-items:center;justify-content:center;margin-bottom:var(--s2)}
+  .trust-card .ic svg{width:22px;height:22px;stroke:var(--ember);fill:none;stroke-width:1.6}
+  .trust-card h3{font-size:1.2rem;margin-bottom:6px;color:var(--bone-text)}
+  .trust-card p{color:var(--muted-dark);font-size:.92rem}
+  .concept-note{margin-top:var(--s5);text-align:center;color:var(--muted-dark);font-size:.86rem;border:1px dashed rgba(224,113,47,.4);border-radius:var(--r-md);padding:var(--s3);max-width:760px;margin-left:auto;margin-right:auto}
+  .concept-note strong{color:var(--ember)}
+
+  /* ---- CONTACT ---- */
+  .contact{background:var(--base-soft)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s6);align-items:start}
+  .contact h2{font-size:clamp(2.2rem,5vw,3.4rem);color:var(--bone-text);margin:14px 0 var(--s3)}
+  .contact p.lead{color:var(--muted-dark);margin-bottom:var(--s4);max-width:430px}
+  .info{margin-top:var(--s4);background:var(--base-deep);border:1px solid var(--line-dark);border-radius:var(--r-md);padding:6px var(--s4)}
+  .irow{display:flex;justify-content:space-between;gap:18px;padding:18px 0;border-bottom:1px solid var(--line-dark)}
+  .irow:last-child{border-bottom:none}
+  .irow .k{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ember)}
+  .irow .v{text-align:right;color:var(--bone-text)}
+  .irow a.v:hover{color:var(--ember)}
+
+  form .field{margin-bottom:var(--s3)}
+  form label{display:block;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-dark);margin-bottom:8px}
+  form input,form textarea{width:100%;background:var(--base);border:1px solid var(--line-dark);border-radius:var(--r-sm);color:var(--bone-text);font-family:'Outfit';font-size:1rem;padding:13px 15px;transition:border-color .25s}
+  form input:focus,form textarea:focus{border-color:var(--ember);outline:none}
+  form textarea{resize:vertical;min-height:120px}
+  .form-panel{background:var(--base-deep);border:1px solid var(--line-dark);border-radius:var(--r-lg);padding:var(--s5)}
+  form .btn{width:100%;justify-content:center}
+  .form-status{display:none;margin-top:var(--s2);padding:14px 16px;border-radius:var(--r-sm);font-size:.92rem}
+  .form-status.err{display:block;background:rgba(224,113,47,.12);border:1px solid rgba(224,113,47,.45);color:#f1b890}
+  .form-status.ok{display:block;background:rgba(120,170,110,.14);border:1px solid rgba(120,170,110,.5);color:#bfe0b3}
+
+  /* ---- FOOTER ---- */
+  footer{background:var(--base-deep);color:var(--muted-dark);padding:var(--s6) 0 var(--s5);text-align:center;border-top:1px solid var(--line-dark)}
+  footer .fb{font-family:'Fraunces';font-size:1.5rem;color:var(--bone-text);margin-bottom:6px}
+  footer .fb .amp{color:var(--ember);font-style:italic}
+  footer p{font-size:.86rem;margin:6px 0}
+  footer a{color:var(--bone-text);text-decoration:underline;text-decoration-color:rgba(224,113,47,.5);text-underline-offset:3px}
+  footer a:hover{color:var(--ember)}
+  footer .concept-foot{margin-top:var(--s3);font-size:.8rem;color:var(--muted-dark)}
+
+  /* ---- Reveal ----
+     Content is visible by DEFAULT. The hidden start-state only applies when
+     <html> has the .reveal-ready class (added by an inline head script before
+     paint). With no JS / before the observer fires / on print / in social
+     unfurls, everything stays fully visible — animation is an enhancement,
+     never a gate. */
+  .reveal{transition:opacity .5s ease,transform .5s ease}
+  html.reveal-ready .reveal{opacity:0;transform:translateY(12px)}
+  html.reveal-ready .reveal.in{opacity:1;transform:none}
+
+  /* ---- Mobile sticky CTA ---- */
+  .mcta{display:none}
+  @media(max-width:900px){
+    .nav-links a:not(.nav-cta){display:none}
+    .feature{grid-template-columns:1fr}
+    .feature .txt{padding:var(--s5) 0 0}
+    .contact-grid{grid-template-columns:1fr;gap:var(--s5)}
+    .trust-grid{grid-template-columns:1fr}
+    .collage{grid-template-columns:1fr 1fr;grid-auto-rows:minmax(180px,auto)}
+    .c-wide{grid-column:span 2}
+  }
+  @media(max-width:560px){
+    section{padding:var(--s6) 0}
+    .hero{min-height:86vh}
+    .hero-bg::after{background:radial-gradient(140% 80% at 18% 80%,rgba(18,14,11,.5),transparent 62%),linear-gradient(180deg,rgba(18,14,11,.38) 0%,rgba(18,14,11,.34) 32%,rgba(18,14,11,.82) 76%,rgba(18,14,11,.97) 100%)}
+    .strip .wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0;text-align:left}
+    .strip .item{flex:none;min-width:0;padding:18px 20px;border-bottom:1px solid var(--line-dark)}
+    .strip .item:nth-child(odd){border-right:1px solid var(--line-dark)}
+    .strip .item:nth-last-child(-n+2){border-bottom:none}
+    .strip .item b{font-size:1.4rem;margin-bottom:2px}
+    .svc-row{grid-template-columns:1fr auto;gap:6px 14px;column-gap:14px}
+    .svc-row .n,.svc-row .lead{display:none}
+    .collage{grid-template-columns:1fr;grid-auto-rows:minmax(200px,auto)}
+    .c-wide,.c-tall{grid-column:auto;grid-row:auto}
+    body{padding-bottom:74px}
+    .mcta{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:200;padding:10px 14px;background:rgba(18,14,11,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line-dark)}
+    .mcta a{flex:1;text-align:center;padding:13px;border-radius:var(--r-pill);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;font-family:'Outfit';font-weight:500}
+    .mcta .c1{background:var(--ember);color:#1a120b}
+    .mcta .c2{border:1px solid var(--line-dark);color:var(--bone-text)}
+  }
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .btn,.svc-row,.trust-card,.collage img{transition:none}
+  }
+</style>
+</head>
+<body id="top">
+
+<!-- Concept badge near the top -->
+<div class="concept-bar"><strong>Concept demo</strong> — Emberhollow is not a real business. A sample site by Pergola Performance.</div>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">Emberhollow</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#menu">Menu</a>
+      <a href="#about">About</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Reserve</a>
+      <a href="tel:+15559230744" class="nav-cta">(555) 923-0744</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" aria-label="Introduction">
+  <div class="hero-bg"><img src="img/hero.webp" alt="A wood-fired steak resting over glowing embers in the Emberhollow kitchen" fetchpriority="high"></div>
+  <div class="wrap hero-inner">
+    <span class="label">Wood-Fired · American · Neighborhood</span>
+    <h1>Cooked over <em>live fire</em>,<br>made for the table.</h1>
+    <p>A neighborhood kitchen built around an open hearth — seasonal plates, honest sourcing, and an unhurried room where dinner is meant to linger.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-solid">Reserve a table</a>
+      <a href="tel:+15559230744" class="btn btn-line">Call (555) 923-0744</a>
+    </div>
+  </div>
+</section>
+
+<!-- STAT STRIP (honest value props, no invented numbers) -->
+<div class="strip">
+  <div class="wrap">
+    <div class="item"><b>Live fire</b><span>Oak &amp; ember, every plate</span></div>
+    <div class="item"><b>Seasonal</b><span>Menu shifts with the harvest</span></div>
+    <div class="item"><b>Whole-animal</b><span>Honest, local sourcing</span></div>
+    <div class="item"><b>Walk-ins</b><span>Bar seating, no reservation</span></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap feature">
+    <div class="ph reveal"><img src="img/open-fire-kitchen.webp" alt="Cooks tending a glowing open-fire grill in the Emberhollow kitchen"></div>
+    <div class="txt reveal">
+      <span class="label">Our Story</span>
+      <h2>A fire, a table, and good company.</h2>
+      <p>Emberhollow began with a simple idea: that the best meals come off an open flame and slow down everyone at the table. We built our kitchen around a wood-burning hearth, and we cook the way American kitchens always have — with smoke, salt, and patience.</p>
+      <p>The menu changes with what's good that week. We work with growers and ranchers we trust, use as much of every ingredient as we can, and keep the room warm, low-lit, and easy to settle into.</p>
+      <div class="sig">Pull up a chair.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu" class="menu">
+  <div class="wrap">
+    <div class="svc-head reveal">
+      <span class="label">The Menu</span>
+      <h2>From the hearth</h2>
+      <p>A snapshot of how we cook. The full menu turns over with the season — ask your server what's on the fire tonight.</p>
+    </div>
+    <div class="svc-list">
+      <div class="svc-row reveal"><span class="n">01</span><div><h3>Ember-Grilled Ribeye</h3><p>Dry-aged ribeye seared over oak coals, finished with bone-marrow butter and flaky salt.</p></div><span class="lead" aria-hidden="true"></span><span class="price">from $46</span></div>
+      <div class="svc-row reveal"><span class="n">02</span><div><h3>Wood-Roasted Half Chicken</h3><p>Brined and slow-roasted by the fire, served with pan drippings and charred lemon.</p></div><span class="lead" aria-hidden="true"></span><span class="price">from $28</span></div>
+      <div class="svc-row reveal"><span class="n">03</span><div><h3>Fire-Charred Vegetables</h3><p>Whatever's at the market, blistered over the coals with herb oil and toasted seeds.</p></div><span class="lead" aria-hidden="true"></span><span class="price">from $14</span></div>
+      <div class="svc-row reveal"><span class="n">04</span><div><h3>Hearth Flatbread</h3><p>Blistered in the wood oven, topped with seasonal cheese, honey, and cracked pepper.</p></div><span class="lead" aria-hidden="true"></span><span class="price">from $16</span></div>
+      <div class="svc-row reveal"><span class="n">05</span><div><h3>Smoked Short Rib</h3><p>Slow-smoked over oak until it falls apart, glazed with our house ember sauce.</p></div><span class="lead" aria-hidden="true"></span><span class="price">from $34</span></div>
+      <div class="svc-row reveal"><span class="n">06</span><div><h3>Skillet Cornbread</h3><p>Baked in cast iron at the edge of the fire, finished with whipped sorghum butter.</p></div><span class="lead" aria-hidden="true"></span><span class="price">from $9</span></div>
+    </div>
+    <p class="menu-note">Prices are sample concept pricing. Please let us know about any allergies — see our allergen note in the <a href="terms.html#allergens" style="color:var(--ember);text-decoration:underline">terms</a>.</p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="gallery">
+  <div class="wrap">
+    <div class="svc-head reveal">
+      <span class="label">The Room</span>
+      <h2>A look inside</h2>
+      <p>Low light, an open kitchen, and a table worth lingering at.</p>
+    </div>
+    <div class="collage">
+      <figure class="c-tall reveal"><img src="img/dining-room.webp" alt="The warm, low-lit Emberhollow dining room"><figcaption>The dining room</figcaption></figure>
+      <figure class="reveal"><img src="img/hero.webp" alt="A steak resting over glowing oak embers"><figcaption>On the fire</figcaption></figure>
+      <figure class="reveal"><img src="img/hero-dish.webp" alt="A finished wood-fired plate from the Emberhollow kitchen"><figcaption>The plate</figcaption></figure>
+      <figure class="c-wide reveal"><img src="img/open-fire-kitchen.webp" alt="The open-fire kitchen with cooks at the grill"><figcaption>The hearth</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST (honest value props only) -->
+<section id="trust" class="trust">
+  <div class="wrap">
+    <div class="svc-head reveal">
+      <span class="label">Why Emberhollow</span>
+      <h2>What you can count on</h2>
+      <p>No gimmicks — just the things that matter when you sit down to eat with us.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-card reveal">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3c2 3-1 4-1 6a3 3 0 0 0 6 0c0-1-1-2-1-3 2 2 3 4 3 7a8 8 0 1 1-16 0c0-4 3-6 4-9 1 2 2 3 3 3 0-2-1-3-1-4z"/></svg></div>
+        <h3>Cooked over live fire</h3>
+        <p>Every main passes through real oak and ember — not a gas line. It's slower, and it tastes like it.</p>
+      </div>
+      <div class="trust-card reveal">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg></div>
+        <h3>Sourced with care</h3>
+        <p>We buy from growers and ranchers we know by name and use as much of every ingredient as we can.</p>
+      </div>
+      <div class="trust-card reveal">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 11h16M6 11V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4M5 11v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></div>
+        <h3>An unhurried room</h3>
+        <p>Low light, warm wood, and no rush to turn the table. Stay for one more glass.</p>
+      </div>
+    </div>
+    <p class="concept-note"><strong>Concept note:</strong> This is a demonstration site. Emberhollow is not a real restaurant, and nothing here represents an actual client. We have intentionally left out star ratings, review counts, and certifications because there are none to honestly show — a real venue would feature its own verified reviews and credentials here.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <span class="label">Reserve</span>
+      <h2>Save your table</h2>
+      <p class="lead">Tell us when you'd like to come in and we'll be in touch to confirm. Prefer to talk it through? Give us a call — the bar is always open to walk-ins.</p>
+      <div class="info">
+        <div class="irow"><span class="k">Phone</span><a href="tel:+15559230744" class="v">(555) 923-0744</a></div>
+        <div class="irow"><span class="k">Hours</span><span class="v">Tue – Sun · 5pm to 10pm<br>Monday closed</span></div>
+        <div class="irow"><span class="k">Where</span><span class="v">Your neighborhood, USA</span></div>
+      </div>
+    </div>
+    <div class="reveal form-panel">
+      <form id="reserveForm" novalidate>
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" autocomplete="name" placeholder="Jane Doe">
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(555) 000-0000">
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" placeholder="jane@email.com">
+        </div>
+        <div class="field">
+          <label for="message">Date, time &amp; party size</label>
+          <textarea id="message" name="message" placeholder="Saturday around 7:30, party of 4 — celebrating a birthday."></textarea>
+        </div>
+        <button type="submit" class="btn btn-solid">Request reservation</button>
+        <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fb">Emberhollow</div>
+    <p>Wood-fired American kitchen.</p>
+    <p>
+      <a href="privacy.html">Privacy</a> ·
+      <a href="terms.html">Terms</a> ·
+      <a href="terms.html#refunds">Cancellations</a> ·
+      <a href="tel:+15559230744">(555) 923-0744</a>
+    </p>
+    <p class="concept-foot"><strong>CONCEPT site</strong> — not a real business / not an actual client. Demo by <a href="../../index.html">Pergola Performance</a>.</p>
+  </div>
+</footer>
+
+<!-- Mobile sticky CTA -->
+<div class="mcta">
+  <a class="c1" href="#contact">Reserve</a>
+  <a class="c2" href="tel:+15559230744">Call</a>
+</div>
+
+<script>
+(function(){
+  /* Scroll reveals — reduced-motion safe */
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items=document.querySelectorAll('.reveal');
+  if(reduce||!('IntersectionObserver'in window)){
+    items.forEach(function(el){el.classList.add('in');});
+  }else{
+    var obs=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
+    },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+    items.forEach(function(el){obs.observe(el);});
+    /* Safety net: force-show anything still hidden after 1.2s so the page can
+       never get stuck looking empty (slow JS, missed observer, fast scroll). */
+    setTimeout(function(){
+      document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});
+    },1200);
+  }
+
+  /* Demo reservation form — blocks empty submit, shows success state */
+  var form=document.getElementById('reserveForm');
+  var status=document.getElementById('formStatus');
+  if(form){
+    form.addEventListener('submit',function(ev){
+      ev.preventDefault();
+      var name=form.name.value.trim();
+      var phone=form.phone.value.trim();
+      var email=form.email.value.trim();
+      var msg=form.message.value.trim();
+      if(!name||(!phone&&!email)||!msg){
+        status.className='form-status err';
+        status.textContent='Please add your name, a phone or email, and the details of your visit.';
+        return;
+      }
+      status.className='form-status ok';
+      status.textContent='Thank you, '+name+' — this is a demo, so no reservation was actually sent. On a live site, your request would reach the restaurant here.';
+      form.reset();
+    });
+  }
+})();
+</script>
+</body>
+</html>

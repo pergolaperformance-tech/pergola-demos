@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Auto Care | Fix It Right. Then Make It Yours.</title>
+<meta name="description" content="Apex Auto Care — honest repair and serious customization. Pick your vehicle, get a live estimate, and book it with one click. Cinematic dark build.">
+<meta property="og:title" content="Apex Auto Care | Fix It Right. Then Make It Yours.">
+<meta property="og:description" content="Honest repair plus serious builds. Use the Apex estimator to price your service in seconds and send it straight to our bay.">
+<meta property="og:image" content="https://pergolaperformance.pages.dev/work/apex-auto-care/img/hero-dark-1.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0c0d10">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ff4d00'/%3E%3Cpath d='M16 6 L26 26 H20.5 L16 16.5 L11.5 26 H6 Z' fill='%230c0d10'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0d10; --ink-2:#0f1116; --panel:#14161b; --panel-2:#191c22; --panel-3:#1f232b;
+    --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+    --text:#f1f1ee; --muted:#9aa0a8; --muted-2:#71777f;
+    --orange:#ff4d00; --orange-hot:#ff6a1a; --orange-deep:#d94100;
+    --ease:cubic-bezier(0.23,1,0.32,1);
+    --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  /* clip horizontal overflow at the ROOT so the initial containing block can never widen past the
+     visual viewport (fixes off-screen fixed-position concierge panel/FAB/lightbox on mobile).
+     clip (not hidden) avoids creating a scroll container that would break position:sticky on .nav. */
+  html{scroll-behavior:smooth;max-width:100%;overflow-x:clip}
+  body{font-family:'Archivo',system-ui,sans-serif;background:var(--ink);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;max-width:100%;overflow-x:clip;position:relative}
+  /* ambient dark substrate — fine noise + a faint orange ember glow anchored bottom-right, GPU-cheap (fixed) */
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E")}
+  body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(60% 50% at 82% 8%,rgba(255,77,0,.07),transparent 70%),radial-gradient(45% 40% at 10% 100%,rgba(255,106,26,.05),transparent 70%)}
+  body>*{position:relative;z-index:1}
+  h1,h2,h3{font-stretch:118%;font-weight:850;text-transform:uppercase;line-height:.96;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .mono{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+  :focus-visible{outline:2px solid var(--orange-hot);outline-offset:3px;border-radius:2px}
+  ::selection{background:var(--orange);color:#0c0d10}
+
+  /* BUTTONS */
+  .btn{display:inline-flex;align-items:center;gap:.6rem;cursor:pointer;font-family:'Archivo';font-stretch:115%;text-transform:uppercase;letter-spacing:.06em;font-weight:800;font-size:.95rem;padding:.9rem 1.8rem;border:1.5px solid var(--line-2);background:transparent;color:var(--text);border-radius:0;transition:transform 200ms var(--ease),background 200ms ease,color 200ms ease,box-shadow 240ms var(--ease),border-color 200ms ease}
+  .btn:active{transform:scale(.97)}
+  .btn .ico{display:inline-grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:50%;background:rgba(255,255,255,.08);transition:transform 220ms var(--ease),background 200ms ease}
+  .btn-hot{background:var(--orange);border-color:var(--orange);color:#120800;box-shadow:0 14px 40px -16px rgba(255,77,0,.85),inset 0 1px 0 rgba(255,255,255,.25)}
+  @media(hover:hover){.btn-hot:hover{background:var(--orange-hot);border-color:var(--orange-hot);transform:translateY(-3px);box-shadow:0 22px 54px -18px rgba(255,106,26,.95),inset 0 1px 0 rgba(255,255,255,.3)}.btn-hot:hover .ico{transform:translate(2px,-1px) scale(1.06);background:rgba(0,0,0,.18)}}
+  .btn-hot .ico{background:rgba(0,0,0,.16)}
+  .btn-line{background:rgba(255,255,255,.02);color:var(--text)}
+  @media(hover:hover){.btn-line:hover{border-color:var(--orange);color:#fff;transform:translateY(-3px);box-shadow:0 18px 44px -20px rgba(255,77,0,.55)}.btn-line:hover .ico{transform:translate(2px,-1px) scale(1.06);background:rgba(255,77,0,.18)}}
+
+  /* NAV */
+  .nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px clamp(20px,4vw,56px);background:rgba(12,13,16,.72);backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:11px;font-stretch:120%;font-weight:850;text-transform:uppercase;font-size:1.18rem;letter-spacing:.02em;min-width:0}
+  .brand .mk{width:34px;height:34px;background:var(--orange);display:grid;place-items:center;color:#0c0d10;font-weight:900;font-size:1.15rem;clip-path:polygon(0 0,100% 0,100% 78%,78% 100%,0 100%);box-shadow:0 0 22px -4px rgba(255,77,0,.8)}
+  .nav-links{display:flex;gap:4px}
+  .nav-links a{padding:9px 14px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid transparent;transition:color 150ms ease,border-color 150ms ease}
+  @media(hover:hover){.nav-links a:hover{color:var(--text);border-color:var(--orange)}}
+  .nav .tel{font-stretch:115%;font-weight:850;font-size:1.02rem;white-space:nowrap;min-width:0;flex:0 1 auto}
+  .nav .tel span{color:var(--orange-hot)}
+
+  .sec{padding:clamp(64px,9vw,120px) clamp(20px,4.5vw,64px);position:relative}
+  .inner{max-width:1180px;margin:0 auto}
+  .kicker{display:flex;align-items:center;gap:12px;color:var(--orange-hot);margin-bottom:20px;letter-spacing:.2em}
+  .kicker::before{content:"";width:30px;height:1.5px;background:var(--orange);box-shadow:0 0 12px rgba(255,77,0,.9)}
+  .sec h2{font-size:clamp(2.3rem,5vw,4rem);margin-bottom:16px}
+  .lead{color:var(--muted);font-size:1.1rem;max-width:620px}
+
+  /* ============ HERO — full-viewport cinematic ============ */
+  .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:60% 50%;transform:scale(1.04);will-change:transform}
+  /* cinematic scrim: dark from left + heavy at bottom for legibility */
+  .hero-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(105deg,rgba(8,9,11,.94) 0%,rgba(8,9,11,.66) 34%,rgba(8,9,11,.15) 62%,rgba(8,9,11,0) 88%),
+      linear-gradient(0deg,rgba(8,9,11,.97) 0%,rgba(8,9,11,.55) 26%,rgba(8,9,11,0) 56%),
+      radial-gradient(120% 80% at 18% 90%,rgba(255,77,0,.16),transparent 55%)}
+  .hero-scrim::after{content:"";position:absolute;inset:0;mix-blend-mode:overlay;opacity:.5;
+    background:radial-gradient(140% 100% at 50% 0%,transparent 60%,rgba(0,0,0,.4) 100%)}
+  /* WebGL canvas sits behind text, above the photo scrim accent */
+  #fx{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity 1200ms ease}
+  #fx.on{opacity:1}
+  .hero-inner{position:relative;z-index:3;max-width:1180px;margin:0 auto;width:100%;padding:0 clamp(20px,4.5vw,64px) clamp(48px,7vh,90px)}
+  .hero-kicker{color:var(--orange-hot);margin-bottom:26px}
+  .hero h1{font-size:clamp(2.9rem,8.4vw,7.2rem);letter-spacing:-.035em;margin-bottom:26px;max-width:14ch;
+    text-shadow:0 4px 60px rgba(0,0,0,.6)}
+  .hero h1 em{font-style:normal;color:var(--orange);text-shadow:0 0 44px rgba(255,77,0,.6)}
+  .hero .sub{font-size:clamp(1.05rem,1.5vw,1.25rem);color:#cdd1d6;max-width:540px;margin-bottom:34px}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:42px}
+  .hero-chips{display:flex;gap:14px;flex-wrap:wrap}
+  .hchip{display:flex;align-items:center;gap:11px;padding:13px 18px;background:rgba(20,22,27,.55);border:1px solid var(--line);backdrop-filter:blur(10px);border-radius:0;min-width:0}
+  .hchip .dot{width:8px;height:8px;border-radius:50%;background:var(--orange);box-shadow:0 0 12px 1px rgba(255,77,0,.9);flex:none}
+  .hchip b{display:block;font-stretch:116%;font-weight:850;font-size:1.05rem;line-height:1.05}
+  .hchip span{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase}
+  .scroll-cue{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:3;color:var(--muted-2);font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .scroll-cue .bar{width:1px;height:34px;background:linear-gradient(180deg,var(--orange),transparent);animation:cue 2.4s var(--ease) infinite}
+  @keyframes cue{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* hero load stagger */
+  .hero .anim{opacity:0;transform:translateY(26px);animation:heroIn .9s var(--ease) forwards}
+  .hero .anim.d1{animation-delay:.12s}.hero .anim.d2{animation-delay:.24s}.hero .anim.d3{animation-delay:.36s}.hero .anim.d4{animation-delay:.5s}.hero .anim.d5{animation-delay:.66s}
+  @keyframes heroIn{to{opacity:1;transform:none}}
+
+  /* marquee */
+  .marq{overflow:hidden;border-bottom:1px solid var(--line);background:var(--panel);color:var(--text);padding:14px 0;white-space:nowrap}
+  .marq-track{display:inline-block;animation:marq 28s linear infinite;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  @media(hover:hover){.marq:hover .marq-track{animation-play-state:paused}}
+  @keyframes marq{to{transform:translateX(-50%)}}
+  .marq span{font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;margin:0 26px;color:var(--muted)}
+  .marq i{color:var(--orange-hot);font-style:normal}
+
+  /* TRUST BAR — hairline-ruled cells on dark */
+  .creds{background:var(--ink-2);border-bottom:1px solid var(--line)}
+  .creds-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+  .creds-cell{background:var(--ink-2);padding:18px clamp(14px,2.4vw,28px);display:flex;align-items:center;gap:12px;min-height:68px;transition:background 200ms ease}
+  @media(hover:hover){.creds-cell:hover{background:var(--panel)}}
+  .creds-cell .seal{color:var(--orange-hot);font-size:1.05rem;line-height:1;flex:none}
+  .creds-cell .lbl{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;font-weight:600;color:var(--text);line-height:1.35}
+
+  /* ============ ESTIMATOR ============ */
+  .est{background:var(--ink-2);border-bottom:1px solid var(--line);position:relative}
+  .est .kicker{color:var(--orange-hot)}
+  .est-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(20px,3vw,40px);margin-top:38px;align-items:stretch}
+  /* dark glass panels (double-bezel: outer line + inner glow) */
+  .glass{position:relative;background:
+      radial-gradient(120% 90% at 50% 0%,rgba(255,77,0,.06),transparent 60%),
+      linear-gradient(180deg,var(--panel),var(--ink-2));
+    border:1px solid var(--line);border-radius:0;overflow:hidden;
+    box-shadow:0 40px 90px -50px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.06)}
+  .glass::before{content:"";position:absolute;inset:0;pointer-events:none;border:1px solid transparent;
+    background:linear-gradient(180deg,rgba(255,255,255,.07),transparent 30%) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+
+  /* STAGE — silhouette preview */
+  .stage{padding:26px 24px 22px;display:flex;flex-direction:column;min-height:100%}
+  .stage .tag{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);margin-bottom:4px}
+  .stage .tag b{color:var(--orange-hot);font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.16em;font-weight:600}
+  .silo{flex:1;display:grid;place-items:center;position:relative;min-height:230px;
+    background:radial-gradient(60% 56% at 50% 64%,rgba(255,77,0,.12),transparent 72%)}
+  .silo::after{content:"";position:absolute;left:6%;right:6%;bottom:18%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,77,0,.5),transparent)}
+  .silo svg{width:min(94%,440px);height:auto;display:block;filter:drop-shadow(0 18px 24px rgba(0,0,0,.55));animation:siloIn .5s var(--ease)}
+  @keyframes siloIn{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+  .silo .body{fill:#23272f;stroke:rgba(255,255,255,.12);stroke-width:1.2}
+  .silo .glass-p{fill:#13161b;stroke:rgba(255,255,255,.1);stroke-width:1}
+  .silo .tire{fill:#0d0f12;stroke:rgba(255,255,255,.16);stroke-width:1.4}
+  .silo .hub{fill:var(--orange)}
+  .silo .accent{fill:var(--orange);opacity:.92}
+  .silo .ground{fill:none}
+  .silo-name{text-align:center;font-stretch:118%;font-weight:850;text-transform:uppercase;letter-spacing:.04em;font-size:1.15rem;margin-top:6px}
+  .silo-name span{color:var(--orange-hot);font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.16em;display:block;font-weight:500;color:var(--muted);margin-top:3px}
+
+  /* CONTROLS */
+  .ctrl{padding:26px 24px;display:flex;flex-direction:column;gap:24px}
+  .ctrl-block .mono{color:var(--muted);display:block;margin-bottom:12px}
+  .pick{display:flex;flex-wrap:wrap;gap:8px}
+  .pick button{display:inline-flex;align-items:center;gap:8px;padding:11px 14px;background:rgba(255,255,255,.025);border:1px solid var(--line);color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:0;transition:border-color 180ms ease,color 180ms ease,background 180ms ease,transform 140ms var(--ease)}
+  .pick button .gi{width:24px;height:16px;flex:none;color:currentColor}
+  .pick button:active{transform:scale(.96)}
+  @media(hover:hover){.pick button:hover{border-color:var(--line-2);color:var(--text);background:rgba(255,255,255,.05)}}
+  .pick button[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:#120800;font-weight:600;box-shadow:0 10px 28px -12px rgba(255,77,0,.85)}
+  .svc-pick button{font-variant-numeric:tabular-nums}
+  .svc-pick button small{opacity:.7;font-size:.66rem;margin-left:2px}
+
+  .est-out{margin-top:4px;border:1px solid var(--line);background:linear-gradient(180deg,var(--panel-2),var(--ink-2));padding:22px 24px}
+  .est-out .row{display:flex;align-items:baseline;justify-content:space-between;gap:14px}
+  .est-out .lbl{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase}
+  #estOut{font-stretch:118%;font-weight:850;font-size:clamp(1.9rem,3.6vw,2.5rem);color:var(--orange-hot);font-variant-numeric:tabular-nums;line-height:1;text-shadow:0 0 30px rgba(255,106,26,.4)}
+  #estInc{color:var(--muted);font-size:.86rem;margin-top:12px;line-height:1.5}
+  .ctrl .btn{justify-content:center;margin-top:2px}
+
+  /* ============ SERVICES ledger (dark) ============ */
+  .ledger{margin-top:36px;border:1px solid var(--line);background:linear-gradient(180deg,var(--panel),var(--ink-2));box-shadow:0 40px 90px -55px rgba(0,0,0,.9)}
+  .lrow{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;padding:20px 28px;border-bottom:1px solid var(--line);transition:background 200ms ease,padding-left 240ms var(--ease);position:relative}
+  .lrow:last-child{border-bottom:none}
+  .lrow::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--orange);box-shadow:0 0 16px rgba(255,77,0,.9);transform:scaleY(0);transform-origin:top;transition:transform 240ms var(--ease)}
+  @media(hover:hover){.lrow:hover{background:rgba(255,77,0,.04);padding-left:40px}.lrow:hover::before{transform:scaleY(1)}}
+  .lrow .num{font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--orange-hot);letter-spacing:.1em}
+  .lrow h3{font-size:1.32rem}
+  .lrow p{color:var(--muted);font-size:.92rem}
+  .lrow .price{font-stretch:118%;font-weight:850;font-size:1.4rem;white-space:nowrap}
+  .lrow .price small{display:block;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:.6rem;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;text-align:right}
+
+  /* STATS */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:24px;border:1px solid var(--line);background:var(--line)}
+  .stat{padding:24px 26px;background:var(--ink-2);transition:background 200ms ease}
+  @media(hover:hover){.stat:hover{background:var(--panel)}}
+  .stat .v{font-stretch:118%;font-weight:850;font-size:2.4rem;color:var(--orange-hot);text-shadow:0 0 28px rgba(255,106,26,.3)}
+  .stat .k{color:var(--muted);font-size:.88rem}
+
+  /* ============ BEFORE / AFTER ============ */
+  .ba{background:var(--ink);border-bottom:1px solid var(--line)}
+  .ba-wrap{margin-top:36px;position:relative;border:1px solid var(--line);overflow:hidden;box-shadow:0 50px 110px -55px rgba(0,0,0,.95);user-select:none;touch-action:pan-y;aspect-ratio:16/9;background:#000}
+  .ba-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+  .ba-after{clip-path:inset(0 0 0 50%)}
+  .ba-lbl{position:absolute;top:16px;z-index:3;font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:7px 12px;background:rgba(12,13,16,.7);border:1px solid var(--line);backdrop-filter:blur(8px);color:var(--text)}
+  .ba-lbl.bf{left:16px}.ba-lbl.af{right:16px;color:var(--orange-hot)}
+  .ba-handle{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--orange);box-shadow:0 0 22px rgba(255,77,0,.9);z-index:4;transform:translateX(-50%)}
+  .ba-grip{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:var(--orange);border:2px solid #120800;display:grid;place-items:center;cursor:ew-resize;box-shadow:0 8px 30px -8px rgba(255,77,0,.9);color:#120800;z-index:5;touch-action:none}
+  .ba-grip:active{transform:translate(-50%,-50%) scale(.94)}
+  .ba-grip svg{width:22px;height:22px;pointer-events:none}
+  .ba-range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;z-index:6}
+  .ba-cap{margin-top:16px;color:var(--muted);font-size:.9rem}
+
+  /* GALLERY */
+  .gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:14px;margin-top:36px}
+  .gal button{padding:0;border:1px solid var(--line);overflow:hidden;cursor:pointer;background:none;position:relative}
+  .gal button::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(8,9,11,.6));opacity:.7;transition:opacity 300ms ease;pointer-events:none}
+  .gal img{width:100%;height:100%;object-fit:cover;transition:transform 600ms var(--ease),filter 300ms ease;filter:saturate(.92) brightness(.92)}
+  @media(hover:hover){.gal button:hover img{transform:scale(1.07);filter:saturate(1.05) brightness(1)}.gal button:hover::after{opacity:.35}}
+  .lb{position:fixed;inset:0;max-width:100vw;z-index:100;display:flex;align-items:center;justify-content:center;background:rgba(6,7,9,.92);backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity 240ms var(--ease),visibility 240ms}
+  .lb.open{opacity:1;visibility:visible}
+  .lb img{max-width:90vw;max-height:84vh;border:1px solid var(--line-2);transform:scale(.96);transition:transform 260ms var(--ease);box-shadow:0 60px 120px -40px rgba(0,0,0,.9)}
+  .lb.open img{transform:scale(1)}
+  .lb-btn{position:absolute;background:rgba(255,255,255,.07);border:1px solid var(--line-2);color:#fff;width:48px;height:48px;border-radius:50%;font-size:1.3rem;cursor:pointer;display:grid;place-items:center;transition:background 180ms ease,transform 140ms var(--ease)}
+  @media(hover:hover){.lb-btn:hover{background:var(--orange);color:#120800}}
+  .lb-btn:active{transform:scale(.92)}
+  .lb-close{top:24px;right:24px}.lb-prev{left:24px}.lb-next{right:24px}
+
+  /* BOOK */
+  .book{background:var(--ink-2);border-top:1px solid var(--line)}
+  .form{margin-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:780px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);box-shadow:0 50px 110px -55px rgba(0,0,0,.95);padding:32px}
+  .field{display:flex;flex-direction:column;gap:8px}
+  .field.full{grid-column:1/-1}
+  .field label{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.13em;font-weight:500;font-size:.7rem;color:var(--muted)}
+  .field input,.field select,.field textarea{background:var(--ink);border:1px solid var(--line-2);padding:13px 14px;color:var(--text);font-family:'Archivo';font-size:1rem;min-height:48px;border-radius:0;transition:border-color 180ms ease,box-shadow 180ms ease,background 180ms ease}
+  .field input::placeholder,.field textarea::placeholder{color:var(--muted-2)}
+  .field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%239aa0a8' stroke-width='1.6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+  .field select option{background:var(--ink);color:var(--text)}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--orange);background:#101216;box-shadow:0 0 0 3px rgba(255,77,0,.18)}
+  .form-note{grid-column:1/-1;color:var(--muted);font-size:.83rem}
+  .form-note a{color:var(--orange-hot)}
+  .form-ok{grid-column:1/-1;display:none;background:var(--orange);color:#120800;padding:16px 18px;font-weight:600}
+  .form-ok.show{display:block}
+
+  /* FOOTER */
+  footer{background:var(--ink);color:var(--text);padding:72px clamp(20px,4.5vw,64px) 32px;border-top:1px solid var(--line)}
+  .ft{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:42px}
+  .ft h4{font-stretch:118%;text-transform:uppercase;font-weight:850;font-size:1.05rem;margin-bottom:16px}
+  .ft p,.ft a{color:var(--muted);font-size:.92rem}
+  .ft a{display:block;padding:3px 0;transition:color 150ms ease}
+  @media(hover:hover){.ft a:hover{color:var(--orange-hot)}}
+  .ft .tel-big{font-stretch:118%;font-weight:850;font-size:1.8rem;color:var(--text);display:inline-block;margin:8px 0 12px;transition:color 150ms ease}
+  @media(hover:hover){.ft .tel-big:hover{color:var(--orange-hot)}}
+  .ft-bottom{max-width:1180px;margin:48px auto 0;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--muted-2);font-size:.8rem}
+  .ft-bottom a{color:var(--muted)}
+  @media(hover:hover){.ft-bottom a:hover{color:var(--orange-hot)}}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(24px);transition:opacity 700ms var(--ease),transform 700ms var(--ease)}
+  .rv.in{opacity:1;transform:none}
+  .no-js .rv{opacity:1;transform:none}
+
+  /* ============ APEX SERVICE DESK — concierge (re-themed dark) ============ */
+  .cc-fab{position:fixed;right:24px;bottom:24px;z-index:90;width:60px;height:60px;border-radius:0;border:1.5px solid #120800;cursor:pointer;background:var(--orange);color:#120800;display:grid;place-items:center;box-shadow:0 14px 40px -10px rgba(255,77,0,.85);clip-path:polygon(0 0,100% 0,100% 78%,78% 100%,0 100%);transition:transform 200ms var(--ease),background 200ms ease,box-shadow 240ms var(--ease)}
+  @media(hover:hover){.cc-fab:hover{transform:translateY(-3px);background:var(--orange-hot);box-shadow:0 22px 54px -14px rgba(255,106,26,.95)}}
+  .cc-fab:active{transform:scale(.96)}
+  .cc-fab svg{width:26px;height:26px;pointer-events:none}
+  .cc-pip{position:absolute;top:5px;right:7px;width:9px;height:9px;background:#120800;display:block}
+  .cc-fab.cc-seen .cc-pip{display:none}
+  .cc-panel{position:fixed;right:24px;bottom:96px;z-index:91;width:min(380px,calc(100vw - 32px));height:min(560px,calc(100vh - 140px));background:var(--ink-2);border:1px solid var(--line-2);border-radius:0;box-shadow:0 40px 90px -30px rgba(0,0,0,.9);display:flex;flex-direction:column;overflow:hidden;opacity:0;visibility:hidden;transform:translateY(8px) scale(.99);transform-origin:bottom right;transition:opacity 240ms var(--ease),transform 240ms var(--ease),visibility 240ms}
+  .cc-panel.open{opacity:1;visibility:visible;transform:none}
+  .cc-head{background:var(--panel);color:#fff;padding:15px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+  .cc-head .av{width:38px;height:38px;background:var(--orange);display:grid;place-items:center;color:#120800;font-weight:900;font-size:1.1rem;font-stretch:120%;clip-path:polygon(0 0,100% 0,100% 78%,78% 100%,0 100%);flex:none;box-shadow:0 0 18px -2px rgba(255,77,0,.8)}
+  .cc-head .t b{font-stretch:118%;font-weight:850;text-transform:uppercase;font-size:1rem;display:block;letter-spacing:.01em;line-height:1}
+  .cc-head .t span{font-family:'IBM Plex Mono',monospace;font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:6px;margin-top:4px}
+  .cc-head .t span::after{content:"\2588";color:var(--orange-hot);animation:ccBlink 1.1s steps(1) infinite}
+  @keyframes ccBlink{0%,100%{opacity:1}50%{opacity:0}}
+  .cc-head .x{margin-left:auto;background:transparent;border:none;color:var(--muted);cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.06em;padding:6px 8px;min-height:44px;display:flex;align-items:center;transition:color 160ms ease}
+  @media(hover:hover){.cc-head .x:hover{color:var(--orange-hot)}}
+  .cc-log{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:10px;background:var(--ink-2);
+    background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 28px),repeating-linear-gradient(90deg,rgba(255,255,255,.018) 0 1px,transparent 1px 28px)}
+  .cc-msg{max-width:86%;padding:10px 13px;font-size:.9rem;line-height:1.5;border-radius:0;animation:ccPop 260ms var(--ease)}
+  @keyframes ccPop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .cc-bot{align-self:flex-start;background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--orange);color:var(--text);box-shadow:0 6px 18px -10px rgba(0,0,0,.6)}
+  .cc-bot .pfx{display:block;font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--orange-hot);margin-bottom:5px}
+  .cc-bot b{font-weight:800;color:#fff}
+  .cc-bot .miniledger{margin:8px 0 2px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:6px 0;display:flex;flex-direction:column;gap:3px}
+  .cc-bot .miniledger span{display:flex;justify-content:space-between;gap:14px;font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+  .cc-bot .miniledger span i{font-style:normal;color:var(--muted);text-transform:uppercase;font-size:.66rem;letter-spacing:.1em}
+  .cc-user{align-self:flex-end;background:var(--orange);color:#120800;text-align:left;clip-path:polygon(0 0,100% 0,100% 100%,8px 100%,0 calc(100% - 8px))}
+  .cc-user .pfx{display:block;font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:#3a1500;margin-bottom:4px}
+  .cc-typing{align-self:flex-start;display:flex;gap:5px;padding:13px 14px;background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--orange)}
+  .cc-typing i{width:7px;height:7px;background:var(--orange-hot);display:block;animation:ccBlink2 1.2s infinite}
+  .cc-typing i:nth-child(2){animation-delay:.18s}.cc-typing i:nth-child(3){animation-delay:.36s}
+  @keyframes ccBlink2{0%,60%,100%{opacity:.3}30%{opacity:1}}
+  .cc-chips{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px 6px;background:var(--ink-2)}
+  .cc-chip{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:9px 12px;min-height:40px;display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:0;background:var(--panel);color:var(--text);cursor:pointer;transition:background 160ms ease,color 160ms ease,transform 120ms var(--ease),border-color 160ms ease;font-variant-numeric:tabular-nums}
+  @media(hover:hover){.cc-chip:hover{background:var(--orange);color:#120800;border-color:var(--orange)}}
+  .cc-chip:active{transform:scale(.96)}
+  .cc-input{display:flex;gap:8px;padding:11px 14px;border-top:1px solid var(--line);background:var(--ink-2)}
+  .cc-input input{flex:1;border:1px solid var(--line-2);border-radius:0;background:var(--ink);padding:11px 13px;font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.04em;min-height:44px;color:var(--text);transition:box-shadow 160ms ease,border-color 160ms ease}
+  .cc-input input::placeholder{color:var(--muted-2);text-transform:uppercase;letter-spacing:.1em;font-size:.7rem}
+  .cc-input input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,77,0,.18)}
+  .cc-input button{flex:none;width:44px;height:44px;border-radius:0;border:1.5px solid #120800;background:var(--orange);color:#120800;cursor:pointer;display:grid;place-items:center;transition:background 160ms ease,transform 120ms var(--ease)}
+  @media(hover:hover){.cc-input button:hover{background:var(--orange-hot)}}
+  .cc-input button:active{transform:scale(.92)}
+  .cc-foot{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);padding:8px 10px;background:var(--ink-2);border-top:1px solid var(--line)}
+
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    html{scroll-behavior:auto}
+    .rv{opacity:1;transform:none}
+    .marq-track{animation:none}
+    .hero .anim{opacity:1;transform:none;animation:none}
+    .hero-bg img{transform:none}
+    .cc-head .t span::after{animation:none}
+    .scroll-cue .bar{animation:none}
+  }
+
+  @media(max-width:980px){
+    .est-grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .nav-links{display:none}
+    .creds-grid{grid-template-columns:repeat(2,1fr)}
+    .ft{grid-template-columns:1fr 1fr}
+    .hero h1{max-width:none}
+  }
+  @media(max-width:640px){
+    .gal{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px}
+    .sec{padding:52px 18px}
+    .brand{font-size:.92rem;white-space:nowrap}
+    .brand .mk{width:28px;height:28px;font-size:.95rem}
+    .nav{padding:10px 16px}
+    .hero h1{font-size:clamp(2.5rem,12vw,3.4rem)}
+    .form{gap:12px;padding:22px;grid-template-columns:1fr}
+    .ft{grid-template-columns:1fr}
+    .nav .tel span{display:none}
+    .hero-chips{gap:10px}
+    .hchip{padding:11px 14px}
+  }
+  @media(max-width:560px){
+    body{padding-bottom:76px}
+    .cc-fab{right:16px;bottom:16px}
+    .cc-panel{right:8px;bottom:84px;width:calc(100vw - 16px);height:min(72vh,500px)}
+    .stat .v{white-space:normal;font-size:2rem}
+  }
+  @media(max-width:400px){
+    .nav .tel{font-size:.9rem}
+  }
+</style>
+</head>
+<body class="no-js">
+<script>document.body.classList.remove('no-js')</script>
+
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="#top"><span class="mk" aria-hidden="true">A</span>Apex Auto Care</a>
+  <div class="nav-links">
+    <a href="#estimator">Estimator</a>
+    <a href="#services">Services</a>
+    <a href="#work">Work</a>
+    <a href="#book">Book</a>
+  </div>
+  <a class="tel" href="tel:+15553182240"><span>Call&nbsp;</span>(555) 318-2240</a>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true">
+    <img src="img/hero-dark-1.png" alt="" fetchpriority="high">
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <span class="mono hero-kicker anim d1">Repair shop · Build shop · Est. trust</span>
+    <h1 class="anim d2">Fix it right.<br>Then make it <em>yours.</em></h1>
+    <p class="sub anim d3">Apex handles the honest stuff — brakes, diagnostics, oil — and the serious stuff: lifts, wheels, wraps and tint. Price your service below and send it straight to our bay.</p>
+    <div class="hero-cta anim d4">
+      <a class="btn btn-hot" href="#estimator">Open the estimator<span class="ico" aria-hidden="true">→</span></a>
+      <a class="btn btn-line" href="#book">Book a service<span class="ico" aria-hidden="true">→</span></a>
+    </div>
+    <div class="hero-chips anim d5">
+      <div class="hchip"><span class="dot" aria-hidden="true"></span><div><b>12-month</b><span>warranty on repairs</span></div></div>
+      <div class="hchip"><span class="dot" aria-hidden="true"></span><div><b>Same day</b><span>on most services</span></div></div>
+      <div class="hchip"><span class="dot" aria-hidden="true"></span><div><b>Trusted</b><span>by the neighborhood</span></div></div>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span class="bar"></span>Scroll</div>
+</header>
+
+<div class="marq" aria-hidden="true">
+  <div class="marq-track">
+    <span>Engine diagnostics <i>///</i></span><span>Lift kits <i>///</i></span><span>Brake service <i>///</i></span><span>Wheels &amp; tires <i>///</i></span><span>Wraps &amp; tint <i>///</i></span><span>AC &amp; heating <i>///</i></span><span>Transmission <i>///</i></span><span>Alignment <i>///</i></span>
+    <span>Engine diagnostics <i>///</i></span><span>Lift kits <i>///</i></span><span>Brake service <i>///</i></span><span>Wheels &amp; tires <i>///</i></span><span>Wraps &amp; tint <i>///</i></span><span>AC &amp; heating <i>///</i></span><span>Transmission <i>///</i></span><span>Alignment <i>///</i></span>
+  </div>
+</div>
+
+<section class="creds" aria-label="Shop credentials">
+  <div class="creds-grid">
+    <div class="creds-cell"><span class="seal" aria-hidden="true">&#10003;</span><span class="lbl">Certified Techs</span></div>
+    <div class="creds-cell"><span class="seal" aria-hidden="true">&#10003;</span><span class="lbl">OEM + Aftermarket Parts</span></div>
+    <div class="creds-cell"><span class="seal" aria-hidden="true">&#10003;</span><span class="lbl">Warranty-Backed Repairs</span></div>
+    <div class="creds-cell"><span class="seal" aria-hidden="true">&#10003;</span><span class="lbl">Trusted by the Neighborhood</span></div>
+  </div>
+</section>
+
+<!-- ============ VEHICLE-TYPE ESTIMATOR ============ -->
+<section class="sec est" id="estimator">
+  <div class="inner">
+    <span class="mono kicker">The Apex estimator</span>
+    <h2 class="rv">Price it before you park it</h2>
+    <p class="lead rv">Pick what you drive, pick what it needs — the estimate updates live. When it looks right, send the request straight to the shop and we'll lock in a slot.</p>
+    <div class="est-grid">
+      <div class="glass stage rv">
+        <div class="tag"><b id="stageTag">APX-EST / VEHICLE</b><span class="mono">live preview</span></div>
+        <div class="silo" id="stage" aria-hidden="true"></div>
+        <div class="silo-name" id="siloName" aria-live="polite" aria-atomic="true">Sedan<span>Factor &times;1.00</span></div>
+      </div>
+      <div class="glass ctrl rv">
+        <div class="ctrl-block">
+          <span class="mono">01 / Vehicle type</span>
+          <div class="pick" id="vehRow" role="group" aria-label="Vehicle type"></div>
+        </div>
+        <div class="ctrl-block">
+          <span class="mono">02 / Service</span>
+          <div class="pick svc-pick" id="svcRow" role="group" aria-label="Service"></div>
+        </div>
+        <div class="est-out" aria-live="polite" aria-atomic="true">
+          <div class="row">
+            <span class="lbl">Estimate range</span>
+            <span id="estOut">$0 – $0</span>
+          </div>
+          <p id="estInc">Live estimate — ranges include parts &amp; labor for most jobs.</p>
+        </div>
+        <button class="btn btn-hot" id="bookEst" type="button">Send this estimate to the shop<span class="ico" aria-hidden="true">→</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="services">
+  <div class="inner">
+    <span class="mono kicker">Services</span>
+    <h2 class="rv">The honest stuff</h2>
+    <p class="lead rv">Straight diagnoses, upfront pricing, 12-month warranty. No upsell theater.</p>
+    <div class="ledger rv">
+      <div class="lrow"><span class="num">/01</span><div><h3>Engine Diagnostics</h3><p>Full computer scan with a plain-English explanation of what's wrong.</p></div><div class="price">$89<small>from</small></div></div>
+      <div class="lrow"><span class="num">/02</span><div><h3>Brake Service</h3><p>Pads, rotors, fluid — stop like you mean it.</p></div><div class="price">$149<small>from</small></div></div>
+      <div class="lrow"><span class="num">/03</span><div><h3>Oil &amp; Filter Change</h3><p>Full synthetic, multi-point inspection included.</p></div><div class="price">$49<small>from</small></div></div>
+      <div class="lrow"><span class="num">/04</span><div><h3>AC &amp; Heating</h3><p>Recharge, leak detection, compressor repair.</p></div><div class="price">$99<small>from</small></div></div>
+      <div class="lrow"><span class="num">/05</span><div><h3>Tire &amp; Alignment</h3><p>Mounting, balancing, four-wheel alignment.</p></div><div class="price">$79<small>from</small></div></div>
+      <div class="lrow"><span class="num">/06</span><div><h3>Transmission Repair</h3><p>Service, rebuild or replace — diagnosed honestly first.</p></div><div class="price">$130<small>from</small></div></div>
+    </div>
+    <div class="stats rv">
+      <div class="stat"><div class="v">Honest</div><div class="k">Diagnosis before any work</div></div>
+      <div class="stat"><div class="v">Upfront</div><div class="k">Pricing, no upsell theater</div></div>
+      <div class="stat"><div class="v">Warranty</div><div class="k">Backed repairs</div></div>
+      <div class="stat"><div class="v">Same&nbsp;day</div><div class="k">On most services</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BEFORE / AFTER ============ -->
+<section class="sec ba" id="transform">
+  <div class="inner">
+    <span class="mono kicker">In the bay</span>
+    <h2 class="rv">Before. After. Apex.</h2>
+    <p class="lead rv">Drag the handle — or use the arrow keys — to see what comes out of our bay. Raw shop floor on one side, finished build on the other.</p>
+    <div class="ba-wrap rv" id="baWrap">
+      <img class="ba-before" src="img/bay.webp" alt="Vehicle on the lift in the Apex service bay, before the build">
+      <img class="ba-after" id="baAfter" src="img/build.webp" alt="Finished lifted black pickup build on off-road wheels">
+      <span class="ba-lbl bf" aria-hidden="true">Before</span>
+      <span class="ba-lbl af" aria-hidden="true">After</span>
+      <div class="ba-handle" id="baHandle" aria-hidden="true"></div>
+      <div class="ba-grip" id="baGrip" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5"/><path d="M16 7l5 5-5 5"/></svg>
+      </div>
+      <input class="ba-range" id="baRange" type="range" min="0" max="100" value="50" step="0.5" aria-label="Reveal the finished build — drag to compare before and after">
+    </div>
+    <p class="ba-cap">Slide to compare · keyboard accessible · same vehicle, two stages.</p>
+  </div>
+</section>
+
+<section class="sec" id="work" style="padding-top:0">
+  <div class="inner">
+    <span class="mono kicker">Recent work</span>
+    <h2 class="rv">Out of the bay</h2>
+    <div class="gal rv" id="gallery">
+      <button type="button"><img src="img/build.webp" alt="Lifted black pickup build on off-road wheels, studio shot"></button>
+      <button type="button"><img src="img/wheel.webp" alt="Forged gunmetal wheel with orange brake caliper"></button>
+      <button type="button"><img src="img/bay.webp" alt="Technician working under a vehicle on the lift"></button>
+      <button type="button"><img src="img/detail.webp" alt="Hand-polishing a burnt-orange truck fender"></button>
+    </div>
+  </div>
+</section>
+
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <img id="lbImg" src="" alt="">
+  <button class="lb-btn lb-close" type="button" aria-label="Close">✕</button>
+  <button class="lb-btn lb-prev" type="button" aria-label="Previous image">‹</button>
+  <button class="lb-btn lb-next" type="button" aria-label="Next image">›</button>
+</div>
+
+<section class="sec book" id="book">
+  <div class="inner">
+    <span class="mono kicker">Book it</span>
+    <h2 class="rv">Get on the schedule</h2>
+    <p class="lead rv">Tell us what you're driving and what it needs — we'll confirm a slot within one business day.</p>
+    <form class="form rv" id="bookForm" novalidate>
+      <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" required autocomplete="name"></div>
+      <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" required autocomplete="tel"></div>
+      <div class="field"><label for="f-vehicle">Vehicle</label><input id="f-vehicle" name="vehicle" placeholder="e.g. 2021 F-150"></div>
+      <div class="field"><label for="f-service">Service</label>
+        <select id="f-service" name="service">
+          <option>Engine diagnostics</option><option>Brake service</option><option>Oil &amp; filter</option>
+          <option>AC &amp; heating</option><option>Tire &amp; alignment</option><option>Transmission</option>
+          <option>Custom build (visualizer)</option><option>Something else</option>
+        </select>
+      </div>
+      <div class="field full"><label for="f-msg">Details</label><textarea id="f-msg" name="message" rows="4" placeholder="What's going on with it?"></textarea></div>
+      <p class="form-note">We only use your info to schedule your service — never shared, never sold. See our <a href="privacy.html" style="text-decoration:underline">privacy policy</a>.</p>
+      <div class="form-ok" id="formOk">✓ Request received — we'll call you within one business day to confirm.</div>
+      <div class="field full"><button class="btn btn-hot" type="submit">Request appointment<span class="ico" aria-hidden="true">→</span></button></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">
+    <div>
+      <h4>Apex Auto Care</h4>
+      <p>Honest repair and serious builds under one roof.</p>
+      <a class="tel-big" href="tel:+15553182240">(555) 318-2240</a>
+      <p>2841 Industrial Ave, Springfield</p>
+    </div>
+    <div>
+      <h4>Hours</h4>
+      <p>Mon–Fri · 7:30am – 6:00pm</p>
+      <p>Saturday · 8:00am – 2:00pm</p>
+      <p>Sunday · Closed</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <a href="#estimator">Estimator</a>
+      <a href="#services">Services &amp; pricing</a>
+      <a href="#work">Recent work</a>
+      <a href="#book">Book a service</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <span>© 2026 Apex Auto Care · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · Concept/demo build</span>
+    <span>Demo site by <a href="../../index.html">Pergola Performance</a></span>
+  </div>
+</footer>
+
+<!-- APEX SERVICE DESK — concierge (scripted demo) -->
+<button class="cc-fab" id="ccFab" type="button" aria-expanded="false" aria-label="Open the Apex service desk (demo)">
+  <span class="cc-pip" aria-hidden="true"></span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-3a8 8 0 0 1 16 0v3"/><path d="M20 15a2 2 0 0 1-2 2h-1v-5h1a2 2 0 0 1 2 2zM4 15a2 2 0 0 0 2 2h1v-5H6a2 2 0 0 0-2 2z"/><path d="M18 17v1a3 3 0 0 1-3 3h-3"/></svg>
+</button>
+<div class="cc-panel" id="ccPanel" role="dialog" aria-label="Apex Service Desk (demo)">
+  <div class="cc-head">
+    <div class="av" aria-hidden="true">A</div>
+    <div class="t"><b>Apex Service Desk</b><span>Bay Radio · Auto-reply</span></div>
+    <button class="x" id="ccClose" type="button" aria-label="Close service desk">[ X ]</button>
+  </div>
+  <div class="cc-log" id="ccLog" aria-live="polite"></div>
+  <div class="cc-chips" id="ccChips"></div>
+  <form class="cc-input" id="ccForm">
+    <input id="ccText" type="text" placeholder="Type a question…" autocomplete="off" aria-label="Message">
+    <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg></button>
+  </form>
+  <div class="cc-foot">/// Scripted demo — built by Pergola Performance</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ============ VEHICLE-TYPE ESTIMATOR ============ */
+  var VEHICLES=[
+    {name:"Sedan",factor:1.0},
+    {name:"SUV",factor:1.15},
+    {name:"Truck",factor:1.25},
+    {name:"Luxury / Euro",factor:1.5},
+    {name:"EV / Hybrid",factor:1.35}
+  ];
+  var SERVICES=[
+    {name:"Diagnostics",base:89},
+    {name:"Oil & Filter",base:49},
+    {name:"Brakes",base:149},
+    {name:"AC & Heating",base:99},
+    {name:"Tire & Alignment",base:79},
+    {name:"Transmission",base:130},
+    {name:"Custom Build",base:1500}
+  ];
+  /* inline-SVG silhouettes per vehicle type — content set via setAttribute('d'/innerHTML of trusted static markup only */
+  var SILHOUETTES={
+    "Sedan":'<svg viewBox="0 0 440 180" role="img" aria-label="Sedan silhouette"><path class="body" d="M40 128 L60 128 C66 100 92 84 120 84 L235 84 C262 70 300 70 330 86 L388 96 C400 99 404 108 404 118 L404 128 L378 128"/><path class="body" d="M40 128 C40 138 48 144 58 144 L382 144 C394 144 404 138 404 128 L404 122 C404 118 400 115 396 115 L48 115 C43 115 40 119 40 124 Z"/><path class="glass-p" d="M128 88 L160 88 L160 72 C150 73 140 78 132 85 Z M168 88 L228 88 L228 72 L200 72 C188 72 178 78 168 88 Z"/><rect class="accent" x="48" y="124" width="356" height="3"/><circle class="tire" cx="118" cy="146" r="26"/><circle class="hub" cx="118" cy="146" r="9"/><circle class="tire" cx="330" cy="146" r="26"/><circle class="hub" cx="330" cy="146" r="9"/></svg>',
+    "SUV":'<svg viewBox="0 0 440 180" role="img" aria-label="SUV silhouette"><path class="body" d="M44 124 L62 124 C66 92 92 74 122 74 L300 74 C330 74 356 84 372 96 L392 104 C400 108 404 114 404 122 L404 126"/><path class="body" d="M44 124 C44 136 52 142 62 142 L386 142 C397 142 404 136 404 126 L404 118 C404 114 401 112 397 112 L52 112 C47 112 44 116 44 121 Z"/><path class="glass-p" d="M128 78 L184 78 L184 60 L150 60 C140 60 132 68 128 78 Z M192 78 L296 78 C314 78 326 84 332 90 L300 60 L192 60 Z"/><rect class="accent" x="52" y="122" width="352" height="3"/><circle class="tire" cx="120" cy="144" r="28"/><circle class="hub" cx="120" cy="144" r="10"/><circle class="tire" cx="328" cy="144" r="28"/><circle class="hub" cx="328" cy="144" r="10"/></svg>',
+    "Truck":'<svg viewBox="0 0 440 180" role="img" aria-label="Pickup truck silhouette"><path class="body" d="M36 118 L60 118 C64 86 90 68 120 68 L196 68 C204 68 210 74 210 82 L210 108 L398 108 C404 108 408 112 408 118 L408 122"/><path class="body" d="M36 118 C36 132 44 138 56 138 L390 138 C401 138 408 132 408 122 L408 116 C408 112 405 110 401 110 L218 110 L218 80 C218 74 213 70 207 70 L44 70 C40 70 36 74 36 78 Z"/><path class="glass-p" d="M126 72 L186 72 L186 54 L152 54 C140 54 130 62 126 72 Z"/><rect class="accent" x="44" y="116" width="364" height="3"/><circle class="tire" cx="116" cy="142" r="30"/><circle class="hub" cx="116" cy="142" r="11"/><circle class="tire" cx="332" cy="142" r="30"/><circle class="hub" cx="332" cy="142" r="11"/></svg>',
+    "Luxury / Euro":'<svg viewBox="0 0 440 180" role="img" aria-label="Luxury coupe silhouette"><path class="body" d="M30 130 L52 130 C58 104 84 90 114 90 L244 88 C276 70 320 70 352 88 L398 100 C406 102 410 110 410 118 L410 128 L382 130"/><path class="body" d="M30 130 C30 140 38 146 50 146 L390 146 C402 146 410 140 410 130 L410 124 C410 120 406 117 401 117 L40 117 C34 117 30 121 30 126 Z"/><path class="glass-p" d="M120 92 L168 92 L172 74 C158 74 144 80 132 90 Z M178 92 L246 90 L250 74 L208 74 C196 74 186 80 178 92 Z"/><rect class="accent" x="40" y="126" width="370" height="3"/><circle class="tire" cx="112" cy="148" r="25"/><circle class="hub" cx="112" cy="148" r="9"/><circle class="tire" cx="336" cy="148" r="25"/><circle class="hub" cx="336" cy="148" r="9"/></svg>',
+    "EV / Hybrid":'<svg viewBox="0 0 440 180" role="img" aria-label="Electric vehicle silhouette"><path class="body" d="M38 126 L58 126 C62 96 88 80 118 80 L250 78 C282 64 322 64 352 84 L394 98 C402 101 406 109 406 117 L406 126"/><path class="body" d="M38 126 C38 137 46 143 57 143 L387 143 C398 143 406 137 406 126 L406 120 C406 116 403 113 398 113 L48 113 C43 113 38 117 38 122 Z"/><path class="glass-p" d="M124 84 L186 84 L190 66 C172 66 154 72 138 82 Z M198 84 L256 82 L260 66 L218 66 C208 66 200 73 198 84 Z"/><rect class="accent" x="48" y="124" width="358" height="3"/><path class="accent" d="M218 96 L210 112 L220 112 L214 124 L232 104 L222 104 Z"/><circle class="tire" cx="116" cy="145" r="27"/><circle class="hub" cx="116" cy="145" r="10"/><circle class="tire" cx="330" cy="145" r="27"/><circle class="hub" cx="330" cy="145" r="10"/></svg>'
+  };
+  var est={veh:0,svc:0};
+  var vehRow=document.getElementById("vehRow");
+  var svcRow=document.getElementById("svcRow");
+  var stage=document.getElementById("stage");
+  var siloName=document.getElementById("siloName");
+  var estOut=document.getElementById("estOut");
+  var estInc=document.getElementById("estInc");
+  var stageTag=document.getElementById("stageTag");
+
+  function r5(n){return Math.round(n/5)*5;}
+  function money(n){return "$"+n.toLocaleString("en-US");}
+
+  function renderStage(){
+    var v=VEHICLES[est.veh];
+    /* SILHOUETTES values are static, author-controlled markup (no user input) — safe to assign */
+    stage.innerHTML=SILHOUETTES[v.name];
+    var n=document.createElement("span");
+    n.textContent="Factor ×"+v.factor.toFixed(2);
+    siloName.textContent=v.name;        /* text node, never HTML for derived text */
+    siloName.appendChild(n);
+    if(stageTag)stageTag.textContent="APX-EST / "+v.name.toUpperCase().replace(/ \/ /g," / ");
+  }
+
+  function updateEst(){
+    var v=VEHICLES[est.veh], s=SERVICES[est.svc];
+    var base=s.base, f=v.factor;
+    var out, inc;
+    if(s.name==="Custom Build"){
+      out="from "+money(r5(base*f)).replace("$","$"); /* keep $ */
+      out="from "+money(Math.round(base*f));
+      inc="Custom builds are spec'd one-on-one — paint or wrap, lift, wheels and tint. This is a starting point for a "+v.name+" platform.";
+    } else {
+      var low=r5(base*f*0.9), high=r5(base*f*1.15);
+      out=money(low)+" – "+money(high);
+      inc=s.name+" on a "+v.name+" — range includes parts &amp; labor for most jobs. Final quote confirmed at the counter.";
+    }
+    estOut.textContent=out;                 /* derived text — textContent only */
+    estInc.innerHTML=inc;                    /* contains only static &amp; entity, no user input */
+    return {v:v,s:s,out:out};
+  }
+
+  /* build vehicle buttons */
+  VEHICLES.forEach(function(v,i){
+    var b=document.createElement("button");
+    b.type="button";
+    b.setAttribute("aria-pressed",i===0?"true":"false");
+    var ico=document.createElement("span"); ico.className="gi"; ico.setAttribute("aria-hidden","true");
+    ico.innerHTML='<svg viewBox="0 0 24 16" fill="currentColor" aria-hidden="true"><path d="M2 11 C2 9 4 8 6 8 L9 6 C11 5 15 5 17 7 L21 8 C22 8 22 9 22 10 L22 11 L2 11 Z"/><circle cx="7" cy="12" r="2.4"/><circle cx="17" cy="12" r="2.4"/></svg>';
+    var t=document.createElement("span"); t.textContent=v.name;
+    b.appendChild(ico); b.appendChild(t);
+    b.addEventListener("click",function(){
+      est.veh=i;
+      vehRow.querySelectorAll("button").forEach(function(x,xi){x.setAttribute("aria-pressed",xi===i?"true":"false");});
+      renderStage(); updateEst();
+    });
+    vehRow.appendChild(b);
+  });
+
+  /* build service buttons */
+  SERVICES.forEach(function(s,i){
+    var b=document.createElement("button");
+    b.type="button";
+    b.setAttribute("aria-pressed",i===0?"true":"false");
+    var t=document.createElement("span"); t.textContent=s.name;
+    var p=document.createElement("small"); p.textContent=s.name==="Custom Build"?"":("· $"+s.base);
+    b.appendChild(t); b.appendChild(p);
+    b.addEventListener("click",function(){
+      est.svc=i;
+      svcRow.querySelectorAll("button").forEach(function(x,xi){x.setAttribute("aria-pressed",xi===i?"true":"false");});
+      updateEst();
+    });
+    svcRow.appendChild(b);
+  });
+
+  renderStage();
+  updateEst();
+
+  /* book this estimate — populate the form, scroll, focus name */
+  document.getElementById("bookEst").addEventListener("click",function(){
+    var r=updateEst();
+    var f=document.getElementById("f-service");
+    /* keep the select on a sensible existing option, else "Something else" */
+    var map={"Diagnostics":"Engine diagnostics","Oil & Filter":"Oil & filter","Brakes":"Brake service","AC & Heating":"AC & heating","Tire & Alignment":"Tire & alignment","Transmission":"Transmission","Custom Build":"Custom build (visualizer)"};
+    f.value=map[r.s.name]||"Something else";
+    document.getElementById("f-vehicle").value=r.v.name;
+    document.getElementById("f-msg").value="Estimate request — "+r.s.name+" for a "+r.v.name+" · est. "+r.out;
+    document.getElementById("book").scrollIntoView({behavior:reduce?"auto":"smooth"});
+    setTimeout(function(){document.getElementById("f-name").focus({preventScroll:true});},reduce?0:650);
+  });
+
+  /* ============ BEFORE / AFTER SLIDER ============ */
+  (function(){
+    var wrap=document.getElementById("baWrap");
+    if(!wrap)return;
+    var after=document.getElementById("baAfter");
+    var handle=document.getElementById("baHandle");
+    var grip=document.getElementById("baGrip");
+    var range=document.getElementById("baRange");
+    function setPos(p){
+      p=Math.max(0,Math.min(100,p));
+      after.style.clipPath="inset(0 0 0 "+p+"%)";
+      handle.style.left=p+"%";
+      grip.style.left=p+"%";
+      if(+range.value!==p)range.value=p;
+    }
+    range.addEventListener("input",function(){setPos(+range.value);});
+    /* pointer drag anywhere on the wrap (range overlay handles the actual value, this gives immediate feel) */
+    var dragging=false;
+    function fromClientX(x){
+      var rect=wrap.getBoundingClientRect();
+      setPos(((x-rect.left)/rect.width)*100);
+    }
+    wrap.addEventListener("pointerdown",function(e){
+      dragging=true; wrap.setPointerCapture&&wrap.setPointerCapture(e.pointerId);
+      fromClientX(e.clientX);
+    });
+    wrap.addEventListener("pointermove",function(e){ if(dragging)fromClientX(e.clientX); });
+    window.addEventListener("pointerup",function(){ dragging=false; });
+    setPos(50);
+  })();
+
+  /* ============ LIGHTBOX ============ */
+  var lb=document.getElementById("lightbox"),lbImg=document.getElementById("lbImg"),idx=0;
+  var shots=Array.prototype.slice.call(document.querySelectorAll("#gallery img"));
+  var lbBtns=Array.prototype.slice.call(lb.querySelectorAll(".lb-btn")); // [close, prev, next]
+  var lbReturnTo=null; // gallery button that opened the lightbox — focus returns here on close
+  function openLb(i,trigger){
+    idx=i;lbImg.src=shots[i].src;lbImg.alt=shots[i].alt;lb.classList.add("open");
+    lbReturnTo=trigger||null;
+    lb.querySelector(".lb-close").focus(); // move focus into the dialog
+  }
+  function closeLb(){
+    lb.classList.remove("open");
+    if(lbReturnTo){lbReturnTo.focus();lbReturnTo=null;} // restore focus to the originating gallery button
+  }
+  function step(d){idx=(idx+d+shots.length)%shots.length;lbImg.src=shots[idx].src;lbImg.alt=shots[idx].alt}
+  document.querySelectorAll("#gallery button").forEach(function(b,i){b.addEventListener("click",function(){openLb(i,b)})});
+  lb.querySelector(".lb-close").addEventListener("click",closeLb);
+  lb.querySelector(".lb-prev").addEventListener("click",function(){step(-1)});
+  lb.querySelector(".lb-next").addEventListener("click",function(){step(1)});
+  lb.addEventListener("click",function(e){if(e.target===lb)closeLb()});
+  document.addEventListener("keydown",function(e){
+    if(!lb.classList.contains("open"))return;
+    if(e.key==="Escape"){closeLb();return;}
+    if(e.key==="ArrowLeft")step(-1);
+    if(e.key==="ArrowRight")step(1);
+    /* focus trap — keep Tab cycling within the three lightbox buttons */
+    if(e.key==="Tab"){
+      var first=lbBtns[0], last=lbBtns[lbBtns.length-1];
+      if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
+      else if(lbBtns.indexOf(document.activeElement)===-1){e.preventDefault();first.focus();}
+    }
+  });
+
+  /* ============ FORM ============ */
+  document.getElementById("bookForm").addEventListener("submit",function(e){
+    e.preventDefault();
+    document.getElementById("formOk").classList.add("show");
+    this.reset();
+  });
+
+  /* ============ REVEALS ============ */
+  var els=document.querySelectorAll(".rv");
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en,i){
+        if(en.isIntersecting){
+          en.target.style.transitionDelay=(i%4)*60+"ms";
+          en.target.classList.add("in");io.unobserve(en.target);
+        }
+      });
+    },{threshold:.12});
+    els.forEach(function(el){io.observe(el)});
+  } else { els.forEach(function(el){el.classList.add("in")}) }
+})();
+</script>
+
+<!-- ============ WEBGL EMBER FIELD (V7 method, Three.js r160) — fully optional, behind hero text ============ -->
+<script type="module">
+  (function(){
+    "use strict";
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var canvas = document.getElementById('fx');
+    if(!canvas || reduce) return;                    // reduced-motion: hero image carries it, no-op
+    // gracefully no-op if WebGL is unavailable
+    try{
+      var test = document.createElement('canvas');
+      if(!(test.getContext('webgl') || test.getContext('experimental-webgl'))) return;
+    }catch(e){ return; }
+
+    import('https://unpkg.com/three@0.160.0/build/three.module.min.js').then(function(THREE){
+      var hero = canvas.parentElement;
+      var renderer, scene, camera, points, raf, running=true;
+      var mouse = {x:0,y:0}, tmouse = {x:0,y:0};
+      var COUNT = (window.innerWidth < 760) ? 130 : 230;   // GPU-light
+
+      try{
+        renderer = new THREE.WebGLRenderer({canvas:canvas, alpha:true, antialias:false, powerPreference:'low-power'});
+      }catch(err){ return; }
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 1.75));
+
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+      camera.position.z = 24;
+
+      // ember particle field
+      var positions = new Float32Array(COUNT*3);
+      var speeds = new Float32Array(COUNT);
+      var phase = new Float32Array(COUNT);
+      var W = 56, H = 40;
+      for(var i=0;i<COUNT;i++){
+        positions[i*3]   = (Math.random()-0.5)*W;
+        positions[i*3+1] = (Math.random()-0.5)*H;
+        positions[i*3+2] = (Math.random()-0.5)*30;
+        speeds[i] = 0.6 + Math.random()*1.6;
+        phase[i]  = Math.random()*Math.PI*2;
+      }
+      var geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+      // soft round ember sprite drawn to a tiny canvas
+      var spr = document.createElement('canvas'); spr.width = spr.height = 64;
+      var g = spr.getContext('2d');
+      var grad = g.createRadialGradient(32,32,0,32,32,32);
+      grad.addColorStop(0,'rgba(255,180,120,1)');
+      grad.addColorStop(0.25,'rgba(255,106,26,0.95)');
+      grad.addColorStop(0.6,'rgba(255,77,0,0.35)');
+      grad.addColorStop(1,'rgba(255,77,0,0)');
+      g.fillStyle = grad; g.beginPath(); g.arc(32,32,32,0,Math.PI*2); g.fill();
+      var tex = new THREE.CanvasTexture(spr);
+
+      var mat = new THREE.PointsMaterial({
+        size: 1.5, map: tex, transparent: true, depthWrite:false,
+        blending: THREE.AdditiveBlending, opacity: 0.9
+      });
+      points = new THREE.Points(geo, mat);
+      scene.add(points);
+
+      function resize(){
+        var w = hero.clientWidth, h = hero.clientHeight;
+        if(!w || !h) return;
+        renderer.setSize(w, h, false);
+        camera.aspect = w/h; camera.updateProjectionMatrix();
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      // subtle mouse parallax
+      hero.addEventListener('pointermove', function(e){
+        var r = hero.getBoundingClientRect();
+        tmouse.x = ((e.clientX - r.left)/r.width  - 0.5);
+        tmouse.y = ((e.clientY - r.top )/r.height - 0.5);
+      });
+
+      var t0 = performance.now();
+      function tick(now){
+        if(!running){ raf = requestAnimationFrame(tick); return; }
+        var t = (now - t0)/1000;
+        var pos = geo.attributes.position.array;
+        for(var i=0;i<COUNT;i++){
+          // drift upward + gentle horizontal sway
+          pos[i*3+1] += speeds[i]*0.02;
+          pos[i*3]   += Math.sin(t*0.6 + phase[i])*0.008;
+          if(pos[i*3+1] > H/2){ pos[i*3+1] = -H/2; pos[i*3] = (Math.random()-0.5)*W; }
+        }
+        geo.attributes.position.needsUpdate = true;
+
+        mouse.x += (tmouse.x - mouse.x)*0.05;
+        mouse.y += (tmouse.y - mouse.y)*0.05;
+        points.rotation.y = mouse.x*0.25;
+        points.rotation.x = -mouse.y*0.18;
+        camera.position.x = mouse.x*3;
+        camera.position.y = -mouse.y*2;
+        camera.lookAt(0,0,0);
+
+        renderer.render(scene, camera);
+        raf = requestAnimationFrame(tick);
+      }
+
+      // pause when hero scrolled out of view (battery/GPU friendly)
+      if('IntersectionObserver' in window){
+        new IntersectionObserver(function(ents){ running = ents[0].isIntersecting; }, {threshold:0.02}).observe(hero);
+      }
+      // pause when tab hidden
+      document.addEventListener('visibilitychange', function(){ if(document.hidden) running=false; else running=true; });
+
+      canvas.classList.add('on');
+      raf = requestAnimationFrame(tick);
+    }).catch(function(){ /* import failed — hero image still carries it, silent no-op */ });
+  })();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  /* ============ APEX SERVICE DESK + POLISH (scripted demo, self-contained) ============ */
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Concierge ---- */
+  var fab=document.getElementById('ccFab'), panel=document.getElementById('ccPanel'), closeBtn=document.getElementById('ccClose');
+  var log=document.getElementById('ccLog'), chips=document.getElementById('ccChips'), form=document.getElementById('ccForm'), text=document.getElementById('ccText');
+  var lb=document.getElementById('lightbox');
+  var seeded=false;
+
+  var CHIPS=['Services & pricing','Open the estimator','Shop hours','Book a service'];
+
+  function add(who,html){
+    var d=document.createElement('div');
+    d.className='cc-msg '+(who==='bot'?'cc-bot':'cc-user');
+    var pfx=who==='bot'?'Advisor ›':'You ›';
+    var p=document.createElement('span'); p.className='pfx'; p.textContent=pfx;
+    var body=document.createElement('span');
+    if(who==='bot'){ body.innerHTML=html; } else { body.textContent=html; }  /* user input as text, never HTML */
+    d.appendChild(p); d.appendChild(body);
+    log.appendChild(d); log.scrollTop=log.scrollHeight; return d;
+  }
+  function typing(){
+    var t=document.createElement('div'); t.className='cc-typing';
+    t.innerHTML='<i></i><i></i><i></i>'; log.appendChild(t); log.scrollTop=log.scrollHeight; return t;
+  }
+  function botReply(html,delay){
+    var t=typing();
+    setTimeout(function(){ t.remove(); add('bot',html); }, reduce?0:(delay||700));
+  }
+  function renderChips(){
+    chips.innerHTML='';
+    CHIPS.forEach(function(c){
+      var b=document.createElement('button'); b.type='button'; b.className='cc-chip';
+      b.textContent=c; b.addEventListener('click',function(){ handle(c); }); chips.appendChild(b);
+    });
+  }
+
+  function answer(q){
+    var s=q.toLowerCase();
+    /* SERVICES / PRICING */
+    if(/(price|pricing|cost|service|ledger|how much|quote|estimat)/.test(s))
+      return 'Straight pricing — diagnostics from <b>$89</b>, brakes from <b>$149</b>, oil + filter <b>$49</b>, AC from <b>$99</b>, tire &amp; alignment from <b>$79</b>, transmission from <b>$130</b>. Every repair carries our 12-month warranty.'
+        +'<div class="miniledger"><span><i>Diagnostics</i>$89</span><span><i>Brakes</i>$149</span><span><i>Oil + filter</i>$49</span></div>'
+        +'Want a live estimate for your exact vehicle?';
+    /* ESTIMATOR */
+    if(/(build|visualiz|the lab|build lab|spec|configure|configurator|estimator)/.test(s))
+      return 'That&rsquo;s the <b>Apex estimator</b> — pick your vehicle type and the service, and the range updates live. When it looks right, fire it straight to our bay. Want me to open it?';
+    /* WRAP / LIFT / WHEEL / TINT price OR bare number */
+    if(/(wrap|lift|wheel|tint|forged|mesh|custom)/.test(s) || /\d{2,}/.test(s))
+      return 'Custom work is spec&rsquo;d one-on-one — wraps, lifts, wheels and tint. A custom build starts around <b>$1,500</b> and scales with the platform. Run your vehicle through the estimator for a live starting number.';
+    /* BOOK / APPOINTMENT */
+    if(/(book|appointment|schedule|slot|reserve)/.test(s))
+      return 'Easiest part. I&rsquo;ll drop you at the booking ticket — name, vehicle, and what it needs, and we confirm a slot within one business day.';
+    /* HOURS */
+    if(/(hour|open|close|time|when)/.test(s))
+      return 'Mon&ndash;Fri 7:30&ndash;6, Saturday 8&ndash;2, Sunday we&rsquo;re dark. Most services are same-day.';
+    /* WARRANTY */
+    if(/(warrant|guarantee|guaranty)/.test(s))
+      return 'Every repair is backed <b>12 months</b>, parts and labor. Honest diagnosis first — no upsell theater.';
+    /* GREETING */
+    if(/^(hi|hey|hello|yo|sup)\b/.test(s) || s.indexOf('hello')>-1)
+      return 'Apex service desk. I can talk pricing, the estimator, shop hours, or get you booked. Pick a chip or ask away.';
+    /* FALLBACK — self-aware, never a dead end */
+    return 'Good question — on the live site this routes straight to a tech at the counter. For the demo I can talk pricing, the estimator, shop hours, or get you booked. Or call the shop direct: <b>(555) 318-2240</b>.';
+  }
+
+  function maybeScroll(q){
+    var s=q.toLowerCase();
+    function go(id,extra){
+      setTimeout(function(){
+        var el=document.getElementById(id);
+        if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth'});
+        if(extra)extra();
+      }, reduce?0:1200);
+    }
+    if(/(book|appointment|schedule|slot|reserve)/.test(s))
+      go('book',function(){ setTimeout(function(){ var n=document.getElementById('f-name'); if(n)n.focus({preventScroll:true}); }, reduce?0:650); });
+    else if(/(price|pricing|cost|service|ledger|how much|quote)/.test(s))
+      go('services');
+    else if(/(build|visualiz|the lab|build lab|spec|configure|configurator|estimator|wrap|lift|wheel|tint|forged|mesh|custom)/.test(s) || /\d{2,}/.test(s))
+      go('estimator');
+    /* greeting + warranty + hours + fallback => no scroll (avoid scroll-jack) */
+  }
+
+  function handle(q){ add('user',q); botReply(answer(q),700); maybeScroll(q); }
+
+  function openChat(){
+    /* z-ladder discipline: never stack two modals */
+    if(lb && lb.classList.contains('open'))lb.classList.remove('open');
+    panel.classList.add('open'); fab.classList.add('cc-seen'); fab.setAttribute('aria-expanded','true');
+    if(!seeded){
+      seeded=true;
+      botReply('Apex service desk — what&rsquo;re you working on? /// Pick a chip or type a question.',400);
+      renderChips();
+    }
+    setTimeout(function(){ text.focus(); }, reduce?0:300);
+  }
+  function closeChat(){ panel.classList.remove('open'); fab.setAttribute('aria-expanded','false'); fab.focus(); }
+
+  fab.addEventListener('click',function(){ panel.classList.contains('open')?closeChat():openChat(); });
+  closeBtn.addEventListener('click',closeChat);
+
+  /* collect the panel's focusable elements live (chips render after open, so query on demand) */
+  function ccFocusables(){
+    return Array.prototype.slice.call(
+      panel.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+    ).filter(function(el){ return !el.disabled && el.offsetParent!==null; });
+  }
+
+  /* scoped Escape + focus trap — early-return when the panel is closed so it never collides with the lightbox handler */
+  document.addEventListener('keydown',function(e){
+    if(!panel.classList.contains('open'))return;
+    if(e.key==='Escape'){ closeChat(); return; }
+    if(e.key==='Tab'){
+      var f=ccFocusables(); if(!f.length)return;
+      var first=f[0], last=f[f.length-1];
+      if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
+      else if(f.indexOf(document.activeElement)===-1){e.preventDefault();first.focus();}
+    }
+  });
+
+  /* force-close the concierge if the lightbox opens (gallery click) so two overlays never stack */
+  document.querySelectorAll('#gallery button').forEach(function(b){
+    b.addEventListener('click',function(){ if(panel.classList.contains('open'))panel.classList.remove('open'); });
+  });
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=text.value.trim(); if(!v)return;
+    handle(v); text.value='';
+  });
+})();
+</script>
+</body>
+</html>
