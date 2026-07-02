@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lost in the Valley — Elk Hollow 404</title>
+<meta name="description" content="Page not found. The trail you followed doesn't reach this part of the Elk Hollow valley — head back to the main page." />
+<meta name="robots" content="noindex" />
+<link rel="canonical" href="https://elk-hollow-concept.pages.dev/404.html" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Lost in the Valley — Elk Hollow 404" />
+<meta property="og:description" content="Page not found. The trail you followed doesn't reach this part of the Elk Hollow valley — head back to the main page." />
+<meta property="og:url" content="https://elk-hollow-concept.pages.dev/404.html" />
+<meta property="og:image" content="https://elk-hollow-concept.pages.dev/img/og.jpg" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Lost in the Valley — Elk Hollow 404" />
+<meta name="twitter:description" content="Page not found. The trail you followed doesn't reach this part of the Elk Hollow valley — head back to the main page." />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600&family=EB+Garamond:ital,wght@1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{--coal:#141110;--bone:#c8b28a;--bone-lt:#e6dabd;--bone-dk:#a08c66;--line:rgba(200,178,138,.16);--ease:cubic-bezier(.16,1,.3,1)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--coal);color:var(--bone-lt);font-family:'Archivo',system-ui,sans-serif;min-height:100svh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--bone);outline-offset:3px}
+  main{flex:1;display:grid;place-items:center;text-align:center;padding:24px;position:relative;overflow:hidden}
+  canvas{position:absolute;inset:auto 0 0 0;width:100%;height:38svh;opacity:.6}
+  .in{position:relative}
+  .code{font-family:'Anton';font-size:clamp(6rem,30vw,20rem);line-height:.9;text-transform:uppercase;color:var(--bone)}
+  .line{font-family:'EB Garamond';font-style:italic;font-size:clamp(1.1rem,2.4vw,1.6rem);margin-top:16px;color:var(--bone-lt)}
+  .home{display:inline-flex;margin-top:36px;border:1px solid var(--line);padding:16px 30px;font-size:.78rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;transition:background .3s,color .3s}
+  @media(hover:hover){.home:hover{background:var(--bone);color:var(--coal)}}
+  footer{padding:20px 24px;font-size:.72rem;color:var(--bone-dk);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;letter-spacing:.14em;text-transform:uppercase;position:relative}
+</style>
+</head>
+<body>
+<main>
+  <canvas id="rg" aria-hidden="true"></canvas>
+  <div class="in">
+    <h1 class="code">404</h1>
+    <p class="line">This trail fades out before it reaches anything. The valley keeps some places to itself.</p>
+    <a class="home" href="index.html">Back to Elk Hollow →</a>
+  </div>
+</main>
+<footer>
+  <span>© 2026 Elk Hollow (concept — fictional property)</span>
+  <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="refunds.html">Refunds</a></span>
+</footer>
+<script>
+(function(){
+  var cv=document.getElementById('rg');if(!cv)return;
+  function draw(){
+    var dpr=Math.min(devicePixelRatio||1,1.5),w=cv.clientWidth,h=cv.clientHeight;
+    if(!w||!h)return;cv.width=w*dpr;cv.height=h*dpr;
+    var x=cv.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);
+    var seed=13;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
+    var bw=3,gap=4,n=Math.ceil(w/(bw+gap));
+    for(var i=0;i<n;i++){var t=i/n;
+      var ridge=Math.sin(t*Math.PI*2.1+.6)*.25+Math.sin(t*Math.PI*5.3+2.1)*.12+Math.sin(t*Math.PI*11.7+4.2)*.06+.52;
+      var bh=Math.max(.04,Math.min(.96,ridge+(rnd()-.5)*.14))*h;
+      x.globalAlpha=.55+rnd()*.45;x.fillStyle='#c8b28a';
+      x.fillRect(i*(bw+gap),h-bh,bw,bh);}
+  }
+  draw();var t;addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
+})();
+</script>
+</body>
+</html>
